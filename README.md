@@ -23,8 +23,10 @@ Some of these are:
 ## Credits
 SOF is a fork of the following option frameworks. Each have their own credits outlined on their project pages.
 
-[Slightly Modded Options Framework v1.5.2](https://github.com/sy4mil/Options-Framework)
-[NHP Theme Options v1.0.6](https://github.com/leemason/NHP-Theme-Options-Framework)
+* [Slightly Modded Options Framework v1.5.2](https://github.com/sy4mil/Options-Framework)
+** Used because it has a very complete UI and widgets.
+* [NHP Theme Options v1.0.6](https://github.com/leemason/NHP-Theme-Options-Framework)
+** Used because of excellent PHP development and hook usage.
 
 ### License
 
