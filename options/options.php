@@ -801,13 +801,13 @@ class Simple_Options{
 							echo '</div>';
 							echo '
 										<script>
-											function displaySOFObject() {
+											function sof_object() {
 												console.log( jQuery.parseJSON( jQuery("#sof-object").val() ) );	
 												return;
 											}
 										</script>';
 
-							echo '<input type="hidden" id="sof-object" value=\''.json_encode($this).'\' /><a href="javascript:displaySOFObject()">Show Object in Javascript Console Object</a>';
+							echo '<input type="hidden" id="sof-object" value=\''.json_encode($this).'\' /><a href="javascript:sof_object()">Show Object in Javascript Console Object</a>';
 						echo '</div>';
 					}
 					
