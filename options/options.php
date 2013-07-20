@@ -799,6 +799,15 @@ class Simple_Options{
 							echo '<div class="simple-options-section-desc">';
 							echo '<textarea class="large-text" rows="24">'.print_r($this, true).'</textarea>';
 							echo '</div>';
+							echo '
+										<script>
+											function displaySOFObject() {
+												console.log( jQuery.parseJSON( jQuery("#sof-object").val() ) );	
+												return;
+											}
+										</script>';
+
+							echo '<input type="hidden" id="sof-object" value=\''.json_encode($this).'\' /><a href="javascript:displaySOFObject()">Show Object in Javascript Console Object</a>';
 						echo '</div>';
 					}
 					
