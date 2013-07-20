@@ -7,8 +7,29 @@ SOF is a back-end framework for creating and managing options inside WordPress t
 
 The main feature of SMOF is its intuitive, user-friendly interface that aims to look as native as possible to WordPress. Additionally, it comes loaded with some awesome features that makes it even more usable to you as a theme author. 
 
-Some of these are:
+## Simple Usage
+Simply include the ```options-init.php``` file in your themes ```functions.php``` file, like so:
 
+```php
+get_template_part('options', 'init');
+```
+
+Then change the settings as written in the ```options-init.php``` file.
+
+## Features 
+### Working on outlining this proper. Please be patient -dovy
+* Uses the [WordPress Settings API](http://codex.wordpress.org/Settings_API "WordPress Settings API")
+* Multiple built in field types: [View WIKI](/leemason/NHP-Theme-Options-Framework/wiki "View WIKI")
+* Multple layout field types: [View WIKI](/leemason/NHP-Theme-Options-Framework/wiki "View WIKI")
+* Fields can be over-ridden with a callback function, for custom field types
+* Easily extendable by creating Field Classes (more info in the [View WIKI](/leemason/NHP-Theme-Options-Framework/wiki "View WIKI"))
+* Built in Validation Classes: [View WIKI](/leemason/NHP-Theme-Options-Framework/wiki title="View WIKI")
+* Easily extendable by creating Validation Classes (more in the [View WIKI](/leemason/NHP-Theme-Options-Framework/wiki "View WIKI"))
+* Custom Validation error handling, including error counts for each section, and custom styling for error fields
+* Custom Validation warning handling, including warning counts for each section, and custom styling for warning fields
+* Multiple Hook Points for customisation
+* Import / Export Functionality - including cross site importing of settings
+* Easily add page help through the class
 * Native Media Library Uploader
 * Native WP Color Picker
 * Drag and Drop Unlimited Slider Options
