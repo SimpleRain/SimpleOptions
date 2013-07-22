@@ -26,7 +26,10 @@ The other option is to embed the entire framework inside your theme. In which ca
 get_template_part('options', 'init');
 ```
 
-Then change the settings as written in the ```options-init.php``` file.
+**Please note if you bake the framework into your theme your users will depend on you to update your theme for core updates as you will lose the automated updates feature.**
+
+With both cases outlined above, you can now change the panel options by modifying the ```options-init.php``` file you have included in your theme.
+
 
 ## Features 
 ### Working on outlining this proper. Please be patient -dovy
