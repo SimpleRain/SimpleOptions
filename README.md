@@ -7,8 +7,20 @@ SOF is a back-end framework for creating and managing options inside WordPress t
 
 The main feature of SMOF is its intuitive, user-friendly interface that aims to look as native as possible to WordPress. Additionally, it comes loaded with some awesome features that makes it even more usable to you as a theme author. 
 
-## Simple Usage
-Simply include the ```options-init.php``` file in your themes ```functions.php``` file, like so:
+## Usage Examples
+Simple Options can be run in two configuration. The preferrable way is to run it as a plugin. We're baking automated updates into Simple Options so users will get all the benefits of improvements without admins. If this is your preferred method, do the following:
+* Install the downloaded zip as a plugin
+* Copy options-init.php inside your theme.
+* Include the ```options-init.php``` file in your theme's ```functions.php``` file, like so:
+
+```php
+get_template_part('options', 'init');
+```
+
+The other option is to embed the entire framework inside your theme. In which case you:
+* Place everything in your root theme directory
+* Delete the simpleoptions.php file (that's plugin specific)
+* Again, initialize the framework in the same method as above by including the ```options-init.php``` file in your themes ```functions.php``` file, like so:
 
 ```php
 get_template_part('options', 'init');

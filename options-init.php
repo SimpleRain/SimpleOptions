@@ -6,8 +6,10 @@
  *
  */
 //define('SOF_OPTIONS_URL', site_url('path the options folder'));
-if(!class_exists('Simple_Options')){
+if( !class_exists('Simple_Options') && file_exists( dirname( __FILE__ ) . '/options/options.php') ){
 	require_once( dirname( __FILE__ ) . '/options/options.php' );
+} else if ( !class_exists('Simple_Options') ) {
+	return;
 }
 
 /*
