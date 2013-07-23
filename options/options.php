@@ -10,15 +10,14 @@ if ( ! class_exists('Simple_Options') ){
 	}
 	
 	if(!defined('SOF_OPTIONS_URL')){
-
 		define('SOF_OPTIONS_URL', site_url(str_replace( $fslashed_abs, '', $fslashed_dir )));
 	}
-	
+
 class Simple_Options{
 	
 	protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 	protected $framework_name = 'Smart Options Framework';
-	protected $framework_version = '1.0.0';
+	protected $framework_version = '0.0.1';
 		
 	public $dir = SOF_OPTIONS_DIR;
 	public $url = SOF_OPTIONS_URL;
@@ -452,7 +451,7 @@ class Simple_Options{
 	 * @since Simple_Options 1.0
 	*/
 	function _register_setting(){
-		
+
 		register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array(&$this,'_validate_options'));
 		
 		foreach($this->sections as $k => $section){

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: SimpleOptions
- * Plugin URI: https://github.com/SimpleRain/SimpleOptions/
+ * Plugin URI: https://github.com/SimpleRain/SimpleOptions
  * Description: A simple wordpress options framework for developers.
  * Version: 0.0.1
  * Author: SimpleRain
@@ -30,6 +30,16 @@
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-3.0.html
  */
 
-if(!class_exists('Simple_Options') || !class_exists('Simple_Options_Framework')){
-	require_once( dirname( __FILE__ ) . '/options/options.php' );
+if(strpos(dirname(__FILE__),WP_PLUGIN_DIR) !== false && !class_exists('Simple_Options')){
+	include_once( dirname( __FILE__ ) . '/options/options.php' );
+}
+
+if (file_exists( dirname( __FILE__ ) . '/options/SimpleUpdater.php') ) {
+	include_once( dirname( __FILE__ ) . '/options/SimpleUpdater.php' );
+  $Simple_Updater = new Simple_Updater( array( 
+  					'slug' => __FILE__, 
+  					'force_update'=>true,
+						'requires' => '0.0.1',
+						'tested' => '0.0.1',  					
+  			) );
 }

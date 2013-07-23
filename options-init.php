@@ -5,10 +5,14 @@
  * Also if running on windows you may have url problems, which can be fixed by defining the framework url first
  *
  */
-//define('SOF_OPTIONS_URL', site_url('path the options folder'));
-if( !class_exists('Simple_Options') && file_exists( dirname( __FILE__ ) . '/options/options.php') ){
-	require_once( dirname( __FILE__ ) . '/options/options.php' );
-} else if ( !class_exists('Simple_Options') ) {
+
+// Try to include the framework if this is in the theme.
+if (strpos(dirname(__FILE__),TEMPLATEPATH) !== false &&!class_exists('Simple_Options') && file_exists( dirname( __FILE__ ) . '/options/options.php') ) {
+	include_once( dirname( __FILE__ ) . '/options/options.php' );
+}
+
+// Return if the class can't be found. No errors please!
+if( !class_exists('Simple_Options') ){
 	return;
 }
 
