@@ -298,14 +298,13 @@ class Simple_Updater {
 				if(isset($_GET['rollback'])){
 					$data->response[$this->config['slug']]['package'] = 
 						$this->config['github_url'] . '/zipball/' . urlencode($_GET['rollback']);
-					echo "No Rollback"; // DEBUG
+					echo "No Rollback version found!"; // DEBUG
 					continue;
 				}
 				// check and generate download link
 				$newest_tag = array_pop($tags);
 				if(version_compare($this->config['version'],  $newest_tag, '>=')){
 					// up-to-date!
-					echo "up-to-date"; // DEBUG
 					return false;
 				}
 				
