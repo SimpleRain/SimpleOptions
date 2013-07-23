@@ -73,15 +73,14 @@ class Simple_Updater {
 	public function __construct( $config = array() ) {
 
 		$defaults = array(
-			'slug'=>'',
-			'proper_folder_name' => '',
-			'access_token' => '',
-			'github_url'=>'',
-			'github_user'=>'',
-			'force_update'=>false,
-			'github_repo'=>'',
-			//'requires'=>'v0.0.1',
-			//'tested'=>'3.3',
+			'slug' 								=> '',
+			'proper_folder_name' 	=> '',
+			'access_token' 				=> '',
+			'github_url' 					=> '',
+			'sslverify' 					=> false,
+			'github_user' 				=> '',
+			'force_update' 				=> false,
+			'github_repo' 				=> '',
 		);
 
 		$this->config = wp_parse_args( $config, $defaults );
@@ -228,6 +227,7 @@ class Simple_Updater {
 		return 2;
 	}
 
+
 	/**
 	 * Callback fn for the http_request_args filter
 	 *
@@ -244,8 +244,6 @@ class Simple_Updater {
 	}
 
 
-
-
 	/**
 	 * Get GitHub Data from the specified repository
 	 *
@@ -258,7 +256,6 @@ class Simple_Updater {
 			$github_data = $this->github_data;
 		} else {
 			$github_data = get_site_transient( $this->config['slug'].'_github_data' );
-
 			if ( $this->overrule_transients() || ( ! isset( $github_data ) || ! $github_data || '' == $github_data ) ) {
 
 				$url = sprintf('https://api.github.com/repos/%s/%s/tags', urlencode($this->config['github_user']), urlencode($this->config['github_repo']));
@@ -327,6 +324,7 @@ class Simple_Updater {
 		return $github_data;
 	}
 
+
 	/**
 	 * Get new version
 	 *
@@ -338,6 +336,7 @@ class Simple_Updater {
 		return ( !empty( $_version->new_version ) ) ? $_version->new_version : false;
 	}
 
+
 	/**
 	 * Get package link
 	 *
@@ -348,6 +347,7 @@ class Simple_Updater {
 		$_download = $this->get_github_data();
 		return ( !empty( $_download->package ) ) ? $_download->package : false;
 	}
+
 
 	/**
 	 * Get plugin description
@@ -383,14 +383,11 @@ class Simple_Updater {
 	 * @return object $transient updated plugin data transient
 	 */
 	public function api_check( $transient ) {
-echo "api_check";
-print_r($transient);
-
-
 		// Check if the transient contains the 'checked' information
 		// If not, just return its value without hacking it
-		if ( empty( $transient->checked ) )
+		if ( empty( $transient->checked ) && !$this->overrule_transients() ) {
 			return $transient;
+		}
 
 		// check the version and decide if it's new
 		$update = version_compare( $this->config['new_version'], $this->config['version'] );
@@ -439,6 +436,7 @@ print_r($transient);
 		$response->download_link = $this->config['package'];
 
 		return $response;
+
 	}
 
 
@@ -469,4 +467,5 @@ print_r($transient);
 		return $result;
 
 	}
+
 }

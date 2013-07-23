@@ -37,9 +37,7 @@ if(strpos(dirname(__FILE__),WP_PLUGIN_DIR) !== false && !class_exists('Simple_Op
 if (file_exists( dirname( __FILE__ ) . '/options/SimpleUpdater.php') ) {
 	include_once( dirname( __FILE__ ) . '/options/SimpleUpdater.php' );
   $Simple_Updater = new Simple_Updater( array( 
-  					'slug' => __FILE__, 
-  					'force_update'=>true,
-						'requires' => '0.0.1',
-						'tested' => '0.0.1',  					
-  			) );
+			'slug' 					=> __FILE__, 
+			'force_update'	=> true,
+		) );
 }
