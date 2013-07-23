@@ -30,7 +30,7 @@
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-3.0.html
  */
 
-if(strpos(dirname(__FILE__),WP_PLUGIN_DIR) !== false && !class_exists('Simple_Options')){
+if(strpos(dirname(__FILE__),WP_PLUGIN_DIR) !== false && !class_exists('Simple_Options') && file_exists( dirname( __FILE__ ) . '/options/options.php' ) ){
 	include_once( dirname( __FILE__ ) . '/options/options.php' );
 }
 
