@@ -816,12 +816,12 @@ class Simple_Options{
 							echo '
 										<script>
 											function sof_object() {
-												console.log( jQuery.parseJSON( jQuery("#sof-object").val() ) );	
+												console.log( jQuery.parseJSON( decodeURIComponent( jQuery("#sof-object").val() ) ) );	
 												return;
 											}
 										</script>';
 
-							echo '<input type="hidden" id="sof-object" value=\''.json_encode($this).'\' /><a href="javascript:sof_object()">Show Object in Javascript Console Object</a>';
+							echo '<input type="hidden" id="sof-object" value="'.urlencode(json_encode($this)).'" /><a href="javascript:sof_object()" class="button">Show Object in Javascript Console Object</a>';
 						echo '</div>';
 					}
 					
@@ -859,8 +859,9 @@ class Simple_Options{
 			
 			echo '<div class="clear"></div><!--clearfix-->';	
 		echo '</div><!--wrap-->';
-
-		echo '<br /><div class="timer">'.get_num_queries().' queries in '.timer_stop(0).' seconds</div>';
+		if (true === $this->args['dev_mode']) {
+			echo '<br /><div class="sof-timer">'.get_num_queries().' queries in '.timer_stop(0).' seconds</div>';
+		}
 
 	}//function
 	

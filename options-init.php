@@ -159,33 +159,81 @@ $args['help_sidebar'] = __('<p>This is the sidebar content, HTML is allowed.</p>
 $sections = array();
 
 $sections[] = array(
-				'title' => __('Getting Started', 'simple-options'),
-				'desc' => __('<p class="description">This is the description field for the Section. HTML is allowed</p>', 'simple-options'),
-				//all the glyphicons are included in the options folder, so you can hook into them, or link to your own custom ones.
-				//You dont have to though, leave it blank for default.
-				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_062_attach.png'
-				//Lets leave this as a blank section, no options just some intro text set above.
-				//'fields' => array()
+				'icon' => '',
+				'title' => __('Porting SMOF Fields', 'simple-options'),
+				'desc' => __('<p class="description">Smof fields\'s we\'re porting over.</p>', 'simple-options'),
+				'fields' => array(
+					array(
+						'id' => 'font', //must be unique
+						'type' => 'typography', //builtin fields include:
+										  //text|textarea|editor|checkbox|multi_checkbox|radio|radio_img|button_set|select|multi_select|color|date|divide|info|upload
+						'title' => __('Typography', 'simple-options'),
+						'sub_desc' => __('A real Google Fonts implementation.', 'simple-options'),
+						'desc' => __('That\'s right. It works!', 'simple-options'),
+						'simple_weight'=> false,
+						//'validate' => '', //builtin validation includes: email|html|html_custom|no_html|js|numeric|url
+						//'msg' => 'custom error message', //override the default validation error message for specific fields
+						'std' => array(
+							'family'=>'Arial',
+							'weight'=>'400',
+							'color'=>'#000',
+							'size'=>'22px',
+							'script'=>'',
+							'line-height'=> '14px',
+						), //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
+						//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "typography"
+						),
+					)
 				);
+
+$sections[] = array( 'type' => 'divide' );
+
+$sections[] = array(
+				'icon' => '',
+				'title' => __('Completed SOF Fields', 'simple-options'),
+				'desc' => __('<p class="description">These are fields that are done and ready to ship.</p>', 'simple-options'),
+				'fields' => array(
+					array(
+						'id' => 'text',
+						'type' => 'text',
+						'title' => __('Text Option', 'simple-options'),
+						'sub_desc' => __('This is a little space under the Field Title in the Options table, additonal info is good in here.', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),		
+
+					array(
+						'id' => 'editor',
+						'type' => 'editor',
+						'title' => __('Editor Option', 'simple-options'), 
+						'sub_desc' => __('Can also use the validation methods if you like.', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'std' => 'OOOOOOhhhh, rich editing.'
+						),
+
+
+
+					)
+					
+				);
+
+$sections[] = array( 'type' => 'divide' );
+
+$sections[] = array(
+				'icon' => '',
+				'title' => __('Old NHP Fields', 'simple-options'),
+				'desc' => __('<p class="description">Fields that may be removed before the end.</p>', 'simple-options'),
+				'fields' => array(
+					)
+				);
+
+$sections[] = array( 'type' => 'divide' );
 
 				
 $sections[] = array(
 				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_107_text_resize.png',
-				'title' => __('Text Fields', 'simple-options'),
+				'title' => __('Field Validation', 'simple-options'),
 				'desc' => __('<p class="description">This is the Description. Again HTML is allowed2</p>', 'simple-options'),
 				'fields' => array(
-					array(
-						'id' => '1', //must be unique
-						'type' => 'text', //builtin fields include:
-										  //text|textarea|editor|checkbox|multi_checkbox|radio|radio_img|button_set|select|multi_select|color|date|divide|info|upload
-						'title' => __('Text Option', 'simple-options'),
-						'sub_desc' => __('This is a little space under the Field Title in the Options table, additonal info is good in here.', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						//'validate' => '', //builtin validation includes: email|html|html_custom|no_html|js|numeric|url
-						//'msg' => 'custom error message', //override the default validation error message for specific fields
-						//'std' => '', //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
-						//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "regular-text"
-						),
 					array(
 						'id' => '2',
 						'type' => 'text',
@@ -306,23 +354,7 @@ $sections[] = array(
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'validate' => 'js'
 						),
-					array(
-						'id' => '9',
-						'type' => 'editor',
-						'title' => __('Editor Option', 'simple-options'), 
-						'sub_desc' => __('Can also use the validation methods if required', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'std' => 'OOOOOOhhhh, rich editing.'
-						)
-					,
-					array(
-						'id' => 'editor2',
-						'type' => 'editor',
-						'title' => __('Editor Option 2', 'simple-options'), 
-						'sub_desc' => __('Can also use the validation methods if required', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'std' => 'OOOOOOhhhh, rich editing2.'
-						)
+
 					)
 				);
 $sections[] = array(
@@ -353,7 +385,7 @@ $sections[] = array(
 						'title' => __('Radio Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
+						'options' => array('1' => 'Opt 1', '2' => 'Opt 2', '3' => 'Opt 3'),//Must provide key => value pairs for radio options
 						'std' => '2'
 						),
 					array(
@@ -379,7 +411,10 @@ $sections[] = array(
 						'options' => array(
 										'1' => array('title' => '1 Column', 'img' => SOF_OPTIONS_URL.'img/1col.png'),
 										'2' => array('title' => '2 Column Left', 'img' => SOF_OPTIONS_URL.'img/2cl.png'),
-										'3' => array('title' => '2 Column Right', 'img' => SOF_OPTIONS_URL.'img/2cr.png')
+										'3' => array('title' => '2 Column Right', 'img' => SOF_OPTIONS_URL.'img/2cr.png'),
+										'4' => array('title' => '3 Column Middle', 'img' => SOF_OPTIONS_URL.'img/3cm.png'),
+										'5' => array('title' => '3 Column Left', 'img' => SOF_OPTIONS_URL.'img/3cl.png'),
+										'6' => array('title' => '3 Column Right', 'img' => SOF_OPTIONS_URL.'img/3cr.png')
 											),//Must provide key => value(array:title|img) pairs for radio options
 						'std' => '2'
 						)																		

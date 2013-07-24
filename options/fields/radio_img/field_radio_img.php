@@ -28,21 +28,29 @@ class Simple_Options_radio_img extends Simple_Options{
 	*/
 	function render(){
 		
-		$class = (isset($this->field['class']))?'class="'.$this->field['class'].'" ':'';
+		$class = (isset($this->field['class']))?' '.$this->field['class']:'';
 		
 		echo '<fieldset>';
+			
+		if (!empty($this->field['options'])) {
+
+			echo '<ul>';
 			
 			foreach($this->field['options'] as $k => $v){
 
 				$selected = (checked($this->value, $k, false) != '')?' sof-radio-img-selected':'';
-
-				echo '<label class="sof-radio-img'.$selected.' sof-radio-img-'.$this->field['id'].'" for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
-				echo '<input type="radio" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" '.$class.' value="'.$k.'" '.checked($this->value, $k, false).'/>';
+				echo '<li class="sof-radio-img' . $class . '">';
+				echo '<label class="'.$selected.' sof-radio-img-'.$this->field['id'].'" for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
+				echo '<input type="radio" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$k.'" '.checked($this->value, $k, false).'/>';
 				echo '<img src="'.$v['img'].'" alt="'.$v['title'].'" onclick="jQuery:sof_radio_img_select(\''.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'\', \''.$this->field['id'].'\');" />';
-				echo '<br/><span>'.$v['title'].'</span>';
-				echo '</label>';
-				
+				echo '<br /><span>'.$v['title'].'</span>';
+				echo '</label>';		
+				echo '</li>';
 			}//foreach
+				
+			echo '</ul>';		
+
+		}
 
 		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<br/><span class="description">'.$this->field['desc'].'</span>':'';
 		

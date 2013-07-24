@@ -479,16 +479,13 @@ border: 1px solid #e5e5e5;
 	float: right;
 }
 #simple-options-form-wrapper .sof-ajax-loading {
-	display: no2ne;
+	display: none;
 	background: red url(../img/ajax.gif) no-repeat;
-	display: block;
 	width: 16px;
 	height: 16px;
 	margin: 3px 4px 0;
 	float: right;
 }
-
-
 
 #simple-options-header {
 	height: 70px;
@@ -587,4 +584,12 @@ border: 1px solid #e5e5e5;
 	width: 32px;
 	background: url(../img/icon_option.png) no-repeat;
 	margin:20px 30px 0;
+}
+.sof-timer {
+	text-align: center;
+	font-size: 10px;
+	color: #888;
+}
+#simple-options-form-wrapper .form-table ul {
+	margin: 0;
 }

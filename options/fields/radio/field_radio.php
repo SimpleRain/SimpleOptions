@@ -31,16 +31,26 @@ class Simple_Options_radio extends Simple_Options{
 		$class = (isset($this->field['class']))?'class="'.$this->field['class'].'" ':'';
 		
 		echo '<fieldset>';
+		
+		if (!empty($this->field['options'])) {
+
+			echo '<ul>';
 			
 			foreach($this->field['options'] as $k => $v){
 				
 				//echo '<option value="'.$k.'" '.selected($this->value, $k, false).'>'.$v.'</option>';
+				echo '<li' . $class . '>';
 				echo '<label for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
 				echo '<input type="radio" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" '.$class.' value="'.$k.'" '.checked($this->value, $k, false).'/>';
 				echo ' <span>'.$v.'</span>';
-				echo '</label><br/>';
+				echo '</label>';
+				echo '</li>';
 				
 			}//foreach
+				
+			echo '</ul>';		
+
+		}
 
 		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<span class="description">'.$this->field['desc'].'</span>':'';
 		
