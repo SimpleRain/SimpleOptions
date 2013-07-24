@@ -650,6 +650,9 @@ class Simple_Options{
 			echo '<form method="post" action="options.php" enctype="multipart/form-data" id="simple-options-form-wrapper">';
 				settings_fields($this->args['opt_name'].'_group');
 				
+				if (empty($this->options['last_tab'])) {
+					$this->options['last_tab'] = "";
+				}
 				$this->options['last_tab'] = (isset($_GET['tab']) && !get_transient('simple-options-saved'))?$_GET['tab']:$this->options['last_tab'];
 				
 				echo '<input type="hidden" id="last_tab" name="'.$this->args['opt_name'].'[last_tab]" value="'.$this->options['last_tab'].'" />';

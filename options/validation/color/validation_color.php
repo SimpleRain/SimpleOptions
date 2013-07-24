@@ -20,6 +20,34 @@ class SOF_Validation_color extends Simple_Options{
 	}//function
 	
 	
+
+	/**
+	 * Validate Color
+	 *
+	 * Takes the user's input color value and returns it only if it's a valid color.
+	 *
+	 * @since Simple_Options 1.0.0
+	*/	
+	function validate_color($color) {
+		
+		$named = array('transparent', 'none', 'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige', 'bisque', 'black', 'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'fuchsia', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'greenyellow', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightsteelblue', 'lightyellow', 'lime', 'limegreen', 'linen', 'magenta', 'maroon', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'navy', 'oldlace', 'olive', 'olivedrab', 'orange', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'purple', 'red', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'silver', 'skyblue', 'slateblue', 'slategray', 'snow', 'springgreen', 'steelblue', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'white', 'whitesmoke', 'yellow', 'yellowgreen');
+
+		if (in_array(strtolower($color), $named)) {
+		  /* A color name was entered instead of a Hex Value, so just exit function */
+		  return $color;
+		}
+
+		$color = str_replace('#','', $color);
+		if (strlen($color) == 3) {
+			$color = $color.$color;
+		}
+	  if (preg_match('/^[a-f0-9]{6}$/i', $color)) {
+	    return '#' . $color;
+	  }
+	  return false;
+
+	}//function
+
 	
 	/**
 	 * Field Render Function.
@@ -30,45 +58,25 @@ class SOF_Validation_color extends Simple_Options{
 	*/
 	function validate(){
 		
-		if(!is_array($this->value)){
-		
-			if($this->value[0] != '#'){
-				$this->value = (isset($this->current))?$this->current:'';
-				$this->error = $this->field;
-				return;
-			}
-			
-			if(strlen($this->value) != 7){
-				$this->value = (isset($this->current))?$this->current:'';
-				$this->error = $this->field;
-			}
-			
-		}//if array
-		
-		
-		if(is_array($this->value)){
-			
+		if(is_array($this->value)) { // If array
 			foreach($this->value as $k => $value){
-				
-				if(isset($this->error)){continue;}
-		
-				if($value[0] != '#'){
+				if ($color = $this->validate_color($value)) {
+					$this->value[$k] = $color;
+				} else {
 					$this->value[$k] = (isset($this->current[$k]))?$this->current[$k]:'';
 					$this->error = $this->field;
-					continue;
+					return;		
 				}
-				
-				if(strlen($value) != 7){
-					$this->value[$k] = (isset($this->current[$k]))?$this->current[$k]:'';
-					$this->error = $this->field;
-				}
-				
 			}//foreach
-			
-		}//if array
-		
-		
-		
+		} else { // not array
+			if ($color = $this->validate_color($this->value)) {
+				$this->value = $color;
+			} else {
+				$this->value = (isset($this->current))?$this->current:'';
+				$this->error = $this->field;
+				return;		
+			}
+		} // END array check
 		
 	}//function
 	
