@@ -7,26 +7,34 @@ SOF is a back-end framework for creating and managing options inside WordPress t
 
 The main feature of SMOF is its intuitive, user-friendly interface that aims to look as native as possible to WordPress. Additionally, it comes loaded with some awesome features that makes it even more usable to you as a theme author. 
 
+## Downloading
+** If you download the zip you get the development version. To get a stable version, please visit here and find the latest release: **
+### [https://github.com/SimpleRain/SimpleOptions/releases](https://github.com/SimpleRain/SimpleOptions/releases)
+
 ## Usage Examples
-Simple Options can be run in two configuration. The preferrable way is to run it as a plugin. We're baking automated updates into Simple Options so users will get all the benefits of improvements without admins. If this is your preferred method, do the following:
-* Install the downloaded zip as a plugin
-* Copy options-init.php inside your theme.
+Simple Options can be run in two configuration. The preferrable way is to run it as a plugin. We've baked automated updates into Simple Options so users will get all the benefits of improvements without theme admin's involvement. To use SOF as a plugin, do the following:
+* Grab the latest release from here: [https://github.com/SimpleRain/SimpleOptions/releases](https://github.com/SimpleRain/SimpleOptions/releases)
+* Install SOF as a plugin
+* Copy options-init.php to inside your theme.
 * Include the ```options-init.php``` file in your theme's ```functions.php``` file, like so:
 
 ```php
 get_template_part('options', 'init');
 ```
 
-The other option is to embed the entire framework inside your theme. In which case you:
-* Place everything in your root theme directory
-* Delete the simpleoptions.php file (that's plugin specific)
-* Again, initialize the framework in the same method as above by including the ```options-init.php``` file in your themes ```functions.php``` file, like so:
+You can also run SOF outside of a plugin, embedded in a theme. By so doing users lose the automatic updates to the core files. To do this:
+* Grab the latest release from here: https://github.com/SimpleRain/SimpleOptions/releases
+* Delete the plugin.php file (it's the plugin specific file)
+* Include and implement the framework by adding the following code to your ```functions.php``` file:
 
 ```php
+include_once('options/options.php');
 get_template_part('options', 'init');
 ```
 
-**Please note if you bake the framework into your theme your users will depend on you to update your theme for core updates as you will lose the automated updates feature.**
+
+
+**Please note if you embed the framework into your theme (not as a plugin) your users will depend on you to update the framework to recieve core updates. It is advisable to use SOF as a plugin.**
 
 With both cases outlined above, you can now change the panel options by modifying the ```options-init.php``` file you have included in your theme.
 
