@@ -29,7 +29,7 @@ jQuery(document).ready(function(){
 		jQuery('.simple-options-group-tab').each(function(){
 			if(jQuery(this).attr('id') == relid+'_section_group'){
 				//jQuery(this).delay(400).fadeIn(400);
-				jQuery(this).fadeIn('fast');
+				jQuery(this).fadeIn(300);
 			}else{
 				jQuery(this).hide();
 			}
@@ -81,17 +81,24 @@ jQuery(document).ready(function(){
 		return false;
 	});	
 	
+	jQuery('#simple-options-import').click(function(e) {
+		if (jQuery('#import-code-value').val() == "" && jQuery('#import-link-value').val() == "" ) {
+			e.preventDefault();
+			return false;
+		}
+	});
+
 	
 	if(jQuery('#simple-options-save').is(':visible')){
-		jQuery('#simple-options-save').delay(4000).slideUp('slow');
+		jQuery('#simple-options-save').slideDown();
 	}
 	
 	if(jQuery('#simple-options-imported').is(':visible')){
-		jQuery('#simple-options-imported').delay(4000).slideUp('slow');
+		jQuery('#simple-options-imported').slideDown();
 	}	
 	
 	jQuery('input, textarea, select').change(function(){
-		jQuery('#simple-options-save-warn').slideDown('slow');
+		jQuery('#simple-options-save-warn').slideDown();
 	});
 	
 	
@@ -126,6 +133,7 @@ jQuery(document).ready(function(){
 	
 	
 function footerInView(elem) {
+		return false;
 		var elem = jQuery('#simple-options-footer');
     var docViewTop = jQuery(window).scrollTop();
     var docViewBottom = docViewTop + jQuery(window).height();

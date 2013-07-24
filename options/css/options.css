@@ -200,6 +200,7 @@ border: 1px solid #e5e5e5;
 	height: 16px;
 	/*vertical-align:middle;*/
 	margin-bottom:-3px;
+	margin-right: 3px;
 }
 #simple-options-sidebar #simple-options-group-menu li a:hover{
 	background:#f9f9f9;
@@ -392,9 +393,6 @@ border: 1px solid #e5e5e5;
 	display:block;
 }
 
-.simple-options-group-tab-link-a span{
-	padding-left: 3px;
-}
 
 
 

@@ -100,6 +100,9 @@ class Simple_Updater {
 
 		// Hook into the plugin details screen
 		add_filter( 'plugins_api', array( $this, 'get_plugin_info' ), 10, 3 );
+
+		add_filter('plugins_api_result', array( $this, 'plugin_changelog' ), 10, 3 );
+
 		add_filter( 'upgrader_post_install', array( $this, 'upgrader_post_install' ), 10, 3 );
 
 		// set timeout
@@ -420,7 +423,7 @@ class Simple_Updater {
 
 		// Check if this call API is for the right plugin
 		if ( $response->slug != $this->config['slug'] ) {
-			return false;
+			//return false;
 		}
 
 		$response->slug = $this->config['slug'];
@@ -465,6 +468,12 @@ class Simple_Updater {
 		echo is_wp_error( $activate ) ? $fail : $success;
 		return $result;
 
+	}
+
+	public function plugin_changelog($false, $action, $response ) {
+		print_r($action);
+		print_r($response);
+		return $response;
 	}
 
 }

@@ -16,8 +16,8 @@ if ( ! class_exists('Simple_Options') ){
 class Simple_Options{
 	
 	protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
-	protected $framework_name = 'Smart Options Framework';
-	protected $framework_version = '0.0.1';
+	protected $framework_name = 'Simple Options Framework';
+	protected $framework_version = '0.0.3';
 		
 	public $dir = SOF_OPTIONS_DIR;
 	public $url = SOF_OPTIONS_URL;
@@ -223,24 +223,29 @@ class Simple_Options{
 						);
 						
 		if(true === $this->args['allow_sub_menu']){
-						
-			//this is needed to remove the top level menu item from showing in the submenu
-			add_submenu_page($this->args['page_slug'],$this->args['page_title'],'',$this->args['page_cap'],$this->args['page_slug'],create_function( '$a', "return null;" ));
-						
-						
-			foreach($this->sections as $k => $section){
-							
-				add_submenu_page(
-						$this->args['page_slug'],
-						$section['title'], 
-						$section['title'], 
-						$this->args['page_cap'], 
-						$this->args['page_slug'].'&tab='.$k, 
-						create_function( '$a', "return null;" )
-				);
-					
-			}
-			
+
+			if (!isset($section['type']) || $section['type'] != "divide") {
+				
+				//this is needed to remove the top level menu item from showing in the submenu
+				add_submenu_page($this->args['page_slug'],$this->args['page_title'],'',$this->args['page_cap'],$this->args['page_slug'],create_function( '$a', "return null;" ));
+										
+				foreach($this->sections as $k => $section){
+					if ( !isset( $section['title']) ) {
+						continue;
+					}
+					add_submenu_page(
+							$this->args['page_slug'],
+							$section['title'],
+							$section['title'], 
+							$this->args['page_cap'], 
+							$this->args['page_slug'].'&tab='.$k, 
+							create_function( '$a', "return null;" )
+					);
+				
+				}
+
+			}	
+
 			if(true === $this->args['show_import_export']){
 				
 				add_submenu_page(
@@ -452,9 +457,14 @@ class Simple_Options{
 	*/
 	function _register_setting(){
 
+
 		register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array(&$this,'_validate_options'));
 		
 		foreach($this->sections as $k => $section){
+
+			if (isset($section['type']) && $section['type'] == "divide") {
+				continue;
+			}
 			
 			add_settings_section($k.'_section', $section['title'], array(&$this, '_section_desc'), $k.'_section_group');
 			
@@ -463,7 +473,6 @@ class Simple_Options{
 				foreach($section['fields'] as $fieldk => $field){
 					
 					if(isset($field['title'])){
-					
 						$th = (isset($field['sub_desc']))?$field['title'].'<span class="description">'.$field['sub_desc'].'</span>':$field['title'];
 					}else{
 						$th = '';
@@ -681,11 +690,14 @@ class Simple_Options{
 				echo '<div id="simple-options-sidebar">';
 					echo '<ul id="simple-options-group-menu">';
 						foreach($this->sections as $k => $section){
-							$icon = (!isset($section['icon']))?'<img src="'.$this->url.'img/glyphicons/glyphicons_019_cogwheel.png" /> ':'<img src="'.$section['icon'].'" /> ';
-							echo '<li id="'.$k.'_section_group_li" class="simple-options-group-tab-link-li">';
-								echo '<a href="javascript:void(0);" id="'.$k.'_section_group_li_a" class="simple-options-group-tab-link-a" data-rel="'.$k.'">'.$icon.'<span>'.$section['title'].'</span></a>';
-							echo '</li>';
-						}
+							if (isset($section['type']) && $section['type'] == "divide") {
+								echo '<li class="divide">&nbsp;</li>';
+							} else {
+								$icon = (!isset($section['icon']))?'<img src="'.$this->url.'img/glyphicons/glyphicons_019_cogwheel.png" /> ':'<img src="'.$section['icon'].'" /> ';
+								echo '<li id="'.$k.'_section_group_li" class="simple-options-group-tab-link-li">';
+									echo '<a href="javascript:void(0);" id="'.$k.'_section_group_li_a" class="simple-options-group-tab-link-a" data-rel="'.$k.'">'.$icon.'<span>'.$section['title'].'</span></a>';
+								echo '</li>';								
+							}						}
 						
 						echo '<li class="divide">&nbsp;</li>';
 						
@@ -845,6 +857,8 @@ class Simple_Options{
 			echo '<div class="clear"></div><!--clearfix-->';	
 		echo '</div><!--wrap-->';
 
+		echo '<br /><div class="timer">'.get_num_queries().' queries in '.timer_stop(0).' seconds</div>';
+
 	}//function
 	
 	
@@ -987,4 +1001,7 @@ class Simple_Options{
 	
 }//class
 }//if
+
 ?>
+
+

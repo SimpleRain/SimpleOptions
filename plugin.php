@@ -3,7 +3,7 @@
  * Plugin Name: SimpleOptions
  * Plugin URI: https://github.com/SimpleRain/SimpleOptions
  * Description: A simple wordpress options framework for developers.
- * Version: 0.0.2
+ * Version: 0.0.1
  * Author: SimpleRain
  * Author URI: http://simplerain.com
  *
@@ -38,6 +38,6 @@ if (file_exists( dirname( __FILE__ ) . '/options/SimpleUpdater.php') ) {
 	include_once( dirname( __FILE__ ) . '/options/SimpleUpdater.php' );
   $Simple_Updater = new Simple_Updater( array( 
 			'slug' 					=> __FILE__, 
-			'force_update'	=> true,
+			'force_update'	=> false,
 		) );
 }
