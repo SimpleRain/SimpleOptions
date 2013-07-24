@@ -36,8 +36,6 @@ get_template_part('options', 'init');
 
 **Please note if you embed the framework into your theme (not as a plugin) your users will depend on you to update the framework to recieve core updates. It is advisable to use SOF as a plugin.**
 
-With both cases outlined above, you can now change the panel options by modifying the ```options-init.php``` file you have included in your theme.
-
 
 ## Features 
 ### Working on outlining this proper. Please be patient -dovy
