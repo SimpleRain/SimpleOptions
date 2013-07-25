@@ -41,18 +41,24 @@ class Simple_Options_google_webfonts extends Simple_Options{
 		
 		echo '<p class="description" style="color:red;">'.__('The fonts provided below are free to use custom fonts from the <a href="http://www.google.com/webfonts" target="_blank">Google Web Fonts directory</a>.<br/>Please <a href="http://www.google.com/webfonts" target="_blank">browse the directory</a> to preview a font, then select your choice below.', 'simple-options').'</p>';
 		
-		echo '<select id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" '.$class.'rows="6" >';
+		if( $this->field['fonts']->items !== NULL ) {
 		
+			echo '<select id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" '.$class.'rows="6" >';
 		
-		foreach($this->field['fonts']->items as $cut){
+			foreach($this->field['fonts']->items as $cut){
 			
-			foreach($cut->variants as $variant){
+				foreach($cut->variants as $variant){
 				
-				echo '<option value="'.$cut->family.':'.$variant.'" '.selected($this->value, $cut->family.':'.$variant, false).'>'.$cut->family.' - '.$variant.'</option>';
+					echo '<option value="'.$cut->family.':'.$variant.'" '.selected($this->value, $cut->family.':'.$variant, false).'>'.$cut->family.' - '.$variant.'</option>';
+				}
 			}
+			echo '</select>';
+			
 		}
-		echo '</select>';
-
+		else {
+			echo '<p class="description" style="color:red;font-weight:600">A valid Google API key must be defined in options-init.php.</p>';
+		}
+		
 		echo (isset($this->field['desc']) && !empty($this->field['desc']))?' <span class="description">'.$this->field['desc'].'</span>':'';
 	}//function
 	
