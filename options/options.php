@@ -646,7 +646,7 @@ class Simple_Options{
 			echo (isset($this->args['intro_text']))?$this->args['intro_text']:'';
 			
 			do_action('simple-options-page-before-form-'.$this->args['opt_name']);
-
+			echo '<div id="sof-container">';
 			echo '<form method="post" action="options.php" enctype="multipart/form-data" id="simple-options-form-wrapper">';
 				settings_fields($this->args['opt_name'].'_group');
 				
@@ -854,6 +854,7 @@ class Simple_Options{
 				echo '</div>';
 			
 			echo '</form>';
+			echo '</div>';
 			
 			do_action('simple-options-page-after-form-'.$this->args['opt_name']);
 			

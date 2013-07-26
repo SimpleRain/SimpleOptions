@@ -28,23 +28,52 @@ class Simple_Options_multi_select extends Simple_Options{
 	*/
 	function render(){
 		
-		$class = (isset($this->field['class']))?'class="'.$this->field['class'].'" ':'';
-		
-		echo '<select id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].'][]" '.$class.'multiple="multiple" rows="6" >';
-			
-			foreach($this->field['options'] as $k => $v){
-				
-				$selected = (is_array($this->value) && in_array($k, $this->value))?' selected="selected"':'';
-				
-				echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>';
-				
-			}//foreach
+		$class = (isset($this->field['class']))?' '.$this->field['class']:'';
+		if (!empty($this->field['options'])) {
+			echo '<select multiple id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" class="sof-select-item'.$class.'" style="min-width:30%">';
+				foreach($this->field['options'] as $k => $v){
+					echo '<option value="'.$k.'" '.selected($this->value, $k, false).'>'.$v.'</option>';
+				}//foreach
+			echo '</select>';			
+		}
 
-		echo '</select>';
-
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<br/><span class="description">'.$this->field['desc'].'</span>':'';
+		echo (isset($this->field['desc']) && !empty($this->field['desc']))?' <span class="description">'.$this->field['desc'].'</span>':'';
 		
 	}//function
 	
+	/**
+	 * Enqueue Function.
+	 *
+	 * If this field requires any scripts, or css define this function and register/enqueue the scripts/css
+	 *
+	 * @since Simple_Options 1.0.0
+	*/
+	function enqueue(){
+		
+		wp_enqueue_script(
+			'select2', 
+			SOF_OPTIONS_URL.'fields/select/select2/select2.min.js', 
+			array('jquery'),
+			time(),
+			true
+		);
+
+		wp_enqueue_script(
+			'select2-init', 
+			SOF_OPTIONS_URL.'fields/select/field_select.js', 
+			array('jquery'),
+			time(),
+			true
+		);		
+
+		wp_enqueue_style(
+			'select2', 
+			SOF_OPTIONS_URL.'fields/select/select2/select2.css', 
+			time(),
+			true
+		);		
+
+	}//function
+
 }//class
 ?>

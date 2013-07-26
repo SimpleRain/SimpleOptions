@@ -209,8 +209,49 @@ $sections[] = array(
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'std' => 'OOOOOOhhhh, rich editing.'
 						),
+					array(
+						'id' => '16',
+						'type' => 'color',
+						'title' => __('Color Option', 'simple-options'), 
+						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'std' => '#FFFFFF'
+						),
+					array(
+						'id' => 'color_gradient',
+						'type' => 'color_gradient',
+						'title' => __('Color Gradient Option', 'simple-options'), 
+						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'std' => array('from' => '#000000', 'to' => '#FFFFFF')
+						),
+					array(
+						'id' => '17',
+						'type' => 'date',
+						'title' => __('Date Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
+						),
+					array(
+						'id' => '18',
+						'type' => 'button_set',
+						'title' => __('Button Set Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
+						'std' => '2'
+						),
 
-
+					array(
+						'id' => '18divide',
+						'type' => 'divide',
+						'title' => __('Button Set Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
+						'std' => '2'
+						),
+									
 
 					)
 					
@@ -426,7 +467,7 @@ $sections[] = array(
 				'desc' => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'simple-options'),
 				'fields' => array(
 					array(
-						'id' => '14',
+						'id' => 'select',
 						'type' => 'select',
 						'title' => __('Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
@@ -436,13 +477,123 @@ $sections[] = array(
 						),
 					array(
 						'id' => '15',
-						'type' => 'multi_select',
+						'type' => 'select',
+						'multiple' => true,
 						'title' => __('Multi Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
 						'std' => array('2','3')
-						)									
+						),
+
+					array(
+						'id' => 'multi-info',
+						'type' => 'info',
+						'desc' => __('You can easily choose a variety of options. They are illustrated below.', 'simple-options'),
+						),
+
+					array(
+						'id' => 'select-categories',
+						'type' => 'select',
+						'data' => 'categories',
+						'title' => __('Categories Select Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),
+					array(
+						'id' => 'select-categories-multi',
+						'type' => 'select',
+						'data' => 'categories',
+						'multiple' => true,
+						'title' => __('Categories Multi Select Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),
+					array(
+						'id' => 'select-pages',
+						'type' => 'select',
+						'data' => 'pages',
+						'title' => __('Pages Select Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),
+					array(
+						'id' => 'pages-multi_select',
+						'type' => 'select',
+						'data' => 'pages',
+						'multiple' => true,
+						'title' => __('Pages Multi Select Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),	
+					array(
+						'id' => 'select-tags',
+						'type' => 'select',
+						'data' => 'tags',
+						'title' => __('Tags Select Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),
+					array(
+						'id' => 'tags-multi_select',
+						'type' => 'select',
+						'data' => 'tags',
+						'multiple' => true,
+						'title' => __('Tags Multi Select Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),	
+					array(
+						'id' => 'select-menus',
+						'type' => 'select',
+						'data' => 'menus',
+						'title' => __('Menus Select Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),
+					array(
+						'id' => 'menus-multi_select',
+						'type' => 'select',
+						'data' => 'menu',
+						'multiple' => true,
+						'title' => __('Menus Multi Select Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),	
+						array(
+						'id' => 'select-post-type',
+						'type' => 'select',
+						'data' => 'post_type',
+						'title' => __('Post Type Select Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),
+					array(
+						'id' => 'post-type-multi_select',
+						'type' => 'select',
+						'data' => 'post_type',
+						'multiple' => true,
+						'title' => __('Post Type Multi Select Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),	
+										array(
+						'id' => 'select-posts',
+						'type' => 'select',
+						'data' => 'post',
+						'title' => __('Posts Select Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),
+					array(
+						'id' => 'select-posts-multi',
+						'type' => 'select',
+						'data' => 'post',
+						'multiple' => true,
+						'title' => __('Posts Multi Select Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),
 					)
 				);
 $sections[] = array(
@@ -451,37 +602,14 @@ $sections[] = array(
 				'desc' => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'simple-options'),
 				'fields' => array(
 					array(
-						'id' => '16',
-						'type' => 'color',
-						'title' => __('Color Option', 'simple-options'), 
-						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'std' => '#FFFFFF'
-						),
-					array(
-						'id' => 'color_gradient',
-						'type' => 'color_gradient',
-						'title' => __('Color Gradient Option', 'simple-options'), 
-						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'std' => array('from' => '#000000', 'to' => '#FFFFFF')
-						),
-					array(
-						'id' => '17',
-						'type' => 'date',
-						'title' => __('Date Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
-						),
-					array(
-						'id' => '18',
-						'type' => 'button_set',
+						'id' => '18info',
+						'type' => 'info',
 						'title' => __('Button Set Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
 						'std' => '2'
-						),
+						),	
 					array(
 						'id' => '19',
 						'type' => 'upload',
