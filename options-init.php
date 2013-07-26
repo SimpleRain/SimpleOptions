@@ -6,7 +6,7 @@
  *
  */
 
-// Try to include the framework if this is in the theme.
+// Try to include the framework if it is embedded in the theme.
 if (strpos(dirname(__FILE__),TEMPLATEPATH) !== false &&!class_exists('Simple_Options') && file_exists( dirname( __FILE__ ) . '/options/options.php') ) {
 	include_once( dirname( __FILE__ ) . '/options/options.php' );
 }
@@ -868,4 +868,3 @@ function validate_callback_function($field, $value, $existing_value){
 	return $return;
 	
 }//function
-?>
