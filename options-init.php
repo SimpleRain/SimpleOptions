@@ -184,7 +184,15 @@ $sections[] = array(
 						//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "typography"
 						),
 					),
-					'fields' => array(
+				);
+
+$sections[] = array( 'type' => 'divide' );
+
+$sections[] = array(
+				'icon' => '',
+				'title' => __('Completed SOF Fields', 'simple-options'),
+				'desc' => __('<p class="description">These are fields that are done and ready to ship.</p>', 'simple-options'),
+
 					array(
 						'id' => 'slider222', //must be unique
 						'type' => 'slider', 
@@ -205,15 +213,7 @@ $sections[] = array(
 						), //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
 						//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "typography"
 						),
-					)
-				);
-
-$sections[] = array( 'type' => 'divide' );
-
-$sections[] = array(
-				'icon' => '',
-				'title' => __('Completed SOF Fields', 'simple-options'),
-				'desc' => __('<p class="description">These are fields that are done and ready to ship.</p>', 'simple-options'),
+					
 				'fields' => array(
 					array(
 						'id' => 'text',

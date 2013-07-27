@@ -1,20 +1,65 @@
 jQuery(document).ready(function($){
 	
+	/**
+		Unfolding elements. Used by switch, checkbox, select
+	**/
 	//(un)fold options in a checkbox-group
 	jQuery('.fld').click(function() {
   	var $fold='.f_'+this.id;
   	$($fold).slideToggle('normal', "swing");
 	});
+	// (un)fold options where the id equals the value
+	jQuery('.fld-parent').change(function() {
+  	var $fold='.f_'+this.id+"-"+this.val();
+  	$($fold).slideToggle('normal', "swing");
+	});
+
+	/**
+		Current tab checks, based on cookies
+	**/
+
+	jQuery('.simple-options-group-tab-link-a').click(function(){
+		relid = jQuery(this).data('rel'); // The group ID of interest
+		// Set the proper page cookie
+		$.cookie('sof_current_tab', relid, { expires: 7, path: '/' });	
+		// Remove the old active tab
+		oldid = jQuery('.simple-options-group-tab-link-li.active .simple-options-group-tab-link-a').data('rel');
+
+		jQuery('#'+oldid+'_section_group_li').removeClass('active');
+
+		// Show the group
+		jQuery('#'+oldid+'_section_group').hide();
+		jQuery('#'+relid+'_section_group').fadeIn(300);
+		jQuery('#'+relid+'_section_group_li').addClass('active');
+	});
+
+	// Get the URL parameter for tab
+	function getURLParameter(name) {
+	    return decodeURI(
+	        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,''])[1]
+	    );
+	}
+	
+	// If the $_GET param of tab is set, use that for the tab that should be open
+	var tab = getURLParameter('tab');
+	if (tab != "") {
+		if ($.cookie("sof_current_tab_get") != tab) {
+			$.cookie('sof_current_tab', tab, { expires: 7, path: '/' });	
+			$.cookie('sof_current_tab_get', tab, { expires: 7, path: '/' });
+			jQuery('#'+tab+'_section_group_li').click();
+		}
+	} else if ($.cookie('sof_current_tab_get') != "") {
+		$.removeCookie('sof_current_tab_get');
+	}
 
 	// Tab the first item or the saved one
-	if(jQuery('#last_tab').val() == ''){
-		jQuery('.simple-options-group-tab:first').fadeIn();
-		jQuery('#simple-options-group-menu li:first').addClass('active');
+	if($.cookie("sof_current_tab") === null){
+		jQuery('.simple-options-group-tab-link-a:first').click();
 	}else{
-		tabid = jQuery('#last_tab').val();
-		jQuery('#'+tabid+'_section_group').fadeIn();
-		jQuery('#'+tabid+'_section_group_li').addClass('active');
+		jQuery('#'+$.cookie("sof_current_tab")+'_section_group_li_a').delay(300).click();
 	}
+
+
 	
 	// Default button clicked
 	jQuery('input[name="'+sof_opts.opt_name+'[defaults]"]').click(function(){
@@ -23,32 +68,7 @@ jQuery(document).ready(function($){
 		}
 	});
 	
-	jQuery('.simple-options-group-tab-link-a').click(function(){
-		relid = jQuery(this).attr('data-rel');
-		
-		jQuery('#last_tab').val(relid);
-		
-		jQuery('.simple-options-group-tab').each(function(){
-			if(jQuery(this).attr('id') == relid+'_section_group'){
-				//jQuery(this).delay(400).fadeIn(400);
-				jQuery(this).fadeIn(300);
-			}else{
-				jQuery(this).hide();
-			}
-			
-		});
-		
-		jQuery('.simple-options-group-tab-link-li').each(function(){
-				if(jQuery(this).attr('id') != relid+'_section_group_li' && jQuery(this).hasClass('active')){
-					jQuery(this).removeClass('active');
-				}
-				if(jQuery(this).attr('id') == relid+'_section_group_li'){
-					jQuery(this).addClass('active');
-				}
-		});
 
-
-	});
 	
 	
 
