@@ -59,7 +59,7 @@
 .ui-widget { font-family: Arial,sans-serif; font-size: 1.1em; }
 .ui-widget .ui-widget { font-size: 1em; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Arial,sans-serif; font-size: 1em; }
-.ui-widget-content { border: 1px solid #B6B6B6; background: #ffffff; color: #4F4F4F; }
+.ui-widget-content { border: 1px solid #B6B6B6; b2ackground: #ffffff; color: #4F4F4F; }
 .ui-widget-content a { color: #4F4F4F; }
 .ui-widget-header { border: 1px solid #B6B6B6; color: #4F4F4F; font-weight: bold; }
 .ui-widget-header {
@@ -561,34 +561,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; }
 .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
-/*
- * jQuery UI Slider 1.8.7
- *
- * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
- * Dual licensed under the MIT or GPL Version 2 licenses.
- * http://jquery.org/license
- *
- * http://docs.jquery.com/UI/Slider#theming
- */
-.ui-slider { position: relative; text-align: left; background: #d7d7d7; z-index: 1; }
-.ui-slider { -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5) inset; -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5) inset; box-shadow: 0 1px 2px rgba(0,0,0,0.5) inset; }
-.ui-slider .ui-slider-handle { background: url(images/slider_handles.png) 0px -23px no-repeat; position: absolute; z-index: 2; width: 23px; height: 23px; cursor: default; border: none; outline: none; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
-.ui-slider  .ui-state-hover, .ui-slider  .ui-state-active { background-position: 0 0; }
-.ui-slider .ui-slider-range { background: #a3cae0; position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
-.ui-slider .ui-slider-range { -moz-box-shadow: 0 1px 2px rgba(17,35,45,0.6) inset; -webkit-box-shadow: 0 1px 2px rgba(17,35,45,0.6) inset; box-shadow: 0 1px 2px rgba(17,35,45,0.6) inset; }
 
-
-.ui-slider-horizontal { height: 5px; }
-.ui-slider-horizontal .ui-slider-handle { top: -8px; margin-left: -13px; }
-.ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; }
-.ui-slider-horizontal .ui-slider-range-min { left: 0; }
-.ui-slider-horizontal .ui-slider-range-max { right: 0; }
-
-.ui-slider-vertical { width: 5px; height: 100px; }
-.ui-slider-vertical .ui-slider-handle { left: -8px; margin-left: 0; margin-bottom: -13px; }
-.ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
-.ui-slider-vertical .ui-slider-range-min { bottom: 0; }
-.ui-slider-vertical .ui-slider-range-max { top: 0; }/*
  * jQuery UI Tabs 1.8.7
  *
  * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)

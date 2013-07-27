@@ -1,20 +1,22 @@
-jQuery(document).ready(function(){
+jQuery(document).ready(function($){
 	
-	
-	if(jQuery('#last_tab').val() == ''){
+	//(un)fold options in a checkbox-group
+	jQuery('.fld').click(function() {
+  	var $fold='.f_'+this.id;
+  	$($fold).slideToggle('normal', "swing");
+	});
 
-		jQuery('.simple-options-group-tab:first').slideDown('fast');
+	// Tab the first item or the saved one
+	if(jQuery('#last_tab').val() == ''){
+		jQuery('.simple-options-group-tab:first').fadeIn();
 		jQuery('#simple-options-group-menu li:first').addClass('active');
-	
 	}else{
-		
 		tabid = jQuery('#last_tab').val();
-		jQuery('#'+tabid+'_section_group').slideDown('fast');
+		jQuery('#'+tabid+'_section_group').fadeIn();
 		jQuery('#'+tabid+'_section_group_li').addClass('active');
-		
 	}
 	
-	
+	// Default button clicked
 	jQuery('input[name="'+sof_opts.opt_name+'[defaults]"]').click(function(){
 		if(!confirm(sof_opts.reset_confirm)){
 			return false;

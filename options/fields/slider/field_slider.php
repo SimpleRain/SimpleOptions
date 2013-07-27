@@ -30,33 +30,56 @@ class Simple_Options_slider extends Simple_Options{
 		
 		$class = (isset($this->field['class']))?' '.$this->field['class']:'';
 
-		if( !isset( $this->field['min'] ) ) { 
+		if( !isset( $this->field['min'] ) || empty($this->field['min']) ) { 
 			$this->field['min'] = 0; 
-		} 
-		if( !isset( $this->field['max'] ) ) { 
-			$this->field['max'] = $this->field['min'] + 1; 
-		} 		
-		if( !isset( $this->field['step'] ) ) { 
-			$this->field['step'] = 1; 
-		} 
-		
-		if(!isset($this->field['edit']) && $this->field['edit'] == false){ 
-			$this->field['edit']  = ' readonly="readonly"'; 
 		} else {
-			$this->field['edit']  = '';
+			$this->field['min'] = (int) $this->field['min'];
+		}
+	
+		if( !isset( $this->field['max'] ) || empty($this->field['max']) ) { 
+			$this->field['max'] = $this->field['min'] + 1; 
+		} else {
+			$this->field['max'] = (int) $this->field['max'];
+		}		
+	
+		if( !isset( $this->field['step'] ) || empty($this->field['max']) || $this->field['step'] > $this->field['max'] ) { 
+			$this->field['step'] = 1; 
+		}else {
+			$this->field['step'] = (int) $this->field['step'];
+		}	
+	
+		if( !isset( $this->value ) || empty($this->value) ) { 
+			$this->value = $this->field['min']; 
+		} else {
+			$this->value = (int) $this->value;
+		}
+
+		// Extra Validation
+		if ($this->value < $this->field['min']) {
+			$this->value = $this->field['min'];
+		} else if ($this->value < $this->field['max']) {
+			$this->value = $this->field['max'];
 		}
 		
-		if( !isset( $this->value ) ) { 
-			$this->value = $this->field['min']; 
-		} 
-		
-		
-		//values
-		$s_data = 'data-id="'.$this->field['id'].'" data-val="'.$this->value.'" data-min="'.$this->field['min'].'" data-max="'.$this->field['max'].'" data-step="'.$this->field['step'].'"';
-		
+		$params = array(
+				'id' => $this->field['id'],
+				'min' => $this->field['min'],
+				'max' => $this->field['max'],
+				'step' => $this->field['step'],
+				'val' => $this->value,
+			);
+
+		// Don't allow input edit if there's a step
+		$readonly = "";
+		if ( isset($this->field['readonly']) && $this->field['readonly'] == true ) {
+			$readonly = ' readonly="readonly"';
+		}
+
+		wp_localize_script( 'sof-slider-js', 'sliderParam', $params );
+	
 		//html output
-		echo '<input type="text" name="'.$this->field['id'].'" id="'.$this->field['id'].'" value="'. $this->value .'" class="mini" '. $this->field['edit'] .' />';
-		echo '<div id="'.$this->field['id'].'-slider" class="smof_sliderui" style="margin-left: 7px;" '. $s_data .'></div>';
+		echo '<input type="text" name="'.$this->field['id'].'" id="'.$this->field['id'].'" value="'. $this->value .'" class="mini slider-input" '. $this->field['edit'] .' '.$readonly.'/>';
+		echo '<div id="'.$this->field['id'].'-slider" class="sof_slider"></div>';
 		
 		echo (isset($this->field['desc']) && !empty($this->field['desc']))?' <span class="description">'.$this->field['desc'].'</span>':'';
 		
@@ -74,16 +97,16 @@ class Simple_Options_slider extends Simple_Options{
 	function enqueue(){
 		
 		wp_enqueue_script(
-			'select2-init', 
-			SOF_OPTIONS_URL.'fields/select/field_slider.js', 
+			'sof-slider-js', 
+			SOF_OPTIONS_URL.'fields/slider/field_slider.js', 
 			array('jquery'),
 			time(),
 			true
 		);		
 
 		wp_enqueue_style(
-			'select2', 
-			SOF_OPTIONS_URL.'fields/select/field_slider.css', 
+			'sof-slider-css', 
+			SOF_OPTIONS_URL.'fields/slider/field_slider.css', 
 			time(),
 			true
 		);		

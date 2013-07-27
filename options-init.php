@@ -187,11 +187,10 @@ $sections[] = array(
 					'fields' => array(
 					array(
 						'id' => 'slider222', //must be unique
-						'type' => 'slider', //builtin fields include:
-										  //text|textarea|editor|checkbox|multi_checkbox|radio|radio_img|button_set|select|multi_select|color|date|divide|info|upload
+						'type' => 'slider', 
 						'title' => __('Slider', 'simple-options'),
 						'sub_desc' => __('A slider', 'simple-options'),
-						'desc' => __('That\'s right. It works!', 'simple-options'),
+						'desc' => __('That\'s right. It works! Try putting in a letter or number beyond the range. Gotta love that javascript!', 'simple-options'),
 						'step' => 2,
 						'min' => 1,
 						'max' => 50,

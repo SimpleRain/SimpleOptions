@@ -333,6 +333,39 @@ if ( ! class_exists('Simple_Options') ){
 				time(),
 				true
 			);
+
+			wp_enqueue_script(
+				'jquery-cookie', 
+				$this->url.'js/cookie.js', 
+				array('jquery','simple-options-js'),
+				time(),
+				true
+			);
+
+			wp_enqueue_script(
+				'jquery-tipsy', 
+				$this->url.'js/jquery.tipsy.js', 
+				array('jquery','simple-options-js'),
+				time(),
+				true
+			);		
+
+			wp_enqueue_script(
+				'jquery-maskedinput', 
+				$this->url.'js/jquery.maskedinput-1.2.2.js', 
+				array('jquery','simple-options-js'),
+				time(),
+				true
+			);	
+
+			wp_enqueue_script(
+				'jquery-numeric', 
+				$this->url.'js/jquery.numeric.js', 
+				array('jquery','simple-options-js'),
+				time(),
+				true
+			);	
+
 			wp_localize_script('simple-options-js', 'sof_opts', array('reset_confirm' => __('Are you sure? Resetting will loose all custom values.', 'simple-options'), 'opt_name' => $this->args['opt_name']));
 			
 			do_action('simple-options-enqueue-'.$this->args['opt_name']);
@@ -638,7 +671,8 @@ if ( ! class_exists('Simple_Options') ){
 		*/
 		function _options_page_html(){
 			
-			echo '<div class="clear"></div><div class="wrap">';
+			echo '<div class="clear"></div><div class="wrap">
+				<noscript><div class="no-js">Warning- This options panel will not work properly without javascript!</div></noscript>';
 				if ( $title = get_admin_page_title() && get_admin_page_title() != "" ) {
 					echo '<div id="'.$this->args['page_icon'].'" class="icon32"><br/></div>';
 					echo '<h2 id="simple-options-heading">'.get_admin_page_title().'</h2>';				
