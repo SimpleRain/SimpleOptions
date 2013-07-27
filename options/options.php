@@ -663,7 +663,6 @@ if ( ! class_exists('Simple_Options') ){
 							  	<div class="icon-option"></div>
 									<div class="clear"></div><!--clearfix-->';
 					echo '</div>';
-					echo '<div id="simple-options-sticky-padder" style="display: none;">&nbsp;</div>';
 					echo '<div id="simple-options-sticky">';
 						echo '<div id="info_bar">';
 							echo '<a href="#" id="expand_options">Expand</a>';
@@ -811,7 +810,7 @@ if ( ! class_exists('Simple_Options') ){
 							echo '<div id="dev_mode_default_section_group'.'" class="simple-options-group-tab">';
 								echo '<h3>'.__('Dev Mode Info', 'simple-options').'</h3>';
 								echo '<div class="simple-options-section-desc">';
-								echo '<textarea class="large-text" rows="24">'.print_r($this, true).'</textarea>';
+								echo '<textarea class="large-text" rows="38">'.print_r($this, true).'</textarea>';
 								echo '</div>';
 								echo '
 											<script>
@@ -831,8 +830,8 @@ if ( ! class_exists('Simple_Options') ){
 						echo '<div class="clear"></div><!--clearfix-->';
 					echo '</div>';
 					echo '<div class="clear"></div><!--clearfix-->';
-					
-					echo '<div id="simple-options-footer">';
+					echo '<div id="simple-options-sticky-padder" style="display: none;">&nbsp;</div>';
+					echo '<div id="simple-options-footer-sticky"><div id="simple-options-footer">';
 					
 						if(isset($this->args['share_icons'])){
 							echo '<div id="simple-options-share">';
@@ -854,7 +853,7 @@ if ( ! class_exists('Simple_Options') ){
 					echo '</div>';
 				
 				echo '</form>';
-				echo '</div>';
+				echo '</div></div>';
 				
 				do_action('simple-options-page-after-form-'.$this->args['opt_name']);
 				

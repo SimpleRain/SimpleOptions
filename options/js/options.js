@@ -97,7 +97,20 @@ jQuery(document).ready(function(){
 		jQuery('#simple-options-imported').slideDown();
 	}	
 	
-	jQuery('input, textarea, select').change(function(){
+	jQuery('input, textarea, select').change(function() {
+		// Hide errors if the user changed the field
+		if (jQuery(this).hasClass('simple-options-field-error')) {
+			jQuery(this).removeClass('simple-options-field-error');
+			jQuery(this).parent().find('.simple-options-th-error').slideUp();
+			var parentID = jQuery(this).closest('.simple-options-group-tab').attr('id');
+			var hideError = true;
+			jQuery('#'+parentID+' .simple-options-field-error').each(function() {
+				hideError = false;
+			});
+			if (hideError) {
+				jQuery('#'+parentID+'_li .simple-options-menu-error').hide();
+			}			
+		}
 		jQuery('#simple-options-save-warn').slideDown();
 	});
 	
@@ -118,9 +131,6 @@ jQuery(document).ready(function(){
 		jQuery('#simple-options-import-link-wrapper').fadeIn('slow');
 	});
 	
-	
-	
-	
 	jQuery('#simple-options-export-code-copy').click(function(){
 		if(jQuery('#simple-options-export-link-value').is(':visible')){jQuery('#simple-options-export-link-value').fadeOut('slow');}
 		jQuery('#simple-options-export-code').toggle('fade');
@@ -132,34 +142,42 @@ jQuery(document).ready(function(){
 	});
 	
 	
-function footerInView(elem) {
-		return false;
-		var elem = jQuery('#simple-options-footer');
-    var docViewTop = jQuery(window).scrollTop();
-    var docViewBottom = docViewTop + jQuery(window).height();
-    var barHeight = jQuery('#simple-options-sticky').height();
-
-    var elemTop = jQuery(elem).offset().top;
-    var elemBottom = elemTop + jQuery(elem).height();
-
-    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-}
+jQuery.fn.isOnScreen = function(){
+    
+    var win = jQuery(window);
+    
+    var viewport = {
+        top : win.scrollTop(),
+        left : win.scrollLeft()
+    };
+    viewport.right = viewport.left + win.width();
+    viewport.bottom = viewport.top + win.height();
+    
+    var bounds = this.offset();
+    bounds.right = bounds.left + this.outerWidth();
+    bounds.bottom = bounds.top + this.outerHeight();
+    
+    return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+    
+};
 
 
 /**
-	Shoe the sticky header bar and notes!
+	Show the sticky header bar and notes!
 **/
-  var stickyHeader = jQuery('#simple-options-sticky').offset().top-28;
-  
+  var stickyHeight = jQuery('#simple-options-footer').height();
+  var stickyWidth = jQuery('#simple-options-footer').width();
+  jQuery('#simple-options-sticky-padder').css({height: stickyHeight});
+
   function stickyInfo() {
-  	jQuery('#simple-options-sticky-padder').height(jQuery('#simple-options-sticky').height());
-    if( jQuery(window).scrollTop() > stickyHeader && !footerInView()) {
-        jQuery('#simple-options-sticky').css({position: 'fixed', top: '28px', width: jQuery('#simple-options-form-wrapper').width(), 'z-index':'999999' });
+    if( !jQuery('#info_bar').isOnScreen() && !jQuery('#simple-options-footer-sticky').isOnScreen()) {
+        jQuery('#simple-options-footer').css({position: 'fixed', bottom: '0', width: stickyWidth});
+        jQuery('#simple-options-footer').addClass('sticky-footer-fixed');
         jQuery('#simple-options-sticky-padder').show();
-        //jQuery('#simple-options-sticky-padder').css(height: jQuery('#simple-options-sticky').height());
     } else {
-    		jQuery('#simple-options-sticky').css({position: 'static', top: '28px', width: jQuery('#simple-options-form-wrapper').width() });
+    		jQuery('#simple-options-footer').css({background: '#eee',position: 'inherit', bottom: 'inherit', width: 'inherit' });
     		jQuery('#simple-options-sticky-padder').hide();
+    		jQuery('#simple-options-footer').removeClass('sticky-footer-fixed');
     }  	
   }  
   jQuery(window).scroll(function(){
@@ -169,6 +187,9 @@ function footerInView(elem) {
 		stickyInfo();
   });
 
-		
+	
+  jQuery('#simple-options-save').delay(3000).slideUp();
+  jQuery('#simple-options-field-errors').delay(4000).slideUp();
+
 	
 });

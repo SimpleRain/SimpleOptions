@@ -8,8 +8,16 @@ SOF is a back-end framework for creating and managing options inside WordPress t
 The main feature of SMOF is its intuitive, user-friendly interface that aims to look as native as possible to WordPress. Additionally, it comes loaded with some awesome features that makes it even more usable to you as a theme author. 
 
 ## Downloading
-** If you download the zip you get the development version. To get a stable version, please visit here and find the latest release: **
+### If you download the zip you get the development version. To get a stable version, please visit here and find the latest release: 
 ### [https://github.com/SimpleRain/SimpleOptions/releases](https://github.com/SimpleRain/SimpleOptions/releases)
+
+## Try it out
+To make your life easier we've created a test theme. With the benefits of SOF's auto-updating you will always be sure to get the latest updates.
+
+[https://github.com/SimpleRain/SimpleOptions-Test-Theme](https://github.com/SimpleRain/SimpleOptions-Test-Theme)
+
+
+
 
 ## Usage Examples
 Simple Options can be run in two configuration. The preferrable way is to run it as a plugin. We've baked automated updates into Simple Options so users will get all the benefits of improvements without theme admin's involvement. To use SOF as a plugin, do the following:

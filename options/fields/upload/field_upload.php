@@ -27,6 +27,41 @@ class Simple_Options_upload extends Simple_Options{
 	*/
 	function render(){
 		
+
+		$uploader = '';
+		$upload = "";
+		if (!empty($this->value)) {
+			$upload = $this->value;
+		}
+	    
+		$hide = '';
+		
+		//if ($mod == "min") {$hide ='hide';}
+		
+	  
+	    
+		$uploader .= '<input class="'.$hide.' upload of-input" name="'. $this->args['opt_name'].'['.$this->field['id'] .']" id="'. $this->field['id'] .'_upload" value="'. $this->value .'" />';	
+		
+		//Upload controls DIV
+		echo '<div class="upload_button_div">';
+		echo '<span class="button media_upload_button" id="'.$this->field['id'].'">Upload</span>';
+			
+			echo '<span class="button remove-image '. $hide.'" id="reset_'. $this->field['id'] .'" title="' . $this->field['id'] . '">Remove</span>';
+
+		echo '</div>' . "\n";
+
+		//Preview
+		echo '<div class="screenshot">';
+		if(!empty($upload)){	
+	    	echo '<a class="of-uploaded-image" href="'. $this->value . '">';
+	    	echo '<img class="of-option-image" id="image_'.$this->field['id'].'" src="'.$this->value.'" alt="" />';
+	    	echo '</a>';			
+			}
+		echo '</div>';
+
+		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<br/><br/><span class="description">'.$this->field['desc'].'</span>':'';
+
+/*		
 		$class = (isset($this->field['class']))?$this->field['class']:'regular-text';
 		
 		
@@ -39,8 +74,10 @@ class Simple_Options_upload extends Simple_Options{
 		echo ' <a href="javascript:void(0);" class="simple-options-upload button-secondary"'.$upload.' rel-id="'.$this->field['id'].'">'.__('Browse', 'simple-options').'</a>';
 		echo ' <a href="javascript:void(0);" class="simple-options-upload-remove"'.$remove.' rel-id="'.$this->field['id'].'">'.__('Remove Upload', 'simple-options').'</a>';
 		
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<br/><br/><span class="description">'.$this->field['desc'].'</span>':'';
 		
+*/
+
+
 	}//function
 	
 	

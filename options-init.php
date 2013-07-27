@@ -183,6 +183,29 @@ $sections[] = array(
 						), //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
 						//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "typography"
 						),
+					),
+					'fields' => array(
+					array(
+						'id' => 'slider222', //must be unique
+						'type' => 'slider', //builtin fields include:
+										  //text|textarea|editor|checkbox|multi_checkbox|radio|radio_img|button_set|select|multi_select|color|date|divide|info|upload
+						'title' => __('Slider', 'simple-options'),
+						'sub_desc' => __('A slider', 'simple-options'),
+						'desc' => __('That\'s right. It works!', 'simple-options'),
+						'step' => 2,
+						'min' => 1,
+						'max' => 50,
+						'edit' => true,
+						'std' => array(
+							'family'=>'Arial',
+							'weight'=>'400',
+							'color'=>'#000',
+							'size'=>'22px',
+							'script'=>'',
+							'line-height'=> '14px',
+						), //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
+						//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "typography"
+						),
 					)
 				);
 
@@ -603,7 +626,7 @@ $sections[] = array(
 				'fields' => array(
 					array(
 						'id' => '18info',
-						'type' => 'info',
+						'type' => 'button_set',
 						'title' => __('Button Set Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
@@ -616,78 +639,6 @@ $sections[] = array(
 						'title' => __('Upload Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
-						),
-					array(
-						'id' => 'pages_select',
-						'type' => 'pages_select',
-						'title' => __('Pages Select Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field creates a drop down menu of all the sites pages.', 'simple-options'),
-						'args' => array()//uses get_pages
-						),
-					array(
-						'id' => 'pages_multi_select',
-						'type' => 'pages_multi_select',
-						'title' => __('Pages Multiple Select Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field creates a Multi Select menu of all the sites pages.', 'simple-options'),
-						'args' => array('number' => '5')//uses get_pages
-						),
-					array(
-						'id' => 'posts_select',
-						'type' => 'posts_select',
-						'title' => __('Posts Select Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field creates a drop down menu of all the sites posts.', 'simple-options'),
-						'args' => array('numberposts' => '10')//uses get_posts
-						),
-					array(
-						'id' => 'posts_multi_select',
-						'type' => 'posts_multi_select',
-						'title' => __('Posts Multiple Select Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field creates a Multi Select menu of all the sites posts.', 'simple-options'),
-						'args' => array('numberposts' => '10')//uses get_posts
-						),
-					array(
-						'id' => 'tags_select',
-						'type' => 'tags_select',
-						'title' => __('Tags Select Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field creates a drop down menu of all the sites tags.', 'simple-options'),
-						'args' => array('number' => '10')//uses get_tags
-						),
-					array(
-						'id' => 'tags_multi_select',
-						'type' => 'tags_multi_select',
-						'title' => __('Tags Multiple Select Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field creates a Multi Select menu of all the sites tags.', 'simple-options'),
-						'args' => array('number' => '10')//uses get_tags
-						),
-					array(
-						'id' => 'cats_select',
-						'type' => 'cats_select',
-						'title' => __('Cats Select Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field creates a drop down menu of all the sites cats.', 'simple-options'),
-						'args' => array('number' => '10')//uses get_categories
-						),
-					array(
-						'id' => 'cats_multi_select',
-						'type' => 'cats_multi_select',
-						'title' => __('Cats Multiple Select Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field creates a Multi Select menu of all the sites cats.', 'simple-options'),
-						'args' => array('number' => '10')//uses get_categories
-						),
-					array(
-						'id' => 'menu_select',
-						'type' => 'menu_select',
-						'title' => __('Menu Select Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field creates a drop down menu of all the sites menus.', 'simple-options'),
-						//'args' => array()//uses wp_get_nav_menus
 						),
 					array(
 						'id' => 'select_hide_below',
