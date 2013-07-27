@@ -6,7 +6,7 @@ class Simple_Options_slider extends Simple_Options{
 	 *
 	 * Required - must call the parent constructor, then assign field and value to vars, and obviously call the render field function
 	 *
-	 * @since Simple_Options 1.0.0
+	 * @since Simple_Options 0.0.4
 	*/
 	function __construct($field = array(), $value ='', $parent){
 		
@@ -24,7 +24,7 @@ class Simple_Options_slider extends Simple_Options{
 	 *
 	 * Takes the vars and outputs the HTML for the field in the settings
 	 *
-	 * @since Simple_Options 1.0.0
+	 * @since Simple_Options 0.0.4
 	*/
 	function render(){
 		
@@ -85,14 +85,12 @@ class Simple_Options_slider extends Simple_Options{
 		
 	}//function
 	
-
-	
 	/**
 	 * Enqueue Function.
 	 *
 	 * If this field requires any scripts, or css define this function and register/enqueue the scripts/css
 	 *
-	 * @since Simple_Options 1.0.0
+	 * @since Simple_Options 0.0.4
 	*/
 	function enqueue(){
 		
