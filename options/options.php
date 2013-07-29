@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.0.5';
+		protected $framework_version = '0.0.6';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -577,7 +577,7 @@ if ( ! class_exists('Simple_Options') ){
 			unset($plugin_options['import']);
 			unset($plugin_options['import_code']);
 			unset($plugin_options['import_link']);
-						
+
 			return $plugin_options;	
 		
 		}//function
