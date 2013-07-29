@@ -5,6 +5,8 @@ a {
    outline: 0 !important;
 }
 
+.ui-datepicker table { background: #fff; }
+
 #sof-container{
 	font-family: "Lucida Grande", Sans-serif;
 	background-color: #eeeeee; /* Old browsers */

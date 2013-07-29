@@ -2,7 +2,6 @@ jQuery.noConflict();
 
 
 jQuery(document).ready(function(){
-
 	jQuery('.sof_slider').each(function() {
 		//slider init
 		jQuery(this).slider({
@@ -12,13 +11,15 @@ jQuery(document).ready(function(){
 			step: parseInt(sliderParam.step),
 			range: "min",
 			slide: function( event, ui ) {
+				console.log('here'+"#" + sliderParam.id);
+
 				jQuery("#" + sliderParam.id).val( ui.value );
 			}
 		});
 	});
 
 	// Update the slider from the input and vice versa
-	jQuery("input").change(function () {
+	jQuery(".slider-input").keyup(function () {
 			var value = parseInt(jQuery(this).val());
 			if (value > sliderParam.max) {
 				value = sliderParam.max;

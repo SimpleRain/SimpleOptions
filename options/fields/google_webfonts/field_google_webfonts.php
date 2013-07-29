@@ -14,7 +14,7 @@ class Simple_Options_google_webfonts extends Simple_Options{
 		$this->field = $field;
 		$this->value = $value;
 		$this->field['fonts'] = array();
-		
+		/*
 		$fonts = get_transient('simple-options-google-webfonts');
 		if(!is_array(json_decode($fonts))){
 			
@@ -23,7 +23,7 @@ class Simple_Options_google_webfonts extends Simple_Options{
 				
 		}
 		$this->field['fonts'] = json_decode($fonts);
-		
+		*/
 	}//function
 	
 
@@ -36,7 +36,7 @@ class Simple_Options_google_webfonts extends Simple_Options{
 	 * @since Simple_Options 1.0.0
 	*/
 	function render(){
-
+/*
 		$class = (isset($this->field['class']))?'class="'.$this->field['class'].'" ':'';
 		
 		echo '<p class="description" style="color:red;">'.__('The fonts provided below are free to use custom fonts from the <a href="http://www.google.com/webfonts" target="_blank">Google Web Fonts directory</a>.<br/>Please <a href="http://www.google.com/webfonts" target="_blank">browse the directory</a> to preview a font, then select your choice below.', 'simple-options').'</p>';
@@ -58,7 +58,7 @@ class Simple_Options_google_webfonts extends Simple_Options{
 		else {
 			echo '<p class="description" style="color:red;font-weight:600">A valid Google API key must be defined in options-init.php.</p>';
 		}
-		
+		*/
 		echo (isset($this->field['desc']) && !empty($this->field['desc']))?' <span class="description">'.$this->field['desc'].'</span>':'';
 	}//function
 	

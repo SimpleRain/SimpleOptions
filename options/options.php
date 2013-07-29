@@ -531,6 +531,8 @@ if ( ! class_exists('Simple_Options') ){
 		 * @since Simple_Options 1.0
 		*/
 		function _validate_options($plugin_options){
+
+
 			
 			set_transient('simple-options-saved', '1', 1000 );
 			
@@ -556,7 +558,6 @@ if ( ! class_exists('Simple_Options') ){
 				$plugin_options = $this->_default_values();
 				return $plugin_options;
 			}//if set defaults
-
 			
 			//validate fields (if needed)
 			$plugin_options = $this->_validate_values($plugin_options, $this->options);
@@ -576,7 +577,7 @@ if ( ! class_exists('Simple_Options') ){
 			unset($plugin_options['import']);
 			unset($plugin_options['import_code']);
 			unset($plugin_options['import_link']);
-			
+						
 			return $plugin_options;	
 		
 		}//function

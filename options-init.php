@@ -163,6 +163,7 @@ $sections[] = array(
 				'title' => __('Porting SMOF Fields', 'simple-options'),
 				'desc' => __('<p class="description">Smof fields\'s we\'re porting over.</p>', 'simple-options'),
 				'fields' => array(
+					/*
 					array(
 						'id' => 'font', //must be unique
 						'type' => 'typography', //builtin fields include:
@@ -183,6 +184,9 @@ $sections[] = array(
 						), //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
 						//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "typography"
 						),
+				*/
+
+						
 					),
 				);
 
@@ -193,28 +197,43 @@ $sections[] = array(
 				'title' => __('Completed SOF Fields', 'simple-options'),
 				'desc' => __('<p class="description">These are fields that are done and ready to ship.</p>', 'simple-options'),
 
-					array(
-						'id' => 'slider222', //must be unique
-						'type' => 'slider', 
-						'title' => __('Slider', 'simple-options'),
-						'sub_desc' => __('A slider', 'simple-options'),
-						'desc' => __('That\'s right. It works! Try putting in a letter or number beyond the range. Gotta love that javascript!', 'simple-options'),
-						'step' => 2,
-						'min' => 1,
-						'max' => 50,
-						'edit' => true,
-						'std' => array(
-							'family'=>'Arial',
-							'weight'=>'400',
-							'color'=>'#000',
-							'size'=>'22px',
-							'script'=>'',
-							'line-height'=> '14px',
-						), //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
-						//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "typography"
-						),
+
 					
 				'fields' => array(
+
+					array(
+						'id' => 'theswitch', //must be unique
+						'type' => 'switch',
+						'title' => __('Switch', 'simple-options'),
+						'sub_desc' => __('On off!', 'simple-options'),
+						'desc' => __('That\'s right. It works!', 'simple-options'),
+						'on' => 'Dovy',
+						'off' => 'Was Here',
+						'std' => 1, //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
+						),
+
+
+				array(
+					'id' => 'slider222', //must be unique
+					'type' => 'slider', 
+					'title' => __('Slider', 'simple-options'),
+					'sub_desc' => __('A slider', 'simple-options'),
+					'desc' => __('That\'s right. It works! Try putting in a letter or number beyond the range. Gotta love that javascript!', 'simple-options'),
+					'step' => 2,
+					'min' => 1,
+					'max' => 50,
+					'edit' => true,
+					'std' => array(
+						'family'=>'Arial',
+						'weight'=>'400',
+						'color'=>'#000',
+						'size'=>'22px',
+						'script'=>'',
+						'line-height'=> '14px',
+						), //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
+					//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "typography"
+					),
+
 					array(
 						'id' => 'text',
 						'type' => 'text',
@@ -237,7 +256,8 @@ $sections[] = array(
 						'title' => __('Color Option', 'simple-options'), 
 						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'std' => '#FFFFFF'
+						'std' => '#FFFFFF',
+						'validate' => 'color',
 						),
 					array(
 						'id' => 'color_gradient',
