@@ -28,34 +28,7 @@ class Simple_Options_typography extends Simple_Options{
 	*/
 	function render(){
 		
-		$class = (isset($this->field['class']))?$this->field['class']:'typography';
-		
-		echo '<ul id="'.$this->field['id'].'-ul">';
-		
-		if(isset($this->value) && is_array($this->value)){
-			foreach($this->value as $k => $value){
-				if($value != ''){
-				
-					
-
-					echo '<li><input type="text" id="'.$this->field['id'].'-'.$k.'" name="'.$this->args['opt_name'].'['.$this->field['id'].'][]" value="'.esc_attr($value).'" class="'.$class.'" /> <a href="javascript:void(0);" class="simple-options-multi-text-remove">'.__('Remove', 'simple-options').'</a></li>';
-					
-				}//if
-				
-			}//foreach
-		}else{
-		
-			echo '<li><input type="text" id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].'][]" value="" class="'.$class.'" /> <a href="javascript:void(0);" class="simple-options-multi-text-remove">'.__('Remove', 'simple-options').'</a></li>';
-		
-		}//if
-		
-		echo '<li style="display:none;"><input type="text" id="'.$this->field['id'].'" name="" value="" class="'.$class.'" /> <a href="javascript:void(0);" class="simple-options-multi-text-remove">'.__('Remove', 'simple-options').'</a></li>';
-		
-		echo '</ul>';
-		
-		echo '<a href="javascript:void(0);" class="simple-options-multi-text-add" rel-id="'.$this->field['id'].'-ul" rel-name="'.$this->args['opt_name'].'['.$this->field['id'].'][]">'.__('Add More', 'simple-options').'</a><br/>';
-		
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?' <span class="description">'.$this->field['desc'].'</span>':'';
+		echo "<h4>This field is still under development.</h4>";
 		
 	}//function
 	

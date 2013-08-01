@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.0.6';
+		protected $framework_version = '0.0.7';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -510,7 +510,7 @@ if ( ! class_exists('Simple_Options') ){
 						}else{
 							$th = '';
 						}
-						
+
 						add_settings_field($fieldk.'_field', $th, array(&$this,'_field_input'), $k.'_section_group', $k.'_section', $field); // checkbox
 						
 					}//foreach
@@ -834,7 +834,7 @@ if ( ! class_exists('Simple_Options') ){
 						
 						foreach($this->extra_tabs as $k => $tab){
 							echo '<div id="'.$k.'_section_group'.'" class="simple-options-group-tab">';
-							echo '<h3>'.$tab['title'].'</h3>';
+							echo '<h3 class="test">'.$tab['title'].'</h3>';
 							echo $tab['content'];
 							echo '</div>';
 						}

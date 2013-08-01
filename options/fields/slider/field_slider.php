@@ -37,7 +37,7 @@ class Simple_Options_slider extends Simple_Options{
 		}
 	
 		if( empty($this->field['max']) ) { 
-			$this->field['max'] = $this->field['min'] + 1; 
+			$this->field['max'] = (int) (int) $this->field['min'] + 1; 
 		} else {
 			$this->field['max'] = (int) $this->field['max'];
 		}		
@@ -48,17 +48,17 @@ class Simple_Options_slider extends Simple_Options{
 			$this->field['step'] = (int) $this->field['step'];
 		}	
 	
-		if( empty($this->value) ) { 
-			$this->value = $this->field['min']; 
+		if( empty($this->value) && !empty($this->field['std'])) { 
+			$this->value = (int) $this->field['std']; 
 		} else {
-			$this->value = (int) $this->value;
+			$this->value = (int) $this->field['min'];
 		}
 
 		// Extra Validation
 		if ($this->value < $this->field['min']) {
-			$this->value = $this->field['min'];
+			$this->value = (int) $this->field['min'];
 		} else if ($this->value > $this->field['max']) {
-			$this->value = $this->field['max'];
+			$this->value = (int) $this->field['max'];
 		}
 		
 		$params = array(
@@ -75,7 +75,7 @@ class Simple_Options_slider extends Simple_Options{
 			$readonly = ' readonly="readonly"';
 		}
 
-		wp_localize_script( 'sof-slider-js', 'sliderParam', $params );
+		wp_localize_script( 'sof-slider-js', $this->field['id'].'Param', $params );
 	
 		//html output
 		echo '<input type="text" name="'.$this->args['opt_name'].'['.$this->field['id'].']" id="' . $this->field['id'] . '" value="'. $this->value .'" class="mini slider-input"'.$readonly.'/>';

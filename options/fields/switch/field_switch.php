@@ -68,6 +68,10 @@ class Simple_Options_switch extends Simple_Options{
 						echo '<input type="hidden" class="'.$fold.'checkbox checkbox-input" id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$this->value.'" />';
 					echo '</span>';
 
+					if (!empty($this->field['fold'])) {
+						echo '<h4>The "fold" feature is still under development.</h4>';
+					}
+
 		echo (isset($this->field['desc']) && !empty($this->field['desc']))?' <span class="description">'.$this->field['desc'].'</span>':'';
 		
 	}//function

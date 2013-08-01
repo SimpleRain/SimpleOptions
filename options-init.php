@@ -160,6 +160,239 @@ $sections = array();
 
 $sections[] = array(
 				'icon' => '',
+				'title' => __('Home Settings', 'simple-options'),
+				'header' => __('Welcome to the Options Framework demo.', 'simple-options'),
+				'desc' => __('This is a slightly modified version of the original options framework by Devin Price with a couple of aesthetical improvements on the interface and some cool additional features. If you want to learn how to setup these options or just need general help on using it feel free to visit my blog at <a href="http://aquagraphite.com/2011/09/29/slightly-modded-options-framework/">AquaGraphite.com</a>', 'simple-options'),
+				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_020_home.png',
+				'fields' => array(
+					
+					array(
+						'id' => 'media', //must be unique
+						'type' => 'media', 
+						'title' => __('Media', 'simple-options'),
+						'sub_desc' => __('Upload any media using the Wordpress native uploader', 'simple-options'),
+						),
+
+					array(
+						'id' => 'media-min', //must be unique
+						'type' => 'media', 
+						'min'=> true,
+						'title' => __('Media Minimalistic (min)', 'simple-options'),
+						'desc'=> __('This represents the minimalistic view. It does not have the preview box or the display URL in an input box. ', 'simple-options'),
+						'sub_desc' => __('Upload any media using the Wordpress native uploader', 'simple-options'),
+						),				
+				
+					array(
+						'id' => 'gallery', //must be unique
+						'type' => 'gallery', 
+						'title' => __('Gallery', 'simple-options'),
+						'desc'=> __('Add a gallery using the integrated media gallery of wordpress. No preview, but fully supports order, etc.', 'simple-options'),
+						),		
+						
+					array(
+						'id' => 'slider1', //must be unique
+						'type' => 'slider', 
+						'title' => __('JQuery UI Slider Example 1', 'simple-options'),
+						'desc'=> __('JQuery UI slider description.<br /> Min: 1, max: 500, step: 3, default value: 45', 'simple-options'),
+						"std" 		=> "45",
+						"min" 		=> "1",
+						"step"		=> "3",
+						"max" 		=> "500",
+						),	
+
+					array(
+						'id' => 'slider2', //must be unique
+						'type' => 'slider', 
+						'title' => __('JQuery UI Slider Example 2 w/ Steps (5)', 'simple-options'),
+						'desc'=> __('JQuery UI slider description.<br /> Min: 0, max: 300, step: 5, default value: 75', 'simple-options'),
+						"std" 		=> "75",
+						"min" 		=> "0",
+						"step"		=> "5",
+						"max" 		=> "300",
+						),	
+
+					array(
+						'id' => 'switch-on', //must be unique
+						'type' => 'switch', 
+						'title' => __('Switch On', 'simple-options'),
+						'sub_desc'=> __('Look, it\'s on!', 'simple-options'),
+						"std" 		=> 1,
+						),	
+
+					array(
+						'id' => 'switch-off', //must be unique
+						'type' => 'switch', 
+						'title' => __('Switch Off', 'simple-options'),
+						'sub_desc'=> __('Look, it\'s on!', 'simple-options'),
+						"std" 		=> 0,
+						),	
+
+					array(
+						'id' => 'switch-custom', //must be unique
+						'type' => 'switch', 
+						'title' => __('Switch - Custom Titles', 'simple-options'),
+						'sub_desc'=> __('Look, it\'s on!', 'simple-options'),
+						"std" 		=> 0,
+						'on' => 'Enabled',
+						'off' => 'Disabled',
+						),	
+
+					array(
+						'id' => 'switch-fold', //must be unique
+						'type' => 'switch', 
+						'title' => __('Switch - With Hidden Items', 'simple-options'),
+						'sub_desc'=> __('Also called a "fold" parent.', 'simple-options'),
+						'desc' => __('Items set with a fold to this ID will hide unless this is set to the appropriate value.', 'simple-options'),
+						'std' 		=> 0,
+						'fold' => true,
+						),	
+					array(
+						'id' => 'layout', //must be unique
+						'type' => 'layout', 
+						'title' => __('Homepage Layout Manager', 'simple-options'),
+						'sub_desc'=> __('Organize how you want the layout to appear on the homepage.', 'simple-options'),
+						),
+
+					array(
+						'id' => 'slides', //must be unique
+						'type' => 'slides', 
+						'title' => __('Slides Options', 'simple-options'),
+						'sub_desc'=> __('Unlimited slider with drag and drop sortings.', 'simple-options'),
+						),
+
+					array(
+						'id' => 'patterns', //must be unique
+						'type' => 'patterns', 
+						'title' => __('Background Patterns Images', 'simple-options'),
+						'sub_desc'=> __('Select a background pattern.', 'simple-options'),
+						'std' 		=> 0,
+						),		
+
+					array(
+						'id' => 'typography', //must be unique
+						'type' => 'typography', 
+						'title' => __('Typography', 'simple-options'),
+						'sub_desc'=> __('Typography option with each property can be called individually.', 'simple-options'),
+						),	
+
+
+					),
+				);
+
+
+
+
+
+
+$sections[] = array(
+				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_280_settings.png',
+				'title' => __('General Settings', 'simple-options'),
+				'fields' => array(
+					array(
+						'id' => 'layout',
+						'type' => 'radio_img',
+						'title' => __('Main Layout', 'simple-options'), 
+						'sub_desc' => __('Select main content and sidebar alignment. Choose between 1, 2 or 3 column layout.', 'simple-options'),
+						'options' => array(
+										'1' => array('alt' => '1 Column', 'img' => SOF_OPTIONS_URL.'img/1col.png'),
+										'2' => array('alt' => '2 Column Left', 'img' => SOF_OPTIONS_URL.'img/2cl.png'),
+										'3' => array('alt' => '2 Column Right', 'img' => SOF_OPTIONS_URL.'img/2cr.png'),
+										'4' => array('alt' => '3 Column Middle', 'img' => SOF_OPTIONS_URL.'img/3cm.png'),
+										'5' => array('alt' => '3 Column Left', 'img' => SOF_OPTIONS_URL.'img/3cl.png'),
+										'6' => array('alt' => '3 Column Right', 'img' => SOF_OPTIONS_URL.'img/3cr.png')
+											),//Must provide key => value(array:title|img) pairs for radio options
+						'std' => '2'
+						),
+
+					array(
+						'id' => 'tracking-code',
+						'type' => 'textarea',
+						'title' => __('Tracking Code', 'simple-options'), 
+						'sub_desc' => __('Paste your Google Analytics (or other) tracking code here. This will be added into the footer template of your theme.', 'simple-options'),
+						'validate' => 'js',
+						'std' => 'Validate that it\'s javascript',
+						),
+
+					array(
+						'id' => 'footer-text',
+						'type' => 'textarea',
+						'title' => __('Footer Text', 'simple-options'), 
+						'sub_desc' => __('You can use the following shortcodes in your footer text: [wp-link] [theme-link] [loginout-link] [blog-title] [blog-link] [the-year]', 'simple-options'),
+						'std' => 'Powered by [wp-link]. Built on the [theme-link].',
+						),
+
+				)
+			);
+
+
+
+
+$sections[] = array(
+				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_234_brush.png',
+				'title' => __('Styling Options', 'simple-options'),
+				'fields' => array(
+
+					array(
+						'id' => 'stylesheet',
+						'type' => 'select',
+						'title' => __('Theme Stylesheet', 'simple-options'), 
+						'sub_desc' => __('Select your themes alternative color scheme.', 'simple-options'),
+						'options' => array('default.css', 'color1.css'),
+						'std' => 'default.css',
+						),
+
+					array(
+						'id' => 'footer-text',
+						'type' => 'textarea',
+						'title' => __('Footer Text', 'simple-options'), 
+						'sub_desc' => __('You can use the following shortcodes in your footer text: [wp-link] [theme-link] [loginout-link] [blog-title] [blog-link] [the-year]', 'simple-options'),
+						'std' => 'Powered by [wp-link]. Built on the [theme-link].',
+						),
+					array(
+						'id' => 'color-background',
+						'type' => 'color',
+						'title' => __('Body Background Color', 'simple-options'), 
+						'sub_desc' => __('Pick a background color for the theme (default: #fff).', 'simple-options'),
+						'std' => '#FFFFFF',
+						'validate' => 'color',
+						),
+					array(
+						'id' => 'color-header',
+						'type' => 'color',
+						'title' => __('Header Background Color', 'simple-options'), 
+						'sub_desc' => __('Pick a background color for the header (default: #fff).', 'simple-options'),
+						'std' => '#FFFFFF',
+						'validate' => 'color',
+						),
+					array(
+						'id' => 'color-footer',
+						'type' => 'color',
+						'title' => __('Footer Background Color', 'simple-options'), 
+						'sub_desc' => __('Pick a background color for the footer (default: #dd9933).', 'simple-options'),
+						'std' => '#dd9933',
+						'validate' => 'color',
+						),
+
+					array(
+						'id' => 'body-font',
+						'type' => 'typography',
+						'title' => __('Body Font', 'simple-options'), 
+						'sub_desc' => __('Specify the body font properties.', 'simple-options'),
+						'std' => array(
+							'color'=>'#dd9933',
+							'font-size'=>'12',
+							'font-family'=>'Arial',
+							'font-weight'=>'Normal',
+							),
+						),					
+
+				)
+			);
+
+
+
+$sections[] = array(
+				'icon' => '',
 				'title' => __('Porting SMOF Fields', 'simple-options'),
 				'desc' => __('<p class="description">Smof fields\'s we\'re porting over.</p>', 'simple-options'),
 				'fields' => array(

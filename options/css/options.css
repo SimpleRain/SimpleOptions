@@ -346,8 +346,7 @@ border: 1px solid #e5e5e5;
 .sof-radio-img input[type='radio']{
 	display:none;
 }
-.sof-radio-img,
-.sof-radio-img-selected{
+.sof-radio-img {
 	margin:6px;
 	display:inline-block;
 	padding:10px;
@@ -630,4 +629,8 @@ border: 1px solid #e5e5e5;
 
 .mini {
 	width: 70px;
+}
+
+#simple-options-main.expand {
+	background: red;
 }

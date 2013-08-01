@@ -81,6 +81,7 @@ jQuery(document).ready(function($){
 		
 		if (trigger.hasClass('expanded')) {
 			trigger.removeClass('expanded');
+			jQuery('#simple-options-main').removeClass('expand');
 			jQuery('#simple-options-sidebar').stop().animate({'margin-left':'0px'},500);
 			jQuery('#simple-options-main').stop().animate({'margin-left':width},500);
 
@@ -95,6 +96,7 @@ jQuery(document).ready(function($){
 
 		} else {
 			trigger.addClass('expanded');
+			jQuery('#simple-options-main').addClass('expand');
 			jQuery('#simple-options-sidebar').stop().animate({'margin-left':-width-2},500);
 			jQuery('#simple-options-main').stop().animate({'margin-left':'0px'},500);	
 			jQuery('.simple-options-group-tab').fadeIn();
