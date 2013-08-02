@@ -28,7 +28,7 @@ class Simple_Options_typography extends Simple_Options{
 	*/
 	function render(){
 		
-		echo "<h4>This field is still under development.</h4>";
+		echo "<h4>Typography: This field is still under development.</h4>";
 		
 	}//function
 	

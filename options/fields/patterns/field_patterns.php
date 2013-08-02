@@ -28,7 +28,7 @@ class Simple_Options_patterns extends Simple_Options{
 	*/
 	function render(){
 		
-		echo "<h4>This field is still under development.</h4>";
+		echo "<h4>Patterns: This field is still under development.</h4>";
 		
 	}//function
 	

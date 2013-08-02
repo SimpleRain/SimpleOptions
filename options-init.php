@@ -161,8 +161,8 @@ $sections = array();
 $sections[] = array(
 				'icon' => '',
 				'title' => __('Home Settings', 'simple-options'),
-				'header' => __('Welcome to the Options Framework demo.', 'simple-options'),
-				'desc' => __('This is a slightly modified version of the original options framework by Devin Price with a couple of aesthetical improvements on the interface and some cool additional features. If you want to learn how to setup these options or just need general help on using it feel free to visit my blog at <a href="http://aquagraphite.com/2011/09/29/slightly-modded-options-framework/">AquaGraphite.com</a>', 'simple-options'),
+				'header' => __('Welcome to the Simple Options Framework Demo', 'simple-options'),
+				'desc' => __('Simple Options Framework was created with the developer in mind. It allows for any theme developer to have an advanced theme panel with most of the features a developer would need. For more information check out the Github repo at: <a href="http://github.com/SimpleRain/SimpleOptions/">http://github.com/SimpleRain/SimpleOptions/</a>', 'simple-options'),
 				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_020_home.png',
 				'fields' => array(
 					
@@ -310,12 +310,12 @@ $sections[] = array(
 						'title' => __('Tracking Code', 'simple-options'), 
 						'sub_desc' => __('Paste your Google Analytics (or other) tracking code here. This will be added into the footer template of your theme.', 'simple-options'),
 						'validate' => 'js',
-						'std' => 'Validate that it\'s javascript',
+						'desc' => 'Validate that it\'s javascript!',
 						),
 
 					array(
 						'id' => 'footer-text',
-						'type' => 'textarea',
+						'type' => 'editor',
 						'title' => __('Footer Text', 'simple-options'), 
 						'sub_desc' => __('You can use the following shortcodes in your footer text: [wp-link] [theme-link] [loginout-link] [blog-title] [blog-link] [the-year]', 'simple-options'),
 						'std' => 'Powered by [wp-link]. Built on the [theme-link].',
@@ -337,16 +337,8 @@ $sections[] = array(
 						'type' => 'select',
 						'title' => __('Theme Stylesheet', 'simple-options'), 
 						'sub_desc' => __('Select your themes alternative color scheme.', 'simple-options'),
-						'options' => array('default.css', 'color1.css'),
+						'options' => array('default.css'=>'default.css', 'color1.css'=>'color1.css'),
 						'std' => 'default.css',
-						),
-
-					array(
-						'id' => 'footer-text',
-						'type' => 'textarea',
-						'title' => __('Footer Text', 'simple-options'), 
-						'sub_desc' => __('You can use the following shortcodes in your footer text: [wp-link] [theme-link] [loginout-link] [blog-title] [blog-link] [the-year]', 'simple-options'),
-						'std' => 'Powered by [wp-link]. Built on the [theme-link].',
 						),
 					array(
 						'id' => 'color-background',
@@ -361,7 +353,7 @@ $sections[] = array(
 						'type' => 'color',
 						'title' => __('Header Background Color', 'simple-options'), 
 						'sub_desc' => __('Pick a background color for the header (default: #fff).', 'simple-options'),
-						'std' => '#FFFFFF',
+						'std' => '#8224e3',
 						'validate' => 'color',
 						),
 					array(
@@ -385,165 +377,16 @@ $sections[] = array(
 							'font-weight'=>'Normal',
 							),
 						),					
-
+					array(
+						'id' => 'custom-css',
+						'type' => 'textarea',
+						'title' => __('Custom CSS', 'simple-options'), 
+						'sub_desc' => __('Quickly add some CSS to your theme by adding it to this block.', 'simple-options'),
+						'desc' => __('This field is even CSS validated!', 'simple-options'),
+						'validate' => 'css',
+						),
 				)
 			);
-
-
-
-$sections[] = array(
-				'icon' => '',
-				'title' => __('Porting SMOF Fields', 'simple-options'),
-				'desc' => __('<p class="description">Smof fields\'s we\'re porting over.</p>', 'simple-options'),
-				'fields' => array(
-					/*
-					array(
-						'id' => 'font', //must be unique
-						'type' => 'typography', //builtin fields include:
-										  //text|textarea|editor|checkbox|multi_checkbox|radio|radio_img|button_set|select|multi_select|color|date|divide|info|upload
-						'title' => __('Typography', 'simple-options'),
-						'sub_desc' => __('A real Google Fonts implementation.', 'simple-options'),
-						'desc' => __('That\'s right. It works!', 'simple-options'),
-						'simple_weight'=> false,
-						//'validate' => '', //builtin validation includes: email|html|html_custom|no_html|js|numeric|url
-						//'msg' => 'custom error message', //override the default validation error message for specific fields
-						'std' => array(
-							'family'=>'Arial',
-							'weight'=>'400',
-							'color'=>'#000',
-							'size'=>'22px',
-							'script'=>'',
-							'line-height'=> '14px',
-						), //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
-						//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "typography"
-						),
-				*/
-
-						
-					),
-				);
-
-$sections[] = array( 'type' => 'divide' );
-
-$sections[] = array(
-				'icon' => '',
-				'title' => __('Completed SOF Fields', 'simple-options'),
-				'desc' => __('<p class="description">These are fields that are done and ready to ship.</p>', 'simple-options'),
-
-
-					
-				'fields' => array(
-
-					array(
-						'id' => 'theswitch', //must be unique
-						'type' => 'switch',
-						'title' => __('Switch', 'simple-options'),
-						'sub_desc' => __('On off!', 'simple-options'),
-						'desc' => __('That\'s right. It works!', 'simple-options'),
-						'on' => 'Dovy',
-						'off' => 'Was Here',
-						'std' => 1, //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
-						),
-
-
-				array(
-					'id' => 'slider222', //must be unique
-					'type' => 'slider', 
-					'title' => __('Slider', 'simple-options'),
-					'sub_desc' => __('A slider', 'simple-options'),
-					'desc' => __('That\'s right. It works! Try putting in a letter or number beyond the range. Gotta love that javascript!', 'simple-options'),
-					'step' => 2,
-					'min' => 1,
-					'max' => 50,
-					'edit' => true,
-					'std' => array(
-						'family'=>'Arial',
-						'weight'=>'400',
-						'color'=>'#000',
-						'size'=>'22px',
-						'script'=>'',
-						'line-height'=> '14px',
-						), //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
-					//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "typography"
-					),
-
-					array(
-						'id' => 'text',
-						'type' => 'text',
-						'title' => __('Text Option', 'simple-options'),
-						'sub_desc' => __('This is a little space under the Field Title in the Options table, additonal info is good in here.', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						),		
-
-					array(
-						'id' => 'editor',
-						'type' => 'editor',
-						'title' => __('Editor Option', 'simple-options'), 
-						'sub_desc' => __('Can also use the validation methods if you like.', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'std' => 'OOOOOOhhhh, rich editing.'
-						),
-					array(
-						'id' => '16',
-						'type' => 'color',
-						'title' => __('Color Option', 'simple-options'), 
-						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'std' => '#FFFFFF',
-						'validate' => 'color',
-						),
-					array(
-						'id' => 'color_gradient',
-						'type' => 'color_gradient',
-						'title' => __('Color Gradient Option', 'simple-options'), 
-						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'std' => array('from' => '#000000', 'to' => '#FFFFFF')
-						),
-					array(
-						'id' => '17',
-						'type' => 'date',
-						'title' => __('Date Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
-						),
-					array(
-						'id' => '18',
-						'type' => 'button_set',
-						'title' => __('Button Set Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
-						'std' => '2'
-						),
-
-					array(
-						'id' => '18divide',
-						'type' => 'divide',
-						'title' => __('Button Set Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
-						'std' => '2'
-						),
-									
-
-					)
-					
-				);
-
-$sections[] = array( 'type' => 'divide' );
-
-$sections[] = array(
-				'icon' => '',
-				'title' => __('Old NHP Fields', 'simple-options'),
-				'desc' => __('<p class="description">Fields that may be removed before the end.</p>', 'simple-options'),
-				'fields' => array(
-					)
-				);
-
-$sections[] = array( 'type' => 'divide' );
-
 				
 $sections[] = array(
 				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_107_text_resize.png',
@@ -725,12 +568,12 @@ $sections[] = array(
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This uses some of the built in images, you can use them for layout options.', 'simple-options'),
 						'options' => array(
-										'1' => array('title' => '1 Column', 'img' => SOF_OPTIONS_URL.'img/1col.png'),
-										'2' => array('title' => '2 Column Left', 'img' => SOF_OPTIONS_URL.'img/2cl.png'),
-										'3' => array('title' => '2 Column Right', 'img' => SOF_OPTIONS_URL.'img/2cr.png'),
-										'4' => array('title' => '3 Column Middle', 'img' => SOF_OPTIONS_URL.'img/3cm.png'),
-										'5' => array('title' => '3 Column Left', 'img' => SOF_OPTIONS_URL.'img/3cl.png'),
-										'6' => array('title' => '3 Column Right', 'img' => SOF_OPTIONS_URL.'img/3cr.png')
+										'1' => array('alt' => '1 Column', 'img' => SOF_OPTIONS_URL.'img/1col.png'),
+										'2' => array('alt' => '2 Column Left', 'img' => SOF_OPTIONS_URL.'img/2cl.png'),
+										'3' => array('alt' => '2 Column Right', 'img' => SOF_OPTIONS_URL.'img/2cr.png'),
+										'4' => array('alt' => '3 Column Middle', 'img' => SOF_OPTIONS_URL.'img/3cm.png'),
+										'5' => array('alt' => '3 Column Left', 'img' => SOF_OPTIONS_URL.'img/3cl.png'),
+										'6' => array('alt' => '3 Column Right', 'img' => SOF_OPTIONS_URL.'img/3cr.png')
 											),//Must provide key => value(array:title|img) pairs for radio options
 						'std' => '2'
 						)																		
@@ -764,7 +607,7 @@ $sections[] = array(
 					array(
 						'id' => 'multi-info',
 						'type' => 'info',
-						'desc' => __('You can easily choose a variety of options. They are illustrated below.', 'simple-options'),
+						'desc' => __('You can easily add a variety of data from wordpress.', 'simple-options'),
 						),
 
 					array(
@@ -982,7 +825,117 @@ $sections[] = array(
 						)				
 					)
 				);
-				
+		
+$sections[] = array( 'type' => 'divide' );
+
+$sections[] = array(
+				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_049_star.png',
+				'title' => __('All Field Types', 'simple-options'),
+				'desc' => __('<p class="description">These are fields that are done and ready to ship.</p>', 'simple-options'),
+
+
+					
+				'fields' => array(
+
+					array(
+						'id' => 'theswitch', //must be unique
+						'type' => 'switch',
+						'title' => __('Switch', 'simple-options'),
+						'sub_desc' => __('On off!', 'simple-options'),
+						'desc' => __('That\'s right. It works!', 'simple-options'),
+						'std' => 1, //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
+						),
+
+
+				array(
+					'id' => 'slider222', //must be unique
+					'type' => 'slider', 
+					'title' => __('Slider', 'simple-options'),
+					'sub_desc' => __('A slider', 'simple-options'),
+					'desc' => __('That\'s right. It works! Try putting in a letter or number beyond the range. Gotta love that javascript!', 'simple-options'),
+					'step' => 2,
+					'min' => 1,
+					'max' => 50,
+					'edit' => true,
+					'std' => array(
+						'family'=>'Arial',
+						'weight'=>'400',
+						'color'=>'#000',
+						'size'=>'22px',
+						'script'=>'',
+						'line-height'=> '14px',
+						), //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
+					//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "typography"
+					),
+
+					array(
+						'id' => 'text',
+						'type' => 'text',
+						'title' => __('Text Option', 'simple-options'),
+						'sub_desc' => __('This is a little space under the Field Title in the Options table, additonal info is good in here.', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						),		
+
+					array(
+						'id' => 'editor',
+						'type' => 'editor',
+						'title' => __('Editor Option', 'simple-options'), 
+						'sub_desc' => __('Can also use the validation methods if you like.', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'std' => 'OOOOOOhhhh, rich editing.'
+						),
+					array(
+						'id' => '16',
+						'type' => 'color',
+						'title' => __('Color Option', 'simple-options'), 
+						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'std' => '#FFFFFF',
+						'validate' => 'color',
+						),
+					array(
+						'id' => 'color_gradient',
+						'type' => 'color_gradient',
+						'title' => __('Color Gradient Option', 'simple-options'), 
+						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'std' => array('from' => '#000000', 'to' => '#FFFFFF')
+						),
+					array(
+						'id' => '17',
+						'type' => 'date',
+						'title' => __('Date Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
+						),
+					array(
+						'id' => '18',
+						'type' => 'button_set',
+						'title' => __('Button Set Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
+						'std' => '2'
+						),
+
+					array(
+						'id' => '18divide',
+						'type' => 'divide',
+						'title' => __('Button Set Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
+						'std' => '2'
+						),
+									
+
+					)
+					
+				);
+
+
+$sections[] = array( 'type' => 'divide' );
+
 				
 	$tabs = array();
 			

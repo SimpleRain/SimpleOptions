@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.0.7';
+		protected $framework_version = '0.0.8';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;

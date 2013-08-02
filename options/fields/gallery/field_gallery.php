@@ -28,7 +28,7 @@ class Simple_Options_gallery extends Simple_Options{
 	*/
 	function render(){
 		
-		echo "<h4>This field is still under development.</h4>";
+		echo "<h4>Gallery: This field is still under development.</h4>";
 
 	}//function
 	

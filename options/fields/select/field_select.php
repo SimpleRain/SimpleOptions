@@ -83,7 +83,9 @@ class Simple_Options_select extends Simple_Options{
 				}
 				//echo "~~".."~~";
 
+
 				foreach($this->field['options'] as $k => $v){
+					echo $k;
 					if (is_object($v)) {
 						echo '<option value="'.$v->term_id.'" '.selected($this->value, $v->term_id, false).'>'.$v->name.'</option>';	
 					} else {

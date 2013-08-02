@@ -33,40 +33,43 @@ class Simple_Options_slider extends Simple_Options{
 		if( empty($this->field['min']) ) { 
 			$this->field['min'] = 0; 
 		} else {
-			$this->field['min'] = (int) $this->field['min'];
+			$this->field['min'] = intval($this->field['min']);
 		}
 	
 		if( empty($this->field['max']) ) { 
-			$this->field['max'] = (int) (int) $this->field['min'] + 1; 
+			$this->field['max'] = intval($this->field['min']) + 1; 
 		} else {
-			$this->field['max'] = (int) $this->field['max'];
+			$this->field['max'] = intval($this->field['max']);
 		}		
 	
 		if( empty($this->field['step']) || $this->field['step'] > $this->field['max'] ) { 
 			$this->field['step'] = 1; 
 		}else {
-			$this->field['step'] = (int) $this->field['step'];
+			$this->field['step'] = intval($this->field['step']);
 		}	
 	
-		if( empty($this->value) && !empty($this->field['std'])) { 
-			$this->value = (int) $this->field['std']; 
-		} else {
-			$this->value = (int) $this->field['min'];
+		if(empty($this->value) && !empty($this->field['std'])) { 
+			$this->value = intval($this->field['std']);
+		}
+
+		if (empty($this->value)) {
+			$this->value = intval($this->field['min']);
 		}
 
 		// Extra Validation
 		if ($this->value < $this->field['min']) {
-			$this->value = (int) $this->field['min'];
+			$this->value = intval($this->field['min']);
 		} else if ($this->value > $this->field['max']) {
-			$this->value = (int) $this->field['max'];
+			$this->value = intval($this->field['max']);
 		}
-		
+
 		$params = array(
 				'id' => $this->field['id'],
 				'min' => $this->field['min'],
 				'max' => $this->field['max'],
 				'step' => $this->field['step'],
 				'val' => $this->value,
+				'std' => $this->field['std'],
 			);
 
 		// Don't allow input edit if there's a step

@@ -28,7 +28,7 @@ class Simple_Options_slides extends Simple_Options{
 	*/
 	function render(){
 		
-		echo "<h4>This field is still under development.</h4>";
+		echo "<h4>Slides: This field is still under development.</h4>";
 		
 	}//function
 	
