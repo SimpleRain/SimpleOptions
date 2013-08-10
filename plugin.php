@@ -22,8 +22,8 @@
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @package   SimpleOptions
- * @version   0.0.3
- * @since     0.0.3
+ * @version   0.0.8
+ * @since     0.0.8
  * @author    Dovy Paukstys <info@simplerain.com>
  * @copyright Copyright (c) 2013, SimpleRain
  * @link      http://simplerain.com/
