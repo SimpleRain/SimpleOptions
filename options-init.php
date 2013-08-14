@@ -176,7 +176,7 @@ $sections[] = array(
 					array(
 						'id' => 'media-min', //must be unique
 						'type' => 'media', 
-						'min'=> true,
+						'mode'=> 'min',
 						'title' => __('Media Minimalistic (min)', 'simple-options'),
 						'desc'=> __('This represents the minimalistic view. It does not have the preview box or the display URL in an input box. ', 'simple-options'),
 						'sub_desc' => __('Upload any media using the Wordpress native uploader', 'simple-options'),
@@ -244,11 +244,11 @@ $sections[] = array(
 						'sub_desc'=> __('Also called a "fold" parent.', 'simple-options'),
 						'desc' => __('Items set with a fold to this ID will hide unless this is set to the appropriate value.', 'simple-options'),
 						'std' 		=> 0,
-						'fold' => true,
 						),	
 					array(
 						'id' => 'layout', //must be unique
 						'type' => 'layout', 
+						'fold' => array('switch-fold'),
 						'title' => __('Homepage Layout Manager', 'simple-options'),
 						'sub_desc'=> __('Organize how you want the layout to appear on the homepage.', 'simple-options'),
 						),
@@ -317,8 +317,8 @@ $sections[] = array(
 						'id' => 'footer-text',
 						'type' => 'editor',
 						'title' => __('Footer Text', 'simple-options'), 
-						'sub_desc' => __('You can use the following shortcodes in your footer text: [wp-link] [theme-link] [loginout-link] [blog-title] [blog-link] [the-year]', 'simple-options'),
-						'std' => 'Powered by [wp-link]. Built on the [theme-link].',
+						'sub_desc' => __('You can use the following shortcodes in your footer text: [wp-url] [site-url] [theme-url] [login-url] [logout-url] [site-title] [site-tagline] [current-year]', 'simple-options'),
+						'std' => 'Powered by [wp-url]. Built on the [theme-url].',
 						),
 
 				)
@@ -349,14 +349,6 @@ $sections[] = array(
 						'validate' => 'color',
 						),
 					array(
-						'id' => 'color-header',
-						'type' => 'color',
-						'title' => __('Header Background Color', 'simple-options'), 
-						'sub_desc' => __('Pick a background color for the header (default: #fff).', 'simple-options'),
-						'std' => '#8224e3',
-						'validate' => 'color',
-						),
-					array(
 						'id' => 'color-footer',
 						'type' => 'color',
 						'title' => __('Footer Background Color', 'simple-options'), 
@@ -364,11 +356,18 @@ $sections[] = array(
 						'std' => '#dd9933',
 						'validate' => 'color',
 						),
-
+					array(
+						'id' => 'color-header',
+						'type' => 'color_gradient',
+						'title' => __('Header Gradient Color Option', 'simple-options'),
+						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'std' => array('from' => '#1e73be', 'to' => '#00897e')
+						),
 					array(
 						'id' => 'body-font',
 						'type' => 'typography',
-						'title' => __('Body Font', 'simple-options'), 
+						'title' => __('Body Font', 'simple-options'),
 						'sub_desc' => __('Specify the body font properties.', 'simple-options'),
 						'std' => array(
 							'color'=>'#dd9933',
@@ -981,7 +980,7 @@ $sections[] = array( 'type' => 'divide' );
 
 	global $Simple_Options;
 	$Simple_Options = new Simple_Options($sections, $args, $tabs);
-
+	//echo $Simple_Options->value('footer-text');
 }//function
 add_action('init', 'setup_framework_options', 0);
 

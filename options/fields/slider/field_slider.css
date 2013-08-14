@@ -37,3 +37,8 @@ box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.20), 0px 0px 1px rgba(0, 0, 0, 0.2
 .sof_slider {
 	margin-left: 15px;
 }
+
+.slider-input {
+	width: auto !important;
+	text-align: center;
+}

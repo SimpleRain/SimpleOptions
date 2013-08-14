@@ -98,6 +98,13 @@ class Simple_Options_upload extends Simple_Options{
 			time(),
 			true
 		);
+
+		wp_enqueue_style(
+			'simple-options-field-upload-css',
+			SOF_OPTIONS_URL.'fields/upload/field_upload.css',
+			time(),
+			true
+		);
 		
 		wp_enqueue_style('thickbox');// thanks to https://github.com/rzepak
 		

@@ -41,7 +41,7 @@ class Simple_Options_multi_checkbox extends Simple_Options{
 				$this->value[$k] = (isset($this->value[$k]))?$this->value[$k]:'';
 				echo '<li class="' . $class . '">';
 				echo '<label for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
-				echo '<input type="checkbox" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']['.$k.']" value="1" '.checked($this->value[$k], '1', false).'/>';
+				echo '<input type="checkbox" class="checkbox" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']['.$k.']" value="1" '.checked($this->value[$k], '1', false).'/>';
 				echo ' '.$v.'</label>';
 				echo '</li>';
 				

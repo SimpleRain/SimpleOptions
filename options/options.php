@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.0.8';
+		protected $framework_version = '0.0.9';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -103,12 +103,23 @@ if ( ! class_exists('Simple_Options') ){
 		/**
 		 * ->get(); This is used to return and option value from the options array
 		 *
-		 * @since Simple_Options 1.0.1
+		 * @since Simple_Options 1.0.0
 		 *
 		 * @param $array $args Arguments. Class constructor arguments.
 		*/
 		function get($opt_name, $default = null){
 			return (!empty($this->options[$opt_name])) ? $this->options[$opt_name] : $default;
+		}//function
+
+		/**
+		 * ->value(); This is used to return and option value from the options array after do_shortcode
+		 *
+		 * @since Simple_Options 1.0.0
+		 *
+		 * @param $array $args Arguments. Class constructor arguments.
+		*/
+		function value($opt_name){
+			return do_shortcode( $this->get($opt_name, true) );
 		}//function
 		
 		/**
@@ -376,6 +387,17 @@ if ( ! class_exists('Simple_Options') ){
 				if(isset($section['fields'])){
 					
 					foreach($section['fields'] as $fieldk => $field){
+
+						if (!empty($field['fold'])) {
+
+							if () {
+
+							}
+							foreach() {
+
+							}
+							echo '<div class="fold"><input type="hidden" class="fold-parent" value="" />';
+						}
 						
 						if(isset($field['type'])){
 						
@@ -391,6 +413,10 @@ if ( ! class_exists('Simple_Options') ){
 							}//if
 							
 						}//if type
+
+						if (!empty($field['fold'])) {
+							echo '</div>';
+						}
 						
 					}//foreach
 				
@@ -717,7 +743,7 @@ if ( ! class_exists('Simple_Options') ){
 							}
 							delete_transient('simple-options-saved');
 						}
-						echo '<div id="simple-options-save-warn">'.apply_filters('simple-options-changed-text-'.$this->args['opt_name'], __('<strong>Settings have changed!, you should save them!</strong>', 'simple-options')).'</div>';
+						echo '<div id="simple-options-save-warn">'.apply_filters('simple-options-changed-text-'.$this->args['opt_name'], __('<strong>Settings have changed, you should save them!</strong>', 'simple-options')).'</div>';
 						echo '<div id="simple-options-field-errors">'.__('<strong><span></span> error(s) were found!</strong>', 'simple-options').'</div>';
 						
 						echo '<div id="simple-options-field-warnings">'.__('<strong><span></span> warning(s) were found!</strong>', 'simple-options').'</div>';
@@ -1040,3 +1066,78 @@ if ( ! class_exists('Simple_Options') ){
 		
 	}//class
 }//if
+
+
+
+/**
+* SimpleOptions Shortcodes. For use within field values.
+*
+* @since Simple_Options 0.0.9
+*
+*/
+
+/**
+	Site URL (URI/Link)
+**/
+
+function SimpleOptions_site_url($atts,$content=NULL) {
+	return 'THIS IS THE SITE URL';
+}
+add_shortcode('site-url','SimpleOptions_site_url');
+
+/**
+	Site URL (URI/Link)
+**/
+
+function SimpleOptions_wp_url($atts,$content=NULL) {
+	return 'THIS IS THE BASE URL';
+}
+add_shortcode('wp-url','SimpleOptions_wp_url');
+
+/**
+	Theme URL (URI/Link)
+**/
+function SimpleOptions_theme_url($atts,$content=NULL) {
+	return 'THIS IS THE THEME URL';
+}
+add_shortcode('theme-url','SimpleOptions_theme_url');
+
+/**
+	Login URL (URI/Link)
+**/
+function SimpleOptions_login_url($atts,$content=NULL) {
+	return 'THIS IS THE LOGIN URL';
+}
+add_shortcode('login-url','SimpleOptions_login_url');
+
+/**
+	Logout URL (URI/Link)
+**/
+function SimpleOptions_logout_url($atts,$content=NULL) {
+	return 'THIS IS THE LOGOUT URL';
+}
+add_shortcode('logout-url','SimpleOptions_logout_url');
+
+/**
+	Site Title
+**/
+function SimpleOptions_site_title($atts,$content=NULL) {
+	return 'THIS IS THE SITE TITLE';
+}
+add_shortcode('site-title','SimpleOptions_site_title');
+
+/**
+	Site Tagline
+**/
+function SimpleOptions_site_tagline($atts,$content=NULL) {
+	return 'THIS IS THE SITE TITLE';
+}
+add_shortcode('site-tagline','SimpleOptions_site_tagline');
+
+/**
+	Current Year
+**/
+function SimpleOptions_current_year($atts,$content=NULL) {
+	return 'THIS IS THE CURRENT YEAR';
+}
+add_shortcode('current-year','SimpleOptions_current_year');

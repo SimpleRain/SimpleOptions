@@ -41,7 +41,7 @@ class Simple_Options_radio extends Simple_Options{
 				//echo '<option value="'.$k.'" '.selected($this->value, $k, false).'>'.$v.'</option>';
 				echo '<li' . $class . '>';
 				echo '<label for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
-				echo '<input type="radio" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" '.$class.' value="'.$k.'" '.checked($this->value, $k, false).'/>';
+				echo '<input type="radio" class="radio" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" '.$class.' value="'.$k.'" '.checked($this->value, $k, false).'/>';
 				echo ' <span>'.$v.'</span>';
 				echo '</label>';
 				echo '</li>';
