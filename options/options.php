@@ -389,13 +389,6 @@ if ( ! class_exists('Simple_Options') ){
 					foreach($section['fields'] as $fieldk => $field){
 
 						if (!empty($field['fold'])) {
-
-							if () {
-
-							}
-							foreach() {
-
-							}
 							echo '<div class="fold"><input type="hidden" class="fold-parent" value="" />';
 						}
 						
