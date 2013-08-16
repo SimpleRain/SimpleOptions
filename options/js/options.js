@@ -215,5 +215,41 @@ jQuery.fn.isOnScreen = function(){
   jQuery('#simple-options-save').delay(3000).slideUp();
   jQuery('#simple-options-field-errors').delay(4000).slideUp();
 
+
+	jQuery('.fold-data').each(function() {
+
+
+		console.log(jQuery.parseJSON(jQuery(this).val()));
+		
+
+
+		var parent = jQuery(this).parent().parent();
+
+		parent.addClass('fold');
+
+		//parent.data('fold');
+
+		var data = jQuery(this).data();
+
+		//console.log(data);
+
+		var keys = [];
+ 		for (var key in data) {      
+    	if (data.hasOwnProperty(key)) keys.push(key);
+ 		}
+ 		//console.log(keys);
+ 		var valueUsed = false;
+		for (var i = 0; i < keys.length; ++i) {
+			jQuery('#'+keys[i]).addClass('hasFold');
+			//console.log(keys[i]);
+			//console.log(data[keys[i]]);
+			if (jQuery('#'+keys[i]).val() == data[keys[i]] || valueUsed) {
+				valueUsed = true;
+				continue;
+			}
+			parent.hide();
+		}
+		
+	});  
 	
 });

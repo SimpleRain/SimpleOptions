@@ -6,9 +6,9 @@ jQuery(document).ready(function(){
 	 * NHP_Options_upload function
 	 * Adds media upload functionality to the page
 	 *
-	 */
+	*/
 	 
-	 var header_clicked = false;
+	var header_clicked = false;
 	 
 	jQuery("img[src='']").attr("src", sof_upload.url);
 	

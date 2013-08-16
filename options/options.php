@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.0.9';
+		protected $framework_version = '0.1.1';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -380,17 +380,20 @@ if ( ! class_exists('Simple_Options') ){
 			wp_localize_script('simple-options-js', 'sof_opts', array('reset_confirm' => __('Are you sure? Resetting will loose all custom values.', 'simple-options'), 'opt_name' => $this->args['opt_name']));
 			
 			do_action('simple-options-enqueue-'.$this->args['opt_name']);
-			
+
 			
 			foreach($this->sections as $k => $section){
 				
 				if(isset($section['fields'])){
 					
 					foreach($section['fields'] as $fieldk => $field){
+<<<<<<< HEAD
+=======
 
 						if (!empty($field['fold'])) {
 							echo '<div class="fold"><input type="hidden" class="fold-parent" value="" />';
 						}
+>>>>>>> d3696976b59d81a29396a5ba1e3fcb2d9416fd58
 						
 						if(isset($field['type'])){
 						
@@ -406,10 +409,6 @@ if ( ! class_exists('Simple_Options') ){
 							}//if
 							
 						}//if type
-
-						if (!empty($field['fold'])) {
-							echo '</div>';
-						}
 						
 					}//foreach
 				
@@ -1025,8 +1024,34 @@ if ( ! class_exists('Simple_Options') ){
 		 * @since Simple_Options 1.0
 		*/
 		function _field_input($field){
-			
-			
+
+						if (!empty($field['fold'])) {
+							if ( !is_array( $field['fold'] ) ) {
+								$field['fold'] = array($field['fold']=>1);
+							}
+							
+
+							echo '<input type="hidden" id="fold-'.$field['id'].'" class="fold-data" value="'.htmlspecialchars(json_encode($field['fold']), ENT_QUOTES, 'UTF-8').'" />';
+/*
+							$countFold = 0;
+							foreach( $field['fold'] as $foldk => $foldv ) {
+								if (is_array($foldv)) {
+									if ($foldk == $countFold) {
+										$foldk = $foldv;
+										$foldv = 1;
+									}
+									$data .= ' data-'.$foldk.'="'.$foldv.'"';
+
+								} 
+
+								$data .= ' data-'.$foldk.'="'.$foldv.'"';
+
+								$countFold++;
+							}
+*/
+							
+						}			
+
 			if(isset($field['callback']) && function_exists($field['callback'])){
 				$value = (isset($this->options[$field['id']]))?$this->options[$field['id']]:'';
 				do_action('simple-options-before-field-'.$this->args['opt_name'], $field, $value);
