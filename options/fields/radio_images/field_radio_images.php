@@ -1,5 +1,5 @@
 <?php
-class Simple_Options_radio_img extends Simple_Options{	
+class Simple_Options_radio_images extends Simple_Options{	
 	
 	/**
 	 * Field Constructor.
@@ -34,7 +34,7 @@ class Simple_Options_radio_img extends Simple_Options{
 			
 		if (!empty($this->field['options'])) {
 
-			echo '<ul>';
+			echo '<ul class="sof-radio-images">';
 			
 			foreach($this->field['options'] as $k => $v){
 				if (!isset($v['title'])) {
@@ -44,11 +44,11 @@ class Simple_Options_radio_img extends Simple_Options{
 					$v['alt'] = $v['title'];
 				}				
 
-				$selected = (checked($this->value, $k, false) != '')?' sof-radio-img-selected':'';
-				echo '<li class="sof-radio-img' . $class . '">';
-				echo '<label class="'.$selected.' sof-radio-img-'.$this->field['id'].'" for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
+				$selected = (checked($this->value, $k, false) != '')?' sof-radio_images-selected':'';
+				echo '<li class="sof-radio_images' . $class . '">';
+				echo '<label class="'.$selected.' sof-radio_images-'.$this->field['id'].'" for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
 				echo '<input type="radio" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$k.'" '.checked($this->value, $k, false).'/>';
-				echo '<img src="'.$v['img'].'" alt="'.$v['alt'].'" onclick="jQuery:sof_radio_img_select(\''.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'\', \''.$this->field['id'].'\');" />';
+				echo '<img src="'.$v['img'].'" alt="'.$v['alt'].'" />';
 				if ($v['title'] != "") {
 					echo '<br /><span>'.$v['title'].'</span>';	
 				}
@@ -60,9 +60,9 @@ class Simple_Options_radio_img extends Simple_Options{
 
 		}
 
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<br/><span class="description">'.$this->field['desc'].'</span>':'';
-		
 		echo '</fieldset>';
+
+		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
 		
 	}//function
 	
@@ -78,12 +78,19 @@ class Simple_Options_radio_img extends Simple_Options{
 	function enqueue(){
 		
 		wp_enqueue_script(
-			'simple-options-field-radio_img-js', 
-			SOF_OPTIONS_URL.'fields/radio_img/field_radio_img.js', 
+			'simple-options-field-images-js', 
+			SOF_OPTIONS_URL.'fields/radio_images/field_radio_images.js', 
 			array('jquery'),
 			time(),
 			true
 		);
+
+		wp_enqueue_style(
+			'simple-options-field-images-css', 
+			SOF_OPTIONS_URL.'fields/radio_images/field_radio_images.css',
+			time(),
+			true
+		);		
 		
 	}//function
 	

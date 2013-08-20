@@ -1,4 +1,58 @@
+	function sof_change() {
+		window.onbeforeunload = confirmOnPageExit;
+		jQuery(document).ready(function($){		
+			console.log('here');
+			// Hide errors if the user changed the field
+			if (jQuery(this).hasClass('simple-options-field-error')) {
+				jQuery(this).removeClass('simple-options-field-error');
+				jQuery(this).parent().find('.simple-options-th-error').slideUp();
+				var parentID = jQuery(this).closest('.simple-options-group-tab').attr('id');
+				var hideError = true;
+				jQuery('#'+parentID+' .simple-options-field-error').each(function() {
+					hideError = false;
+				});
+				if (hideError) {
+					jQuery('#'+parentID+'_li .simple-options-menu-error').hide();
+				}			
+			}
+			jQuery('#simple-options-save-warn').slideDown();	
+		});	
+	}
+
+var confirmOnPageExit = function (e) {
+    // If we haven't been passed the event get the window.event
+    e = e || window.event;
+
+    var message = sof_opts.save_pending;
+
+    // For IE6-8 and Firefox prior to version 4
+    if (e) 
+    {
+        e.returnValue = message;
+    }
+
+    // For Chrome, Safari, IE8+ and Opera 12+
+    return message;
+};
+
+
 jQuery(document).ready(function($){
+
+var confirmOnPageExit = function (e) {
+    // If we haven't been passed the event get the window.event
+    e = e || window.event;
+
+    var message = sof_opts.save_pending;
+
+    // For IE6-8 and Firefox prior to version 4
+    if (e) 
+    {
+        e.returnValue = message;
+    }
+
+    // For Chrome, Safari, IE8+ and Opera 12+
+    return message;
+};
 	
 	/**
 		Unfolding elements. Used by switch, checkbox, select
@@ -66,6 +120,8 @@ jQuery(document).ready(function($){
 		if(!confirm(sof_opts.reset_confirm)){
 			return false;
 		}
+		window.onbeforeunload = null;
+
 	});
 	
 
@@ -121,23 +177,11 @@ jQuery(document).ready(function($){
 		jQuery('#simple-options-imported').slideDown();
 	}	
 	
-	jQuery('input, textarea, select').change(function() {
-		// Hide errors if the user changed the field
-		if (jQuery(this).hasClass('simple-options-field-error')) {
-			jQuery(this).removeClass('simple-options-field-error');
-			jQuery(this).parent().find('.simple-options-th-error').slideUp();
-			var parentID = jQuery(this).closest('.simple-options-group-tab').attr('id');
-			var hideError = true;
-			jQuery('#'+parentID+' .simple-options-field-error').each(function() {
-				hideError = false;
-			});
-			if (hideError) {
-				jQuery('#'+parentID+'_li .simple-options-menu-error').hide();
-			}			
-		}
-		jQuery('#simple-options-save-warn').slideDown();
+	jQuery('input, textarea, select').live('change',function() {
+		sof_change();
 	});
 	
+
 	
 	jQuery('#simple-options-import-code-button').click(function(){
 		if(jQuery('#simple-options-import-link-wrapper').is(':visible')){
@@ -216,10 +260,14 @@ jQuery.fn.isOnScreen = function(){
   jQuery('#simple-options-field-errors').delay(4000).slideUp();
 
 
+  jQuery('.of-save').click(function() {
+  	window.onbeforeunload = null;
+  });
+
 	jQuery('.fold-data').each(function() {
 
 
-		console.log(jQuery.parseJSON(jQuery(this).val()));
+		//console.log(jQuery.parseJSON(jQuery(this).val()));
 		
 
 

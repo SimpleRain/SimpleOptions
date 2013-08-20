@@ -30,13 +30,13 @@ class Simple_Options_color_gradient extends Simple_Options{
 		
 		$class = (isset($this->field['class']))?$this->field['class']:'';
 
-		echo '<div class="sof-color-gradient" id="'.$this->field['id'].'">';
+		echo '<div class="sof-color-gradient-container" id="'.$this->field['id'].'">';
 
 		echo '<strong>' . __('From ', 'simple-options') . '</strong>&nbsp;<input id="'.$this->field['id'].'-from" name="'.$this->args['opt_name'].'['.$this->field['id'].'][from]" value="'.$this->value['from'].'" class="sof-color ' . $class . '"  type="text" value="' . $this->value . '"  data-default-color="' . $this->field['std']['from'] . '" />';
 
 		echo '&nbsp;&nbsp;&nbsp;&nbsp;<strong>' . __('To ', 'simple-options') . '</strong>&nbsp;<input id="'.$this->field['id'].'-to" name="'.$this->args['opt_name'].'['.$this->field['id'].'][to]" value="'.$this->value['to'].'" class="sof-color ' . $class . '"  type="text" value="' . $this->value . '"  data-default-color="' . $this->field['std']['to'] . '" />';
 		
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?' <span class="description">'.$this->field['desc'].'</span>':'';
+		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
 		
 		echo '</div>';
 		

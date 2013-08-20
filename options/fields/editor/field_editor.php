@@ -37,7 +37,7 @@ class Simple_Options_editor extends Simple_Options{
 			);
 		wp_editor($this->value, $this->field['id'], $settings );
 		
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<br/><span class="description">'.$this->field['desc'].'</span>':'';
+		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
 		
 	}//function
 	

@@ -270,24 +270,29 @@ class Simple_Updater {
 					}
 					$response = json_decode($raw_response['body']);
 
-					if(isset($response->message)){
-						if(is_array($response->message)){
-							$errors = '';
-							foreach ( $response->message as $error) {
-								$errors .= ' ' . $error;
-							}
-						} else {
-							$errors = print_r($response->message, true);
-						}
-						$data->response['error'] = sprintf('While <a href="%s">fetching tags</a> api error</a>: <span class="error">%s</span>', $url, $errors);
-					}
-
 					if(count($response) == 0){
 						$data->response['error'] = "Github theme does not have any tags";
 					}
 
 					//set cache, just 60 seconds
 					set_transient(md5($url), $response, 60);
+				}
+
+				if(isset($response->message)){
+
+					if(is_array($response->message)){
+						$errors = '';
+						foreach ( $response->message as $error) {
+							$errors .= ' ' . $error;
+						}
+					} else {
+						$errors = print_r($response->message, true);
+					}
+					$data->response['error'] = sprintf('While <a href="%s">fetching tags</a> api error</a>: <span class="error">%s</span>', $url, $errors);
+				}
+
+				if (!empty($data->response['error'])) {
+					return;
 				}
 
 				// Sort and get latest tag

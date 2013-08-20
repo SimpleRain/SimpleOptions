@@ -39,7 +39,7 @@ class Simple_Options_button_set extends Simple_Options{
 				
 			}//foreach
 			
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'&nbsp;&nbsp;<span class="description">'.$this->field['desc'].'</span>':'';
+		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
 		
 		echo '</fieldset>';
 		

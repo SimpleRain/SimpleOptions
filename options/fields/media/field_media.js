@@ -68,6 +68,10 @@ jQuery(document).ready(function($){
 	}
 
 	function SimpleOptions_remove_file(selector) {
+		if (!selector.find('.remove-image').addClass('hide')) {
+			return;
+		}
+		sof_change();
 		selector.find('.remove-image').addClass('hide');//hide "Remove" button
 		selector.find('.upload').val('');
 		selector.find('.of-background-properties').hide();

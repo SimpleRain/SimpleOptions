@@ -21,31 +21,33 @@ jQuery.noConflict();
 		  * Feature added by : Dovy Paukstys - http://simplerain.com/
 		  * Date 			 : 06.14.2013
 		  */
-		function Typography( mainID, selector ){
-
-			if ($(selector).hasClass('sof-typography-new-face')) {
+		function typographySelect( mainID, selector ){
+			if ($(selector).hasClass('sof-typography-family')) {
 				$('#'+mainID+' .typography-style span').text('');
 				$('#'+mainID+' .typography-script span').text('');
 				$('#'+mainID+' .sof-typography-style').val('');
 				$('#'+mainID+' .sof-typography-script').val('');
 			}
-			var face = $('#'+mainID+' .sof-typography-new-face').val();
+			var family = $('#'+mainID+' select.sof-typography-family ').val();
 			var size = $('#'+mainID+' .sof-typography-size').val();
 			var height = $('#'+mainID+' .sof-typography-height').val();
+			var style = $('#'+mainID+' select.sof-typography-style').val();
+			var script = $('#'+mainID+' select.sof-typography-script').val();
 			var color = $('#'+mainID+' .sof-typography-color').val();
+			var units = $('#'+mainID).data('units');
 
-
-			var option = $('#'+mainID+' .sof-typography-new-face option:selected');
+			var option = $('#'+mainID+' .sof-typography-family option:selected');
 			var google = option.data('google');
-
 			var details = jQuery.parseJSON(decodeURIComponent(option.data('details')));
 
-			if (google && $(selector).hasClass('sof-typography-new-face')) {
+			if (google && $(selector).hasClass('sof-typography-family')) {
 				var html = '<option value="">Select style</option>';
 
 			    for (i = 0; i<=Object.size(details.variants); i++){
-			      if (details.variants[i] == null)
-			        continue;
+			      if (details.variants[i] == null) {
+			      	continue;
+			      }
+
 			      if (details.variants[i].id == style || Object.size(details.variants) == 1) {
 			        var selected = ' selected="selected"';
 					$('#'+mainID+' .typography-style span').text(details.variants[i].name.replace('+',' '));
@@ -76,7 +78,7 @@ jQuery.noConflict();
 				$('#'+mainID+' .sof-typography-script').html(html);
 
 			} else {
-				if ($(selector).hasClass('sof-typography-new-face')) {
+				if ($(selector).hasClass('sof-typography-family')) {
 					$('#'+mainID+' .sof-typography-script').html('');
 					$('#'+mainID+' .sof-typography-style').html('');
 					$('#'+mainID+' .typography-style span').text('');
@@ -97,19 +99,17 @@ jQuery.noConflict();
 
 
 			var _linkclass = 'style_link_'+ mainID;
-			var _previewer = mainID.replace('section-','') +'_ggf_previewer';
 
-			if( face ){ //if var exists and isset
+			if( family ){ //if var exists and isset
 				//Check if selected is not equal with "Select a font" and execute the script.
-				if ( face !== 'none' && face !== 'Select a font' ) {
+				if ( family !== 'none' && family !== 'Select a font' ) {
 
 					//remove other elements crested in <head>
 					$( '.'+ _linkclass ).remove();
 
-
 					//replace spaces with "+" sign
-					var the_font = face.replace(/\s+/g, '+');
-					if ($('#'+mainID+' .sof-typography-new-face option:selected').data('google')) {
+					var the_font = family.replace(/\s+/g, '+');
+					if ($('#'+mainID+' .sof-typography-family option:selected').data('google')) {
 						//add reference to google font family
 						var link = 'http://fonts.googleapis.com/css?family='+ the_font;
 						if (style)
@@ -123,29 +123,37 @@ jQuery.noConflict();
 						$('#'+mainID+' .typography-google').val('false');
 					}
 
-					$('.'+ _previewer ).css('font-size', size);
-					$('.'+ _previewer ).css('font-style', "normal");
+					var previewer = $('#'+mainID+' .typography-preview');
+
+
+					previewer.css('font-size', size+units);
+					previewer.css('font-style', "normal");
 					if (style.indexOf("-") !== -1) {
 						var n = style.split("-");
-						$('.'+ _previewer ).css('font-weight', n[0] );
-						$('.'+ _previewer ).css('font-style', n[1] );
+						previewer.css('font-weight', n[0] );
+						previewer.css('font-style', n[1] );
 					} else {
 						if (!google) {
-							$('.'+ _previewer ).css('font-weight', style );
+							previewer.css('font-weight', style );
 						}
-						$('.'+ _previewer ).css('font-style', style );
+						previewer.css('font-style', style );
 					}
 
 					//show in the preview box the font
-					$('.'+ _previewer ).css('font-family', face +', sans-serif' );
+					previewer.css('font-family', family +', sans-serif' );
 
 				}else{
 					//if selected is not a font remove style "font-family" at preview box
-					$('.'+ _previewer ).css('font-family', '' );
+					previewer.css('font-family', '' );
 				}
 
-				//$('.'+ _previewer ).css('line-height', height );
-				$('.'+ _previewer ).css('color', color );
+				if (height) {
+					previewer.css('line-height', height+units );
+				} else {
+					previewer.css('line-height', size+units );
+				}
+
+				previewer.css('color', color );
 			}
 			$('#'+mainID+' .typography-style span').text($('#'+mainID+' .sof-typography-style option:selected').text());
 			$('#'+mainID+' .typography-script span').text($('#'+mainID+' .sof-typography-script option:selected').text());
@@ -153,32 +161,45 @@ jQuery.noConflict();
 		}
 
 		//init for each element
-		jQuery( '.section-select_typography' ).each(function(){
-			var mainID = jQuery(this).attr('id');
-			Typography( mainID, $(this) );
+		jQuery( '.sof-typography-container' ).each(function(){
+			typographySelect( jQuery(this).attr('id'), $(this) );
 		});
 
 		//init when value is changed
-		jQuery( '.typography_value' ).change(function(){
-			var mainID = jQuery(this).closest('.section-select_typography').attr('id');
-			Typography( mainID, $(this) );
+		jQuery( '.sof-typography' ).change(function(){
+			typographySelect( jQuery(this).closest('.sof-typography-container').attr('id'), $(this) );
 		});
 
+		//init when value is changed
+		jQuery( '.sof-typography-size, .sof-typography-height' ).keyup(function(){
+			sof_change();
+			typographySelect( jQuery(this).closest('.sof-typography-container').attr('id'), $(this) );
+		});		
+
 		// Because wordpress's color picker callback function doesn't run on pallet color clicks. Odd.
-		$('.iris-palette').live('click', function() {
-			var mainID = jQuery(this).closest('.section-select_typography').attr('id');
-			Typography( mainID, $(this) );
+		$('.iris-palette').live('click', function() {console.log(jQuery(this));
+			if (jQuery(this).parents('.sof-typography-container').length) {
+				typographySelect( jQuery(this).closest('.sof-typography-container').attr('id'), $(this) );
+			}
 		});
+
 		// Have to redeclare the wpColorPicker to get a callback function
-		$('.section-select_typography .sof-color').wpColorPicker({
+		$('.sof-typography-color').wpColorPicker({
 		    change: function(event, ui){
-		    	var mainID = jQuery(this).closest('.section-select_typography').attr('id');
-				Typography( mainID, $(this) );
+		    	jQuery(this).val(ui.color.toString());
+		  		typographySelect( jQuery(this).closest('.sof-typography-container').attr('id'), $(this) );
 		    },
 		});
 
+		/**	Tipsy @since v1.3 */
+		if (jQuery().tipsy) {
+			$('.sof-typography-size, .sof-typography-height, .sof-typography-family, .sof-typography-style, .sof-typography-script').tipsy({
+				fade: true,
+				gravity: 's',
+				opacity: 0.7,
+			});
+		}
 
+		jQuery(".sof-typography-size, .sof-typography-height").numeric({negative:false});	
 
-
-
-});
+    });

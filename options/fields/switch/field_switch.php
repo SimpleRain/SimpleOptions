@@ -62,17 +62,17 @@ class Simple_Options_switch extends Simple_Options{
 						$off = $this->field['off'];
 					}
 					
-					echo '<span class="switch-options">';
+					echo '<div class="switch-options">';
 						echo '<label class="'.$fold.'cb-enable'. $cb_enabled .'" data-id="'.$this->field['id'].'"><span>'. $on .'</span></label>';
 						echo '<label class="'.$fold.'cb-disable'. $cb_disabled .'" data-id="'.$this->field['id'].'"><span>'. $off .'</span></label>';
 						echo '<input type="hidden" class="'.$fold.'checkbox checkbox-input" id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$this->value.'" />';
-					echo '</span>';
+					echo '</div>';
 
 					if (!empty($this->field['fold'])) {
 						echo '<h4>The "fold" feature is still under development.</h4>';
 					}
 
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?' <span class="description">'.$this->field['desc'].'</span>':'';
+		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
 		
 	}//function
 	

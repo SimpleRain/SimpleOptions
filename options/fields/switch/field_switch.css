@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------------------------*/
 /* Switch
 /*-------------------------------------------------------------------------------------------*/
-.switch-options{ min-height: 20px; margin-right: 10px;  }
+.switch-options{ min-height: 30px; margin-right: 10px; }
 .cb-enable, .cb-disable, .cb-enable span, .cb-disable span { background: url(switch.gif) repeat-x; display: block; float: left; }
 	.cb-enable span, .cb-disable span { line-height: 30px; display: block; background-repeat: no-repeat; font-weight: bold; }
 	.cb-enable span { background-position: left -90px; padding: 0 10px; }

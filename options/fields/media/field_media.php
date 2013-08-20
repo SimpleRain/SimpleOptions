@@ -60,7 +60,8 @@ class Simple_Options_media extends Simple_Options{
 		//If the user has WP3.5+ show upload/remove button
 
 			echo '<span class="button media_upload_button" id="'.$this->field['id'].'">Upload</span>';
-			if ( empty( $this->value['url'] ) ) {
+			$hide = '';
+			if ( empty( $this->value['url'] ) || $this->value['url'] == "" ) {
 				$hide =' hide';
 			}
 			echo '<span class="button remove-image'. $hide.'" id="reset_'. $this->field['id'] .'" title="' . $this->field['id'] . '">Remove</span>';
@@ -68,16 +69,18 @@ class Simple_Options_media extends Simple_Options{
 		echo '</div>' . "\n";
 
 		//Preview
+		$hide = '';
 		if (empty($this->value['url'])) {
 			$hide =" hide";
 		}
 
 		echo '<div class="screenshot'.$hide.'">';
-	echo '<a class="of-uploaded-image" href="'. $this->value['url'] . '">';
-	echo '<img class="sof-option-image" id="image_'.$this->field['id'].'" src="'.$this->value['url'].'" alt="" />';
-	echo '</a>';
-	echo '</div>';
+		echo '<a class="of-uploaded-image" href="'. $this->value['url'] . '">';
+		echo '<img class="sof-option-image" id="image_'.$this->field['id'].'" src="'.$this->value['url'].'" alt="" />';
+		echo '</a>';
+		echo '</div>';
 		echo '<div class="clear"></div>' . "\n";
+		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
 		
 	}//function
 	

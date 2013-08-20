@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.1.1';
+		protected $framework_version = '0.1.2';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -84,6 +84,9 @@ if ( ! class_exists('Simple_Options') ){
 			
 			//register setting
 			add_action('admin_init', array(&$this, '_register_setting'));
+
+			//register customizer setting
+			add_action( 'customize_register', array(&$this, '_customize_register_setting'));
 			
 			//add the js for the error handling before the form
 			add_action('simple-options-page-before-form-'.$this->args['opt_name'], array(&$this, '_errors_js'), 1);
@@ -244,12 +247,21 @@ if ( ! class_exists('Simple_Options') ){
 						if ( !isset( $section['title']) ) {
 							continue;
 						}
+
+						$section = $this->_item_cleanup($section, $k);
+						$this->sections[$k] = $section;
+
+						$section = apply_filters($section['id'].'_section_menu_modifier', $section);
+
+						$section = $this->_item_cleanup($section, $k);
+						$this->sections[$k] = $section;
+
 						add_submenu_page(
 								$this->args['page_slug'],
 								$section['title'],
 								$section['title'], 
 								$this->args['page_cap'], 
-								$this->args['page_slug'].'&tab='.$k, 
+								$this->args['page_slug'].'&tab='.$section['id'], 
 								create_function( '$a', "return null;" )
 						);
 					
@@ -272,7 +284,13 @@ if ( ! class_exists('Simple_Options') ){
 							
 
 				foreach($this->extra_tabs as $k => $tab){
-					
+						
+					// SMOF Compatibility
+					if (!empty($tab['name']) && empty($tab['title'])) {
+						$tab['title'] = $tab['name'];
+						unset($tab['name']);
+					}
+
 					add_submenu_page(
 							$this->args['page_slug'],
 							$tab['title'], 
@@ -377,7 +395,7 @@ if ( ! class_exists('Simple_Options') ){
 				true
 			);	
 
-			wp_localize_script('simple-options-js', 'sof_opts', array('reset_confirm' => __('Are you sure? Resetting will loose all custom values.', 'simple-options'), 'opt_name' => $this->args['opt_name']));
+			wp_localize_script('simple-options-js', 'sof_opts', array('save_pending' => __('You have changes that are not saved. Would you like to save them now?', 'simple-options'), 'reset_confirm' => __('Are you sure? Resetting will loose all custom values.', 'simple-options'), 'opt_name' => $this->args['opt_name']));
 			
 			do_action('simple-options-enqueue-'.$this->args['opt_name']);
 
@@ -387,13 +405,10 @@ if ( ! class_exists('Simple_Options') ){
 				if(isset($section['fields'])){
 					
 					foreach($section['fields'] as $fieldk => $field){
-<<<<<<< HEAD
-=======
 
 						if (!empty($field['fold'])) {
-							echo '<div class="fold"><input type="hidden" class="fold-parent" value="" />';
+							echo '<input type="hidden" class="fold-parent" value="" />';
 						}
->>>>>>> d3696976b59d81a29396a5ba1e3fcb2d9416fd58
 						
 						if(isset($field['type'])){
 						
@@ -507,21 +522,36 @@ if ( ! class_exists('Simple_Options') ){
 		 * @since Simple_Options 1.0
 		*/
 		function _register_setting(){
-
-
 			register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array(&$this,'_validate_options'));
-			
 			foreach($this->sections as $k => $section){
 
 				if (isset($section['type']) && $section['type'] == "divide") {
 					continue;
 				}
-				
-				add_settings_section($k.'_section', $section['title'], array(&$this, '_section_desc'), $k.'_section_group');
-				
+
+				$section = $this->_item_cleanup($section, $k);
+				$this->sections[$k] = $section;
+
+				$section = apply_filters($section['id'].'_section_modifier', $section);
+
+				$section = $this->_item_cleanup($section, $k);
+				$this->sections[$k] = $section;
+
+				add_settings_section($section['id'].'_section', $section['title'], array(&$this, '_section_desc'), $section['id'].'_section_group');
+
 				if(isset($section['fields'])){
-				
-					foreach($section['fields'] as $fieldk => $field){
+
+					$section['fields'] = apply_filters($section['id'].'_section_fields_modifier', $section['fields']);
+					$this->sections[$k]['fields'] = $section['fields'];
+
+					foreach($section['fields'] as $fieldk => $field){	
+						
+						$field = $this->_item_cleanup($field, $fieldk);
+						$this->sections[$k]['fields'][$fieldk] = $field;
+
+						$field = apply_filters($field['id'].'_field_modifier', $field);
+						$field = $this->_item_cleanup($field, $fieldk);
+						$this->sections[$k]['fields'][$fieldk] = $field;
 						
 						if(isset($field['title'])){
 							$th = (isset($field['sub_desc']))?$field['title'].'<span class="description">'.$field['sub_desc'].'</span>':$field['title'];
@@ -529,8 +559,8 @@ if ( ! class_exists('Simple_Options') ){
 							$th = '';
 						}
 
-						add_settings_field($fieldk.'_field', $th, array(&$this,'_field_input'), $k.'_section_group', $k.'_section', $field); // checkbox
-						
+						add_settings_field($field['id'].'_field', $th, array(&$this,'_field_input'), $section['id'].'_section_group', $section['id'].'_section', $field); // checkbox
+
 					}//foreach
 				
 				}//if(isset($section['fields'])){
@@ -541,7 +571,97 @@ if ( ! class_exists('Simple_Options') ){
 			
 		}//function
 		
-		
+		function _customize_register_setting($wp_customize){
+			return;
+			if (!isset($this->args['customizer']) || $this->args['customizer'] != true) {
+				return;
+			}
+
+			$my_theme = wp_get_theme();
+
+
+			add_action( 'sanitize_option_theme_mods_'.$my_theme->{'Name'}, array(&$this,'_validate_options') );
+			//register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array(&$this,'_validate_options'));
+			$sectionPriority = 10;
+			$fieldPriority = 10;
+			foreach($this->sections as $k => $section){
+
+				if (isset($section['type']) && $section['type'] == "divide") {
+					continue;
+				}
+
+				$section = $this->_item_cleanup($section, $k);
+				$this->sections[$k] = $section;
+
+				$section = apply_filters($section['id'].'_section_modifier', $section);
+
+				$section = $this->_item_cleanup($section, $k);
+				$this->sections[$k] = $section;
+				
+				if (!empty($section['priority'])) {
+					$theSectionPriority = $section['priority'];
+				} else {
+					$theSectionPriority = $sectionPriority;	
+					$sectionPriority += 10;
+				}
+				
+				$wp_customize->add_section( $section['id'].'_section', array(
+				    'title'          => __( $section['title'], 'simple-options' ),
+				    'priority'       => $theSectionPriority,
+				    'description'		 => 'testing!!!',
+				) );					
+				
+
+				if(isset($section['fields'])){
+					
+
+					$section['fields'] = apply_filters($section['id'].'_section_fields_modifier', $section['fields']);
+					$this->sections[$k]['fields'] = $section['fields'];
+
+					foreach($section['fields'] as $fieldk => $field){	
+						
+						$field = $this->_item_cleanup($field, $fieldk);
+						$this->sections[$k]['fields'][$fieldk] = $field;
+
+						$field = apply_filters($field['id'].'_field_modifier', $field);
+						$field = $this->_item_cleanup($field, $fieldk);
+						$this->sections[$k]['fields'][$fieldk] = $field;
+						
+						if(!isset($field['title'])){
+							$field['title'] = "";
+						}
+
+						if (!empty($field['priority'])) {
+							$theFieldPriority = $field['priority'];
+						} else {
+							$theFieldPriority = $fieldPriority;	
+							$fieldPriority += 10;
+						}
+
+						$wp_customize->add_setting($field['id'].'_field', array(
+							//'type'=>'option'
+							));
+						$wp_customize->add_control(new WP_Customize_Control($wp_customize, $field['id'].'_field', array(
+							'label' => $field['title'],
+							'section' => $section['id'].'_section',
+							'settings' => $field['id'].'_field',
+														'description' => (isset($field['sub_desc']))?'<span class="description">'.$field['sub_desc'].'</span>':'',
+														'priority' => $theFieldPriority
+						)));
+						
+					}//foreach
+				
+				}//if(isset($section['fields'])){
+				
+			}//foreach
+			
+			do_action('simple-options-customize-register-settings-'.$this->args['opt_name']);
+			
+		}//function		
+
+		function add_customizer_control($option) {
+
+		}
 		
 		/**
 		 * Validate the Options options before insertion
@@ -745,12 +865,17 @@ if ( ! class_exists('Simple_Options') ){
 					echo '<div id="simple-options-sidebar">';
 						echo '<ul id="simple-options-group-menu">';
 							foreach($this->sections as $k => $section){
+								// SMOF Compatibility
+								if (!empty($section['name']) && empty($section['title'])) {
+									$section['title'] = $section['name'];
+									unset($section['name']);
+								}								
 								if (isset($section['type']) && $section['type'] == "divide") {
 									echo '<li class="divide">&nbsp;</li>';
 								} else {
 									$icon = (!isset($section['icon']))?'<img src="'.$this->url.'img/glyphicons/glyphicons_019_cogwheel.png" /> ':'<img src="'.$section['icon'].'" /> ';
-									echo '<li id="'.$k.'_section_group_li" class="simple-options-group-tab-link-li">';
-										echo '<a href="javascript:void(0);" id="'.$k.'_section_group_li_a" class="simple-options-group-tab-link-a" data-rel="'.$k.'">'.$icon.'<span>'.$section['title'].'</span></a>';
+									echo '<li id="'.$section['id'].'_section_group_li" class="simple-options-group-tab-link-li">';
+										echo '<a href="javascript:void(0);" id="'.$section['id'].'_section_group_li_a" class="simple-options-group-tab-link-a" data-rel="'.$section['id'].'">'.$icon.'<span>'.$section['title'].'</span></a>';
 									echo '</li>';								
 								}						}
 							
@@ -789,8 +914,9 @@ if ( ! class_exists('Simple_Options') ){
 					echo '<div id="simple-options-main">';
 					
 						foreach($this->sections as $k => $section){
-							echo '<div id="'.$k.'_section_group'.'" class="simple-options-group-tab">';
-								do_settings_sections($k.'_section_group');
+							$section = $this->_item_cleanup($section, $k);
+							echo '<div id="'.$section['id'].'_section_group'.'" class="simple-options-group-tab">';
+								do_settings_sections($section['id'].'_section_group');
 							echo '</div>';
 						}					
 						
@@ -1081,7 +1207,61 @@ if ( ! class_exists('Simple_Options') ){
 			
 		}//function
 
-		
+		/**
+		* SimpleOptions compatability. Changes name to title and creates ids if not present
+		*
+		* @since Simple_Options 0.1.2
+		*
+		*/
+		function _item_cleanup($item, $k) {
+			
+			if (!empty($item['type'])) {
+				$item['type'] = $this->_item_type_cleanup($item['type']);
+			}
+
+			if (!empty($item['name']) && empty($item['title'])) {
+				$item['title'] = $item['name'];
+				unset($item['name']);
+			}		
+
+			if (empty($item['id']) && !empty($item['title'])) {
+				$item['id'] = strtolower(str_replace(' ','_', preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $item['title'])));
+			} else if (empty($item['id'])) {
+				$item['id'] = $k;
+			}	
+
+			return $item;
+
+		}//if
+
+		/**
+		* SimpleOptions compatability. Changes types inherit in SMOF to match SOF naming conventions
+		*
+		* @since Simple_Options 0.1.2
+		*
+		*/
+		function _item_type_cleanup($item) {
+
+			// SMOF Compatability
+			if ($item['type'] == "multicheck") {
+				$item['type'] == "multi_checkbox";
+			} else if ($item['type'] == "slider" && !empty($item['name'])) {
+				$item['type'] == "slides";
+			} else if ($item['type'] == "sliderui") {
+				$item['type'] == "slider";
+			} else if ($item['type'] == "upload") {
+				$item['type'] == "media";
+			} else if ($item['type'] == "select_google_font") {
+				$item['type'] == "typography";
+			} else if ($item['type'] == "images") {
+				$item['type'] == "radio_images";
+			} 
+
+			return $item;
+
+		}//if		
+
+
 	}//class
 }//if
 

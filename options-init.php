@@ -81,6 +81,9 @@ $args = array();
 //Set it to dev mode to view the class settings/info in the form - default is false
 $args['dev_mode'] = true;
 
+// Enable customizer support for all of the fields unless denoated as customizer=>false in the field declaration
+$args['customizer'] = true;
+
 //google api key MUST BE DEFINED IF YOU WANT TO USE GOOGLE WEBFONTS
 $args['google_api_key'] = 'AIzaSyAX_2L_UzCDPEnAHTG7zhESRVpMPS4ssII';
 
@@ -193,7 +196,7 @@ $sections[] = array(
 						'id' => 'slider1', //must be unique
 						'type' => 'slider', 
 						'title' => __('JQuery UI Slider Example 1', 'simple-options'),
-						'desc'=> __('JQuery UI slider description.<br /> Min: 1, max: 500, step: 3, default value: 45', 'simple-options'),
+						'desc'=> __('JQuery UI slider description. Min: 1, max: 500, step: 3, default value: 45', 'simple-options'),
 						"std" 		=> "45",
 						"min" 		=> "1",
 						"step"		=> "3",
@@ -204,7 +207,7 @@ $sections[] = array(
 						'id' => 'slider2', //must be unique
 						'type' => 'slider', 
 						'title' => __('JQuery UI Slider Example 2 w/ Steps (5)', 'simple-options'),
-						'desc'=> __('JQuery UI slider description.<br /> Min: 0, max: 300, step: 5, default value: 75', 'simple-options'),
+						'desc'=> __('JQuery UI slider description. Min: 0, max: 300, step: 5, default value: 75', 'simple-options'),
 						"std" 		=> "75",
 						"min" 		=> "0",
 						"step"		=> "5",
@@ -290,7 +293,7 @@ $sections[] = array(
 				'fields' => array(
 					array(
 						'id' => 'layout',
-						'type' => 'radio_img',
+						'type' => 'radio_images',
 						'title' => __('Main Layout', 'simple-options'), 
 						'sub_desc' => __('Select main content and sidebar alignment. Choose between 1, 2 or 3 column layout.', 'simple-options'),
 						'options' => array(
@@ -371,8 +374,8 @@ $sections[] = array(
 						'sub_desc' => __('Specify the body font properties.', 'simple-options'),
 						'std' => array(
 							'color'=>'#dd9933',
-							'font-size'=>'12',
-							'font-family'=>'Arial',
+							'font-size'=>30,
+							'font-family'=>'Arial, Helvetica, sans-serif',
 							'font-weight'=>'Normal',
 							),
 						),					
@@ -548,7 +551,7 @@ $sections[] = array(
 						),
 					array(
 						'id' => '13',
-						'type' => 'radio_img',
+						'type' => 'radio_images',
 						'title' => __('Radio Image Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
@@ -561,8 +564,8 @@ $sections[] = array(
 						'std' => '2'
 						),
 					array(
-						'id' => 'radio_img',
-						'type' => 'radio_img',
+						'id' => 'images',
+						'type' => 'radio_images',
 						'title' => __('Radio Image Option For Layout', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This uses some of the built in images, you can use them for layout options.', 'simple-options'),
@@ -728,13 +731,6 @@ $sections[] = array(
 						'std' => '2'
 						),	
 					array(
-						'id' => '19',
-						'type' => 'upload',
-						'title' => __('Upload Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
-						),
-					array(
 						'id' => 'select_hide_below',
 						'type' => 'select_hide_below',
 						'title' => __('Select Hide Below Option', 'simple-options'), 
@@ -777,13 +773,6 @@ $sections[] = array(
 						'desc' => __('This is created with a callback function, so anything goes in this field. Make sure to define the function though.', 'simple-options'),
 						'callback' => 'my_custom_field'
 						),
-					array(
-						'id' => 'google_webfonts',
-						'type' => 'google_webfonts',//doesnt need to be called for callback fields
-						'title' => __('Google Webfonts', 'simple-options'), 
-						'sub_desc' => __('This is a completely unique field type', 'simple-options'),
-						'desc' => __('This is a simple implementation of the developer API for Google webfonts. Preview selection will be coming in future releases.', 'simple-options')
-						)							
 					)
 				);
 
@@ -874,11 +863,29 @@ $sections[] = array(
 						'sub_desc' => __('This is a little space under the Field Title in the Options table, additonal info is good in here.', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),		
+/*
+    $of_options[] = array(
+      "name"      => __("Posts Featured Image Height", "shoestrap"),
+      "desc"      => __("Select the height of your featured images on single posts. Default: 330px", "shoestrap"),
+      "id"        => "feat_img_post_height",
+      "fold"      => "feat_img_post",
+      "std"       => 330,
+      "min"       => 50,
+      "step"      => 1,
+      "max"       => 1000,
+      "edit"      => 1,
+      "type"      => "sliderui"
 
+
+	name == title
+
+
+    ); 
+*/
 					array(
 						'id' => 'editor',
 						'type' => 'editor',
-						'title' => __('Editor Option', 'simple-options'), 
+						'name' => __('Editor Option', 'simple-options'), 
 						'sub_desc' => __('Can also use the validation methods if you like.', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'std' => 'OOOOOOhhhh, rich editing.'
@@ -986,6 +993,17 @@ add_action('init', 'setup_framework_options', 0);
 
 /*
  * 
+ * Custom function to change the display name of a section for the menu
+ *
+ */
+function change_home_menu_name($section) {
+	//$section['title'] = "This is a test";
+	return $section;
+}
+add_action('home_settings_section_menu_modifier', 'change_home_menu_name', 0);
+
+/*
+ * 
  * Custom function for the callback referenced above
  *
  */
@@ -994,6 +1012,8 @@ function my_custom_field($field, $value){
 	print_r($value);
 
 }//function
+
+
 
 /*
  * 

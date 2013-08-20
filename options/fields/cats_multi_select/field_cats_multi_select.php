@@ -38,7 +38,8 @@ class Simple_Options_cats_multi_select extends Simple_Options{
 			}
 			echo '</select>';
 		} // If
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?' <span class="description">'.$this->field['desc'].'</span>':'';
+		
+		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
 		
 	}//function
 	

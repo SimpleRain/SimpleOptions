@@ -18,6 +18,7 @@ jQuery(document).ready(function(){
 			range: "min",
 			slide: function( event, ui ) {
 				jQuery("#" + sliderParam.id).val( ui.value );
+				sof_change();
 			}
 		});
 

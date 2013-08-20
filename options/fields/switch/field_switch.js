@@ -11,6 +11,10 @@ jQuery(document).ready(function($){
 	  */
 	jQuery(".cb-enable").click(function(){
 		var parent = $(this).parents('.switch-options');
+		if (!jQuery('.cb-disable',parent).hasClass('selected')) {
+			return;
+		}
+		sof_change();
 		jQuery('.cb-disable',parent).removeClass('selected');
 		jQuery(this).addClass('selected');
 		jQuery('.checkbox-input',parent).val(1);
@@ -21,6 +25,10 @@ jQuery(document).ready(function($){
 		jQuery($fold).slideDown('normal', "swing");
 	});
 	jQuery(".cb-disable").click(function(){
+		if (!jQuery('.cb-enable',parent).hasClass('selected')) {
+			return;
+		}
+		sof_change();
 		var parent = $(this).parents('.switch-options');
 		jQuery('.cb-enable',parent).removeClass('selected');
 		jQuery(this).addClass('selected');
