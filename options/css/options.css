@@ -824,3 +824,7 @@ label.radio, label.multicheck {
 	display: block;
 	margin-top: 5px;
 }
+
+.wrap {
+	margin-top: 0;
+}

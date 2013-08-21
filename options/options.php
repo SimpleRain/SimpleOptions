@@ -42,15 +42,15 @@ if ( ! class_exists('Simple_Options') ){
 			
 			$defaults = array();
 			
-			$defaults['opt_name'] = '';//must be defined by theme/plugin
+			$defaults['opt_name'] = strtolower(str_replace(" ", "", wp_get_theme()));//must be defined by theme/plugin
 			
 			$defaults['google_api_key'] = '';//must be defined for use with google webfonts field type
 			
 			$defaults['menu_icon'] = SOF_OPTIONS_URL.'/img/menu_icon.png';
-			$defaults['menu_title'] = "__('Options', 'simple-options')";
+			$defaults['menu_title'] = __('Options', 'simple-options');
 			$defaults['page_icon'] = 'icon-themes';
 			$defaults['page_title'] = "";
-			$defaults['page_slug'] = '_options';
+			$defaults['page_slug'] = 'simple_options';
 			$defaults['page_cap'] = 'manage_options';
 			$defaults['page_type'] = 'menu';
 			$defaults['page_parent'] = '';
@@ -65,7 +65,7 @@ if ( ! class_exists('Simple_Options') ){
 			
 			$defaults['help_tabs'] = array();
 			$defaults['help_sidebar'] = __('', 'simple-options');
-			
+
 			//get args
 			$this->args = wp_parse_args($args, $defaults);
 			$this->args = apply_filters('simple-options-args-'.$this->args['opt_name'], $this->args);
@@ -140,6 +140,7 @@ if ( ! class_exists('Simple_Options') ){
 			}//if
 		}
 		
+
 		/**
 		 * ->show(); This is used to echo and option value from the options array
 		 *
@@ -406,10 +407,6 @@ if ( ! class_exists('Simple_Options') ){
 					
 					foreach($section['fields'] as $fieldk => $field){
 
-						if (!empty($field['fold'])) {
-							echo '<input type="hidden" class="fold-parent" value="" />';
-						}
-						
 						if(isset($field['type'])){
 						
 							$field_class = 'Simple_Options_'.$field['type'];
@@ -1157,9 +1154,10 @@ if ( ! class_exists('Simple_Options') ){
 							}
 							
 
-							echo '<input type="hidden" id="fold-'.$field['id'].'" class="fold-data" value="'.htmlspecialchars(json_encode($field['fold']), ENT_QUOTES, 'UTF-8').'" />';
-/*
+							
+							$data = "";
 							$countFold = 0;
+							print_r($field['fold']);
 							foreach( $field['fold'] as $foldk => $foldv ) {
 								if (is_array($foldv)) {
 									if ($foldk == $countFold) {
@@ -1174,7 +1172,8 @@ if ( ! class_exists('Simple_Options') ){
 
 								$countFold++;
 							}
-*/
+
+							echo '<input type="hidden" '.$data.' id="foldChild-'.$field['id'].'" class="fold-data" value="'.htmlspecialchars(json_encode($field['fold']), ENT_QUOTES, 'UTF-8').'" />';
 							
 						}			
 

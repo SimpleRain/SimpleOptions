@@ -1,10 +1,10 @@
 <?php
-/*
- * 
- * Require the framework class before doing anything else, so we can use the defined urls and dirs
- * Also if running on windows you may have url problems, which can be fixed by defining the framework url first
- *
- */
+/**
+ 
+  Require the framework class before doing anything else, so we can use the defined urls and dirs
+  Also if running on windows you may have url problems, which can be fixed by defining the framework url first
+ 
+**/
 
 // Try to include the framework if it is embedded in the theme.
 if (strpos(dirname(__FILE__),TEMPLATEPATH) !== false &&!class_exists('Simple_Options') && file_exists( dirname( __FILE__ ) . '/options/options.php') ) {
@@ -16,15 +16,15 @@ if( !class_exists('Simple_Options') ){
 	return;
 }
 
-/*
- * 
- * Custom function for filtering the sections array given by theme, good for child themes to override or add to the sections.
- * Simply include this function in the child themes functions.php file.
- *
- * NOTE: the defined constansts for urls, and dir will NOT be available at this point in a child theme, so you must use
- * get_template_directory_uri() if you want to use any of the built in icons
- *
- */
+/**
+
+  Custom function for filtering the sections array given by theme, good for child themes to override or add to the sections.
+  Simply include this function in the child themes functions.php file.
+ 
+  NOTE: the defined constansts for urls, and dir will NOT be available at this point in a child theme, so you must use
+  get_template_directory_uri() if you want to use any of the built in icons
+ 
+**/
 function add_another_section($sections){
 	
 	//$sections = array();
@@ -44,15 +44,18 @@ function add_another_section($sections){
 //add_filter('simple-options-sections-twenty_eleven', 'add_another_section');
 
 
-/*
- * 
- * Custom function for filtering the args array given by theme, good for child themes to override or add to the args array.
- *
- */
+
+
+
+
+
+/**
+
+	Custom function for filtering the args array given by theme, good for child themes to override or add to the args array.
+
+**/
 function change_framework_args($args){
-	
 	//$args['dev_mode'] = false;
-	
 	return $args;
 	
 }//function
@@ -66,98 +69,117 @@ function change_framework_args($args){
 
 
 
-/*
- * This is the meat of creating the optons page
- *
- * Override some of the default values, uncomment the args and change the values
- * - no $args are required, but there there to be over ridden if needed.
- *
- *
- */
+/**
+ 
+  This is the meat of creating the optons page
+ 
+  Override some of the default values, uncomment the args and change the values
+  - no $args are required, but there there to be over ridden if needed.
+ 
+**/
+
 
 function setup_framework_options(){
-$args = array();
+	$args = array();
 
-//Set it to dev mode to view the class settings/info in the form - default is false
-$args['dev_mode'] = true;
+	//Set it to dev mode to view the class settings/info in the form - default is false
+	$args['dev_mode'] = true;
 
-// Enable customizer support for all of the fields unless denoated as customizer=>false in the field declaration
-$args['customizer'] = true;
+	// Enable customizer support for all of the fields unless denoated as customizer=>false in the field declaration
+	$args['customizer'] = true;
 
-//google api key MUST BE DEFINED IF YOU WANT TO USE GOOGLE WEBFONTS
-$args['google_api_key'] = 'AIzaSyAX_2L_UzCDPEnAHTG7zhESRVpMPS4ssII';
+	//google api key MUST BE DEFINED IF YOU WANT TO USE GOOGLE WEBFONTS
+	$args['google_api_key'] = 'AIzaSyAX_2L_UzCDPEnAHTG7zhESRVpMPS4ssII';
 
-//Remove the default stylesheet? make sure you enqueue another one all the page will look whack!
-//$args['stylesheet_override'] = true;
+	//Remove the default stylesheet? make sure you enqueue another one all the page will look whack!
+	//$args['stylesheet_override'] = true;
 
-//Add HTML before the form
-//$args['intro_text'] = __('<p>This is the HTML which can be displayed before the form, it isn\'t required, but more info is always better. Anything goes in terms of markup here, any HTML.</p>', 'simple-options');
+	//Add HTML before the form
+	//$args['intro_text'] = __('<p>This is the HTML which can be displayed before the form, it isn\'t required, but more info is always better. Anything goes in terms of markup here, any HTML.</p>', 'simple-options');
 
-//Setup custom links in the footer for share icons
-$args['share_icons']['twitter'] = array(
-										'link' => 'http://twitter.com/simplerain',
-										'title' => 'Folow me on Twitter', 
-										'img' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_322_twitter.png'
-										);
-$args['share_icons']['linked_in'] = array(
-										'link' => 'http://linkedin.com/in/dovyp',
-										'title' => 'Find me on LinkedIn', 
-										'img' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_337_linked_in.png'
-										);
+	//Setup custom links in the footer for share icons
+	$args['share_icons']['twitter'] = array(
+		'link' => 'http://twitter.com/simplerain',
+		'title' => 'Folow me on Twitter', 
+		'img' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_322_twitter.png'
+		);
+	$args['share_icons']['linked_in'] = array(
+		'link' => 'http://linkedin.com/in/dovyp',
+		'title' => 'Find me on LinkedIn', 
+		'img' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_337_linked_in.png'
+		);
 
-//Choose to disable the import/export feature
-//$args['show_import_export'] = false;
+	//Choose to disable the import/export feature
+	//$args['show_import_export'] = false;
 
-//Choose a custom option name for your theme options, the default is the theme name in lowercase with spaces replaced by underscores
-$args['opt_name'] = 'twenty_eleven';
+	//Choose a custom option name for your theme options, the default is the theme name in lowercase with spaces replaced by underscores
+	//$args['opt_name'] = 'SimpleOptions';
 
-//Custom menu icon
-//$args['menu_icon'] = '';
+	//Custom menu icon
+	//$args['menu_icon'] = '';
 
-//Custom menu title for options page - default is "Options"
-$args['menu_title'] = wp_get_theme();
+	//Custom menu title for options page - default is "Options"
+	$args['menu_title'] = wp_get_theme();
 
-//Custom Page Title for options page - default is "", and thus hidden
-//$args['page_title'] = wp_get_theme() . ' '.__('Theme Options', 'simple-options');
+	//Custom Page Title for options page - default is "", and thus hidden
+	//$args['page_title'] = wp_get_theme() . ' '.__('Theme Options', 'simple-options');
 
-//Custom page slug for options page (wp-admin/themes.php?page=***) - default is "simple_theme_options"
-$args['page_slug'] = 'simple_theme_options';
+	//Custom page slug for options page (wp-admin/themes.php?page=***) - default is "simple_theme_options"
+	//$args['page_slug'] = 'simple_theme_options';
 
-//Custom page capability - default is set to "manage_options"
-//$args['page_cap'] = 'manage_options';
+	//Custom page capability - default is set to "manage_options"
+	//$args['page_cap'] = 'manage_options';
 
-//page type - "menu" (adds a top menu section) or "submenu" (adds a submenu) - default is set to "menu"
-//$args['page_type'] = 'submenu';
+	//page type - "menu" (adds a top menu section) or "submenu" (adds a submenu) - default is set to "menu"
+	//$args['page_type'] = 'submenu';
 
-//parent menu - default is set to "themes.php" (Appearance)
-//the list of available parent menus is available here: http://codex.wordpress.org/Function_Reference/add_submenu_page#Parameters
-//$args['page_parent'] = 'themes.php';
+	//parent menu - default is set to "themes.php" (Appearance)
+	//the list of available parent menus is available here: http://codex.wordpress.org/Function_Reference/add_submenu_page#Parameters
+	//$args['page_parent'] = 'themes.php';
 
-//custom page location - default 100 - must be unique or will override other items
-$args['page_position'] = 27;
+	//custom page location - default 100 - must be unique or will override other items
+	$args['page_position'] = 27;
 
-//Custom page icon class (used to override the page icon next to heading)
-//$args['page_icon'] = 'icon-themes';
+	//Custom page icon class (used to override the page icon next to heading)
+	//$args['page_icon'] = 'icon-themes';
 
-//Want to disable the sections showing as a submenu in the admin? uncomment this line
-//$args['allow_sub_menu'] = false;
-		
-//Set ANY custom page help tabs - displayed using the new help tab API, show in order of definition		
-$args['help_tabs'][] = array(
-							'id' => 'simple-options-1',
-							'title' => __('Theme Information 1', 'simple-options'),
-							'content' => __('<p>This is the tab content, HTML is allowed.</p>', 'simple-options')
-							);
-$args['help_tabs'][] = array(
-							'id' => 'simple-options-2',
-							'title' => __('Theme Information 2', 'simple-options'),
-							'content' => __('<p>This is the tab content, HTML is allowed. Tab2</p>', 'simple-options')
-							);
+	//Want to disable the sections showing as a submenu in the admin? uncomment this line
+	//$args['allow_sub_menu'] = false;
+			
+	//Set ANY custom page help tabs - displayed using the new help tab API, show in order of definition		
+	
+	$args['help_tabs'][] = array(
+								'id' => 'simple-options-1',
+								'title' => __('Theme Information 1', 'simple-options'),
+								'content' => __('<p>This is the tab content, HTML is allowed.</p>', 'simple-options')
+								);
+	$args['help_tabs'][] = array(
+								'id' => 'simple-options-2',
+								'title' => __('Theme Information 2', 'simple-options'),
+								'content' => __('<p>This is the tab content, HTML is allowed. Tab2</p>', 'simple-options')
+								);
 
-//Set the Help Sidebar for the options page - no sidebar by default										
-$args['help_sidebar'] = __('<p>This is the sidebar content, HTML is allowed.</p>', 'simple-options');
+	//Set the Help Sidebar for the options page - no sidebar by default										
+	$args['help_sidebar'] = __('<p>This is the sidebar content, HTML is allowed.</p>', 'simple-options');
 
 
+/**
+
+$wp_customize->add_section($id, $args);
+
+Arguments:
+title
+The visible name of a controller section.
+priority
+This controls the order in which this section appears in the Theme Customizer sidebar.
+description
+This optional argument can add additional descriptive text to the section.
+Icon
+The icon used by the theme.
+Header
+The header text. If none is supplied, the title is used.
+
+**/
 
 $sections = array();
 
@@ -293,7 +315,7 @@ $sections[] = array(
 				'fields' => array(
 					array(
 						'id' => 'layout',
-						'type' => 'radio_images',
+						'type' => 'images',
 						'title' => __('Main Layout', 'simple-options'), 
 						'sub_desc' => __('Select main content and sidebar alignment. Choose between 1, 2 or 3 column layout.', 'simple-options'),
 						'options' => array(
@@ -533,7 +555,7 @@ $sections[] = array(
 						),
 					array(
 						'id' => '11',
-						'type' => 'multi_checkbox',
+						'type' => 'checkbox',
 						'title' => __('Multi Checkbox Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
@@ -551,7 +573,7 @@ $sections[] = array(
 						),
 					array(
 						'id' => '13',
-						'type' => 'radio_images',
+						'type' => 'images',
 						'title' => __('Radio Image Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
@@ -565,7 +587,7 @@ $sections[] = array(
 						),
 					array(
 						'id' => 'images',
-						'type' => 'radio_images',
+						'type' => 'images',
 						'title' => __('Radio Image Option For Layout', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This uses some of the built in images, you can use them for layout options.', 'simple-options'),
@@ -598,7 +620,7 @@ $sections[] = array(
 					array(
 						'id' => '15',
 						'type' => 'select',
-						'multiple' => true,
+						'multi' => true,
 						'title' => __('Multi Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
@@ -620,11 +642,12 @@ $sections[] = array(
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),
+
 					array(
 						'id' => 'select-categories-multi',
 						'type' => 'select',
 						'data' => 'categories',
-						'multiple' => true,
+						'multi' => true,
 						'title' => __('Categories Multi Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
@@ -641,7 +664,7 @@ $sections[] = array(
 						'id' => 'pages-multi_select',
 						'type' => 'select',
 						'data' => 'pages',
-						'multiple' => true,
+						'multi' => true,
 						'title' => __('Pages Multi Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
@@ -658,7 +681,7 @@ $sections[] = array(
 						'id' => 'tags-multi_select',
 						'type' => 'select',
 						'data' => 'tags',
-						'multiple' => true,
+						'multi' => true,
 						'title' => __('Tags Multi Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
@@ -675,7 +698,7 @@ $sections[] = array(
 						'id' => 'menus-multi_select',
 						'type' => 'select',
 						'data' => 'menu',
-						'multiple' => true,
+						'multi' => true,
 						'title' => __('Menus Multi Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
@@ -692,16 +715,16 @@ $sections[] = array(
 						'id' => 'post-type-multi_select',
 						'type' => 'select',
 						'data' => 'post_type',
-						'multiple' => true,
+						'multi' => true,
 						'title' => __('Post Type Multi Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),	
-										array(
+					array(
 						'id' => 'select-posts',
 						'type' => 'select',
 						'data' => 'post',
-						'title' => __('Posts Select Option', 'simple-options'), 
+						'title' => __('Posts Select Option2', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),
@@ -709,7 +732,7 @@ $sections[] = array(
 						'id' => 'select-posts-multi',
 						'type' => 'select',
 						'data' => 'post',
-						'multiple' => true,
+						'multi' => true,
 						'title' => __('Posts Multi Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
@@ -730,41 +753,6 @@ $sections[] = array(
 						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
 						'std' => '2'
 						),	
-					array(
-						'id' => 'select_hide_below',
-						'type' => 'select_hide_below',
-						'title' => __('Select Hide Below Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field requires certain options to be checked before the below field will be shown.', 'simple-options'),
-						'options' => array(
-									'1' => array('name' => 'Opt 1 field below allowed', 'allow' => 'true'),
-									'2' => array('name' => 'Opt 2 field below hidden', 'allow' => 'false'),
-									'3' => array('name' => 'Opt 3 field below allowed', 'allow' => 'true')
-									),//Must provide key => value(array) pairs for select options
-						'std' => '2'
-						),
-					array(
-						'id' => 'menu_location_select',
-						'type' => 'menu_location_select',
-						'title' => __('Menu Location Select Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field creates a drop down menu of all the themes menu locations.', 'simple-options')
-						),
-					array(
-						'id' => 'checkbox_hide_below',
-						'type' => 'checkbox_hide_below',
-						'title' => __('Checkbox to hide below', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field creates a checkbox which will allow the user to use the next setting.', 'simple-options'),
-						),
-						array(
-						'id' => 'post_type_select',
-						'type' => 'post_type_select',
-						'title' => __('Post Type Select Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This field creates a drop down menu of all registered post types.', 'simple-options'),
-						//'args' => array()//uses get_post_types
-						),
 					array(
 						'id' => 'custom_callback',
 						//'type' => 'nothing',//doesnt need to be called for callback fields
@@ -821,8 +809,6 @@ $sections[] = array(
 				'title' => __('All Field Types', 'simple-options'),
 				'desc' => __('<p class="description">These are fields that are done and ready to ship.</p>', 'simple-options'),
 
-
-					
 				'fields' => array(
 
 					array(
@@ -940,7 +926,7 @@ $sections[] = array(
 				);
 
 
-$sections[] = array( 'type' => 'divide' );
+
 
 				
 	$tabs = array();
@@ -1001,6 +987,7 @@ function change_home_menu_name($section) {
 	return $section;
 }
 add_action('home_settings_section_menu_modifier', 'change_home_menu_name', 0);
+
 
 /*
  * 

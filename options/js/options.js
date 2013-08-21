@@ -1,5 +1,5 @@
 	function sof_change() {
-		window.onbeforeunload = confirmOnPageExit;
+		//window.onbeforeunload = confirmOnPageExit;
 		jQuery(document).ready(function($){		
 			console.log('here');
 			// Hide errors if the user changed the field
@@ -265,21 +265,24 @@ jQuery.fn.isOnScreen = function(){
   });
 
 	jQuery('.fold-data').each(function() {
-
-
 		//console.log(jQuery.parseJSON(jQuery(this).val()));
 		
-
-
+		var data = jQuery.parseJSON(jQuery(this).val());
+		console.log(data);
 		var parent = jQuery(this).parent().parent();
+		var parents = "";
+		for (var key in data) {
+			var theparent = jQuery('#'+key).closest('tr');
+			theparent.addClass('fold');
+			theparent.attr('rel',theparent.attr('rel')+'|'+jQuery(this).attr('id').replace("foldChild-",""));
+		}
+		parent.addClass('fold-child');
+		parent.attr('rel', 'test');
 
-		parent.addClass('fold');
 
-		//parent.data('fold');
+		var ndata = parent.data();
 
-		var data = jQuery(this).data();
-
-		//console.log(data);
+		console.log(ndata);
 
 		var keys = [];
  		for (var key in data) {      

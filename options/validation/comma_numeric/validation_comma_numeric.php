@@ -12,7 +12,7 @@ class SOF_Validation_comma_numeric extends Simple_Options{
 		
 		parent::__construct();
 		$this->field = $field;
-		$this->field['msg'] = (isset($this->field['msg']))?$this->field['msg']:__('You must provide a comma seperated list of numerical values for this option.', 'simple-options');
+		$this->field['msg'] = (isset($this->field['msg']))?$this->field['msg']:__('You must provide a comma separated list of numerical values for this option.', 'simple-options');
 		$this->value = $value;
 		$this->current = $current;
 		$this->validate();

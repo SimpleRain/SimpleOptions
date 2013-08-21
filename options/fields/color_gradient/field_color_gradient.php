@@ -28,6 +28,13 @@ class Simple_Options_color_gradient extends Simple_Options{
 	*/
 	function render(){
 		
+		// No errors please
+		$defaults = array(
+			'from' => '',
+			'to' => ''
+			);
+		$this->value = wp_parse_args( $this->value, $defaults );
+
 		$class = (isset($this->field['class']))?$this->field['class']:'';
 
 		echo '<div class="sof-color-gradient-container" id="'.$this->field['id'].'">';

@@ -9,13 +9,13 @@ jQuery.noConflict();
 
 jQuery(document).ready(function(){
 
-	jQuery('.sof-radio_images label').click(function() {
+	jQuery('.sof-images label').click(function() {
 		var id = jQuery(this).attr('for');
 		
-		jQuery(this).parent().parent().find('.sof-radio_images-selected').removeClass('sof-radio_images-selected');	
+		jQuery(this).parent().parent().find('.sof-images-selected').removeClass('sof-images-selected');	
 
 		jQuery(this).find('input[type="radio"]').prop('checked');
-		jQuery('label[for="'+id+'"]').addClass('sof-radio_images-selected');
+		jQuery('label[for="'+id+'"]').addClass('sof-images-selected');
 		var split = id.split('-');
 		var labelclass = split[0];
 		

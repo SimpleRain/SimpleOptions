@@ -28,45 +28,69 @@ class Simple_Options_select extends Simple_Options{
 	*/
 	function render(){
 
+
+		/*
+			Use data instead of tags
+		*/
 		if (!empty($this->field['data']) && empty($this->field['options'])) {
 			if (empty($this->field['args'])) {
 				$this->field['args'] = array();
-				//$this->field['args'] = array('number' => '10');
 			}
-
+			$this->field['options'] = array();
 			$args = wp_parse_args($this->field['args'], array());	
-			
+
 			if ($this->field['data'] == "categories" || $this->field['data'] == "category") {
-				$this->field['options'] = get_categories($args, true); 
-			} else if ($this->field['data'] == "pages" || $this->field['data'] == "page") {
-				foreach (get_pages($args) as $k=>$item) {
-					$this->field['options'][$item->ID] = $item->post_title;
-				}
-			} else if ($this->field['data'] == "tags" || $this->field['data'] == "tag") {
-				$this->field['options'] = get_tags($args);
-			} else if ($this->field['data'] == "posts" || $this->field['data'] == "post") {
-				$args = wp_parse_args($this->field['args'], array('numberposts' => '-1'));
-				foreach (get_posts($args) as $k=>$item) {
-					$this->field['options'][$item->ID] = $item->post_title;
-				}
-			} else if ($this->field['data'] == "post_type" || $this->field['data'] == "post_types") {
-				$args = wp_parse_args($this->field['args'], array('public' => true));
-				foreach (get_post_types($args, 'object') as $k=>$item) {
-					$this->field['options'][$k] = $item->labels->name;
-				}
+				$cats = get_categories($args); 
+				if (!empty($cats)) {		
+					foreach ( $cats as $cat ) {
+						$this->field['options'][$cat->term_id] = $cat->name;
+					}//foreach
+				} // If
 			} else if ($this->field['data'] == "menus" || $this->field['data'] == "menu") {
-				foreach (wp_get_nav_menus($args) as $k=>$item) {
-					$this->field['options'][$item->term_id] = $item->name;
-				}
-			}			
-		}
+				$menus = wp_get_nav_menus($args);
+				if(!empty($menus)) {
+					foreach ($menus as $k=>$item) {
+						$this->field['options'][$item->term_id] = $item->name;
+					}//foreach
+				}//if
+			} else if ($this->field['data'] == "pages" || $this->field['data'] == "page") {
+				$pages = get_pages($args); 
+				if (!empty($pages)) {
+					foreach ( $pages as $page ) {
+						$this->field['options'][$page->ID] = $page->post_title;
+					}//foreach
+				}//if
+			} else if ($this->field['data'] == "posts" || $this->field['data'] == "post") {
+				$posts = get_posts($args); 
+				if (!empty($posts)) {
+					foreach ( $posts as $post ) {
+						$this->field['options'][$post->ID] = $post->post_title;
+					}//foreach
+				}//if
+			} else if ($this->field['data'] == "post_type" || $this->field['data'] == "post_types") {
+				$post_types = get_post_types($args, 'object'); 
+				if (!empty($post_types)) {
+					foreach ( $post_types as $k => $post_type ) {
+						$this->field['options'][$k] = $post_type->labels->name;
+					}//foreach
+				}//if
+			} else if ($this->field['data'] == "tags" || $this->field['data'] == "tag") {
+				$tags = get_tags($args); 
+				if (!empty($tags)) {
+					foreach ( $tags as $tag ) {
+						$this->field['options'][$tag->term_id] = $tag->name;
+					}//foreach
+				}//if
+			}//if
+
+		}//if
 
 		$class = (isset($this->field['class']))?' '.$this->field['class']:'';
 		if (!empty($this->field['options'])) {
-			if (isset($this->field['multiple']) && $this->field['multiple']) {
-				$multiple = " multiple";
+			if (isset($this->field['multi']) && $this->field['multi']) {
+				$multi = ' multiple="multiple"';
 			} else {
-				$multiple = "";
+				$multi = "";
 			}
 			
 			if (!empty($this->field['width'])) {
@@ -75,22 +99,20 @@ class Simple_Options_select extends Simple_Options{
 				$width = ' style="width: 40%;"';
 			}	
 
-			echo '<select'.$multiple.' id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" class="sof-select-item'.$class.'"'.$width.'>';
-				if (empty($multiple)) {
-					echo '<option></option>';
-				} else {
-
-				}
-				//echo "~~".."~~";
+			$nameBrackets = "";
+			if (!empty($multi)) {
+				$nameBrackets = "[]";
+			}
 
 
+			echo '<select'.$multi.' id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']'.$nameBrackets.'" class="sof-select-item'.$class.'"'.$width.' rows="6">';
 				foreach($this->field['options'] as $k => $v){
-					echo $k;
-					if (is_object($v)) {
-						echo '<option value="'.$v->term_id.'" '.selected($this->value, $v->term_id, false).'>'.$v->name.'</option>';	
+					if (is_array($this->value)) {
+						$selected = (is_array($this->value) && in_array($k, $this->value))?' selected="selected"':'';					
 					} else {
-						echo '<option value="'.$k.'" '.selected($this->value, $k, false).'>'.$v.'</option>';	
+						$selected = selected($this->value, $k, false);
 					}
+					echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>';
 				}//foreach
 			echo '</select>';			
 		}

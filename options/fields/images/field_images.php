@@ -1,5 +1,5 @@
 <?php
-class Simple_Options_radio_images extends Simple_Options{	
+class Simple_Options_images extends Simple_Options{	
 	
 	/**
 	 * Field Constructor.
@@ -44,9 +44,9 @@ class Simple_Options_radio_images extends Simple_Options{
 					$v['alt'] = $v['title'];
 				}				
 
-				$selected = (checked($this->value, $k, false) != '')?' sof-radio_images-selected':'';
-				echo '<li class="sof-radio_images' . $class . '">';
-				echo '<label class="'.$selected.' sof-radio_images-'.$this->field['id'].'" for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
+				$selected = (checked($this->value, $k, false) != '')?' sof-images-selected':'';
+				echo '<li class="sof-images' . $class . '">';
+				echo '<label class="'.$selected.' sof-images-'.$this->field['id'].'" for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
 				echo '<input type="radio" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$k.'" '.checked($this->value, $k, false).'/>';
 				echo '<img src="'.$v['img'].'" alt="'.$v['alt'].'" />';
 				if ($v['title'] != "") {
@@ -79,7 +79,7 @@ class Simple_Options_radio_images extends Simple_Options{
 		
 		wp_enqueue_script(
 			'simple-options-field-images-js', 
-			SOF_OPTIONS_URL.'fields/radio_images/field_radio_images.js', 
+			SOF_OPTIONS_URL.'fields/images/field_images.js', 
 			array('jquery'),
 			time(),
 			true
@@ -87,7 +87,7 @@ class Simple_Options_radio_images extends Simple_Options{
 
 		wp_enqueue_style(
 			'simple-options-field-images-css', 
-			SOF_OPTIONS_URL.'fields/radio_images/field_radio_images.css',
+			SOF_OPTIONS_URL.'fields/images/field_images.css',
 			time(),
 			true
 		);		
