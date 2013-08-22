@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.1.3';
+		protected $framework_version = '0.1.4';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -363,6 +363,14 @@ if ( ! class_exists('Simple_Options') ){
 				time(),
 				true
 			);
+
+			wp_enqueue_script(
+				'showdown-js', 
+				$this->url.'js/showdown.js', 
+				array('jquery', 'simple-options-js'),
+				time(),
+				true
+			);			
 
 			wp_enqueue_script(
 				'jquery-cookie', 
@@ -756,6 +764,8 @@ if ( ! class_exists('Simple_Options') ){
 							if(!class_exists($validate)){
 								require_once($this->dir.'validation/'.$field['validate'].'/validation_'.$field['validate'].'.php');
 							}//if
+
+							do_action('-get-validation');
 							
 							if(class_exists($validate)){
 								$validation = new $validate($field, $plugin_options[$field['id']], $options[$field['id']]);
@@ -954,7 +964,7 @@ if ( ! class_exists('Simple_Options') ){
 								
 								
 								echo '<p id="simple-options-import-action"><input type="submit" id="simple-options-import" name="'.$this->args['opt_name'].'[import]" class="button-primary" value="'.__('Import', 'simple-options').'"> <span>'.apply_filters('simple-options-import-warning', __('WARNING! This will overwrite any existing options, please proceed with caution!', 'simple-options')).'</span></p>';
-								echo '<div id="import_divide"></div>';
+								echo '<div class="hr"/><div class="inner"><span>&nbsp;</span></div></div>';
 								
 								echo '<h4>'.__('Export Options', 'simple-options').'</h4>';
 								echo '<div class="simple-options-section-desc">';

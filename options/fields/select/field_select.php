@@ -29,16 +29,15 @@ class Simple_Options_select extends Simple_Options{
 	function render(){
 
 
-		/*
-			Use data instead of tags
-		*/
+		/**
+			Use data from Wordpress to populate options array
+		**/
 		if (!empty($this->field['data']) && empty($this->field['options'])) {
 			if (empty($this->field['args'])) {
 				$this->field['args'] = array();
 			}
 			$this->field['options'] = array();
 			$args = wp_parse_args($this->field['args'], array());	
-
 			if ($this->field['data'] == "categories" || $this->field['data'] == "category") {
 				$cats = get_categories($args); 
 				if (!empty($cats)) {		
@@ -82,7 +81,6 @@ class Simple_Options_select extends Simple_Options{
 					}//foreach
 				}//if
 			}//if
-
 		}//if
 
 		$class = (isset($this->field['class']))?' '.$this->field['class']:'';

@@ -11,17 +11,26 @@
 	background-color:#f9f9f9;
 }
 .sof-images img,
-.sof-images-selected img{
+.sof-images-selected img, 
+.sof-images .pattern,
+.sof-images-selected .pattern {
 	border-width:4px;
 	border-style: solid;
 }
-.sof-images img{
+.sof-images img, .sof-images .pattern{
 	border-color:#e9e9e9;
 }
-.sof-images-selected img{
+.sof-images-selected img, .sof-images-selected .pattern {
 		border-color:#c9c9c9;
 }
 
-.sof-radio-images {
+.sof-images {
 	margin: 0 !important;
+}
+.sof-images .pattern {
+	display: block; 
+	background-color: #FFF;
+	background-repeat: repeat;
+	width: 40px;
+	height: 40px;
 }

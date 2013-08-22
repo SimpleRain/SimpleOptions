@@ -7,6 +7,10 @@
 	color:red;
 }
 
+.upload_button_div {
+	margin-bottom: 5px;
+}
+
 .upload-error {
 	float:left;
 	color:#666;

@@ -34,7 +34,7 @@ class Simple_Options_images extends Simple_Options{
 			
 		if (!empty($this->field['options'])) {
 
-			echo '<ul class="sof-radio-images">';
+			echo '<ul class="sof-images">';
 			
 			foreach($this->field['options'] as $k => $v){
 				if (!isset($v['title'])) {
@@ -42,13 +42,34 @@ class Simple_Options_images extends Simple_Options{
 				}
 				if (!isset($v['alt'])) {
 					$v['alt'] = $v['title'];
-				}				
+				}			
+
+				$style = "";
+				if (!empty($this->field['width'])) {
+					$style .= 'width: '.$this->field['width'];
+					if (is_numeric($this->field['width'])) {
+						$style .= "px";
+					}
+					$style .= ";";
+				}	
+				if (!empty($this->field['height'])) {
+					$style .= 'height: '.$this->field['height'];
+					if (is_numeric($this->field['height'])) {
+						$style .= "px";
+					}
+					$style .= ";";
+				}	
 
 				$selected = (checked($this->value, $k, false) != '')?' sof-images-selected':'';
 				echo '<li class="sof-images' . $class . '">';
 				echo '<label class="'.$selected.' sof-images-'.$this->field['id'].'" for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
 				echo '<input type="radio" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$k.'" '.checked($this->value, $k, false).'/>';
-				echo '<img src="'.$v['img'].'" alt="'.$v['alt'].'" />';
+				if (!empty($this->field['pattern']) && $this->field['pattern'] == true) {
+					echo '<span class="pattern" style="background-image: url('.$v['img'].');">&nbsp;</span>';
+				} else {
+					echo '<img src="'.$v['img'].'" alt="'.$v['alt'].'" style="'.$style.'" />';	
+				}
+				
 				if ($v['title'] != "") {
 					echo '<br /><span>'.$v['title'].'</span>';	
 				}

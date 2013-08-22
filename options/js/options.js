@@ -303,4 +303,11 @@ jQuery.fn.isOnScreen = function(){
 		
 	});  
 	
+	if ($('#theme_docs_section_group').length != 0) {
+		var converter = new Showdown.converter();
+		var text = jQuery('#theme_docs_section_group').html();
+		text = converter.makeHtml(text);
+		jQuery('#theme_docs_section_group').html(text);
+	}
+
 });

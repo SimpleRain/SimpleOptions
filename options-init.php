@@ -287,10 +287,19 @@ $sections[] = array(
 
 					array(
 						'id' => 'patterns', //must be unique
-						'type' => 'patterns', 
-						'title' => __('Background Patterns Images', 'simple-options'),
+						'type' => 'images', 
+						'pattern' => true,
+						'title' => __('Images Option (with pattern=>true)', 'simple-options'),
 						'sub_desc'=> __('Select a background pattern.', 'simple-options'),
 						'std' 		=> 0,
+						'options' => array(
+										'1' => array('alt' => '1 Column', 'img' => SOF_OPTIONS_URL.'img/1col.png'),
+										'2' => array('alt' => '2 Column Left', 'img' => SOF_OPTIONS_URL.'img/2cl.png'),
+										'3' => array('alt' => '2 Column Right', 'img' => SOF_OPTIONS_URL.'img/2cr.png'),
+										'4' => array('alt' => '3 Column Middle', 'img' => SOF_OPTIONS_URL.'img/3cm.png'),
+										'5' => array('alt' => '3 Column Left', 'img' => SOF_OPTIONS_URL.'img/3cl.png'),
+										'6' => array('alt' => '3 Column Right', 'img' => SOF_OPTIONS_URL.'img/3cr.png')
+											),//Must provide key => value(array:title|img) pairs for radio options						
 						),		
 
 					array(
@@ -389,6 +398,14 @@ $sections[] = array(
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'std' => array('from' => '#1e73be', 'to' => '#00897e')
 						),
+					array(
+						'id' => 'header-border',
+						'type' => 'border',
+						'title' => __('Header Border Option', 'simple-options'),
+						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'std' => array('color' => '#1e73be', 'style' => 'solid', 'width'=>'3')
+						),					
 					array(
 						'id' => 'body-font',
 						'type' => 'typography',
@@ -563,6 +580,14 @@ $sections[] = array(
 						'std' => array('1' => '1', '2' => '0', '3' => '0')//See how std has changed? you also dont need to specify opts that are 0.
 						),
 					array(
+						'id' => 'checkbox-data',
+						'type' => 'checkbox',
+						'title' => __('Multi Checkbox Option (with menu data)', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'data' => "menu"
+						),					
+					array(
 						'id' => '12',
 						'type' => 'radio',
 						'title' => __('Radio Option', 'simple-options'), 
@@ -572,9 +597,17 @@ $sections[] = array(
 						'std' => '2'
 						),
 					array(
+						'id' => 'radio-data',
+						'type' => 'radio',
+						'title' => __('Multi Checkbox Option (with menu data)', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
+						'data' => "menu"
+						),					
+					array(
 						'id' => '13',
 						'type' => 'images',
-						'title' => __('Radio Image Option', 'simple-options'), 
+						'title' => __('Images Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'options' => array(
@@ -588,7 +621,7 @@ $sections[] = array(
 					array(
 						'id' => 'images',
 						'type' => 'images',
-						'title' => __('Radio Image Option For Layout', 'simple-options'), 
+						'title' => __('Images Option for Layout', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This uses some of the built in images, you can use them for layout options.', 'simple-options'),
 						'options' => array(
@@ -741,18 +774,35 @@ $sections[] = array(
 				);
 $sections[] = array(
 				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_023_cogwheels.png',
-				'title' => __('Custom Fields', 'simple-options'),
+				'title' => __('Additional Fields', 'simple-options'),
 				'desc' => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'simple-options'),
 				'fields' => array(
+
 					array(
-						'id' => '18info',
+						'id' => '17',
+						'type' => 'date',
+						'title' => __('Date Option', 'simple-options'), 
+						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
+						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
+						),
+					array(
+						'id' => '21',
+						'type' => 'divide'
+						),					
+					array(
+						'id' => '18',
 						'type' => 'button_set',
 						'title' => __('Button Set Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
 						'std' => '2'
-						),	
+						),
+					array(
+						'id' => '23',
+						'type' => 'info',
+						'desc' => __('<p class="description">This is the info field, if you want to break sections up.</p>', 'simple-options')
+						),					
 					array(
 						'id' => 'custom_callback',
 						//'type' => 'nothing',//doesnt need to be called for callback fields
@@ -764,166 +814,6 @@ $sections[] = array(
 					)
 				);
 
-$sections[] = array(
-				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_093_crop.png',
-				'title' => __('Non Value Fields', 'simple-options'),
-				'desc' => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'simple-options'),
-				'fields' => array(
-					array(
-						'id' => '20',
-						'type' => 'text',
-						'title' => __('Text Field', 'simple-options'), 
-						'sub_desc' => __('Additional Info', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
-						),
-					array(
-						'id' => '21',
-						'type' => 'divide'
-						),
-					array(
-						'id' => '22',
-						'type' => 'text',
-						'title' => __('Text Field', 'simple-options'), 
-						'sub_desc' => __('Additional Info', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
-						),
-					array(
-						'id' => '23',
-						'type' => 'info',
-						'desc' => __('<p class="description">This is the info field, if you want to break sections up.</p>', 'simple-options')
-						),
-					array(
-						'id' => '24',
-						'type' => 'text',
-						'title' => __('Text Field', 'simple-options'), 
-						'sub_desc' => __('Additional Info', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
-						)				
-					)
-				);
-		
-$sections[] = array( 'type' => 'divide' );
-
-$sections[] = array(
-				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_049_star.png',
-				'title' => __('All Field Types', 'simple-options'),
-				'desc' => __('<p class="description">These are fields that are done and ready to ship.</p>', 'simple-options'),
-
-				'fields' => array(
-
-					array(
-						'id' => 'theswitch', //must be unique
-						'type' => 'switch',
-						'title' => __('Switch', 'simple-options'),
-						'sub_desc' => __('On off!', 'simple-options'),
-						'desc' => __('That\'s right. It works!', 'simple-options'),
-						'std' => 1, //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
-						),
-
-
-				array(
-					'id' => 'slider222', //must be unique
-					'type' => 'slider', 
-					'title' => __('Slider', 'simple-options'),
-					'sub_desc' => __('A slider', 'simple-options'),
-					'desc' => __('That\'s right. It works! Try putting in a letter or number beyond the range. Gotta love that javascript!', 'simple-options'),
-					'step' => 2,
-					'min' => 1,
-					'max' => 50,
-					'edit' => true,
-					'std' => array(
-						'family'=>'Arial',
-						'weight'=>'400',
-						'color'=>'#000',
-						'size'=>'22px',
-						'script'=>'',
-						'line-height'=> '14px',
-						), //This is a default value, used to set the options on theme activation, and if the user hits the Reset to defaults Button
-					//'class' => '' //Set custom classes for elements if you want to do something a little different - default is "typography"
-					),
-
-					array(
-						'id' => 'text',
-						'type' => 'text',
-						'title' => __('Text Option', 'simple-options'),
-						'sub_desc' => __('This is a little space under the Field Title in the Options table, additonal info is good in here.', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						),		
-/*
-    $of_options[] = array(
-      "name"      => __("Posts Featured Image Height", "shoestrap"),
-      "desc"      => __("Select the height of your featured images on single posts. Default: 330px", "shoestrap"),
-      "id"        => "feat_img_post_height",
-      "fold"      => "feat_img_post",
-      "std"       => 330,
-      "min"       => 50,
-      "step"      => 1,
-      "max"       => 1000,
-      "edit"      => 1,
-      "type"      => "sliderui"
-
-
-	name == title
-
-
-    ); 
-*/
-					array(
-						'id' => 'editor',
-						'type' => 'editor',
-						'name' => __('Editor Option', 'simple-options'), 
-						'sub_desc' => __('Can also use the validation methods if you like.', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'std' => 'OOOOOOhhhh, rich editing.'
-						),
-					array(
-						'id' => '16',
-						'type' => 'color',
-						'title' => __('Color Option', 'simple-options'), 
-						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'std' => '#FFFFFF',
-						'validate' => 'color',
-						),
-					array(
-						'id' => 'color_gradient',
-						'type' => 'color_gradient',
-						'title' => __('Color Gradient Option', 'simple-options'), 
-						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'std' => array('from' => '#000000', 'to' => '#FFFFFF')
-						),
-					array(
-						'id' => '17',
-						'type' => 'date',
-						'title' => __('Date Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
-						),
-					array(
-						'id' => '18',
-						'type' => 'button_set',
-						'title' => __('Button Set Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
-						'std' => '2'
-						),
-
-					array(
-						'id' => '18divide',
-						'type' => 'divide',
-						'title' => __('Button Set Option', 'simple-options'), 
-						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
-						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
-						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
-						'std' => '2'
-						),
-									
-
-					)
-					
-				);
 
 
 
@@ -963,11 +853,11 @@ $sections[] = array(
 					'content' => $theme_info
 					);
 	
-	if(file_exists(trailingslashit(get_stylesheet_directory()).'README.html')){
+	if(file_exists(trailingslashit(get_stylesheet_directory()).'README.md')){
 		$tabs['theme_docs'] = array(
 						'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_071_book.png',
 						'title' => __('Documentation', 'simple-options'),
-						'content' => nl2br(file_get_contents(trailingslashit(get_stylesheet_directory()).'README.html'))
+						'content' => file_get_contents(dirname(__FILE__).'/README.md')
 						);
 	}//if
 

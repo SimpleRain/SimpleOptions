@@ -1,5 +1,5 @@
 <?php
-class Simple_Options_color extends Simple_Options{	
+class Simple_Options_border extends Simple_Options{	
 	
 	/**
 	 * Field Constructor.
@@ -27,12 +27,12 @@ class Simple_Options_color extends Simple_Options{
 	 * @since Simple_Options 1.0.0
 	*/
 	function render(){
-		
-		echo '<div class="sof-color-container">';
+		return;
+		echo '<div class="sof-border-container">';
 
 		$class = (isset($this->field['class']))?$this->field['class']:'';
 
-		echo '<input name="'.$this->args['opt_name'].'['.$this->field['id'].']" id="' . $this->field['id'] . '" class="sof-color ' . $class . '"  type="text" value="' . $this->value . '"  data-default-color="' . $this->field['std'] . '" />';
+		echo '<input name="'.$this->args['opt_name'].'['.$this->field['id'].'][color]" id="' . $this->field['id'] . '" class="sof-color ' . $class . '"  type="text" value="' . $this->value['color'] . '"  data-default-color="' . $this->field['std']['color'] . '" />';
 		
 		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
 		
@@ -65,6 +65,13 @@ class Simple_Options_color extends Simple_Options{
 			true
 		);		
 		
+		wp_enqueue_style(
+			'simple-options-field-border-css', 
+			SOF_OPTIONS_URL.'fields/border/field_border.css', 
+			time(),
+			true
+		);		
+
 	}//function
 	
 }//class

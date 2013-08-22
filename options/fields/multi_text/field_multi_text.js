@@ -1,6 +1,7 @@
 jQuery(document).ready(function(){
 	
 	jQuery('.simple-options-multi-text-remove').live('click', function(){
+		sof_change();
 		jQuery(this).prev('input[type="text"]').val('');
 		jQuery(this).parent().fadeOut('slow', function(){jQuery(this).remove();});
 	});
