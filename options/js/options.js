@@ -319,7 +319,13 @@ jQuery.fn.isOnScreen = function(){
 		var id = jQuery(this).attr('id').replace("foldChild-","");
 		var foldata = jQuery(this).attr('id');
 		var data = jQuery(this).val(); // Items that make this element fold
-		var split = data.split(',');
+		var split = "";
+
+		if (data.indexOf(",") != -1) {
+			split = data.split(',');
+		} else {
+			split = data.split();
+		}		
 
 		jQuery.each(split,function(n){
 			var fid = jQuery('#'+split[n]); // ID of the unit that causes a fold
@@ -334,13 +340,15 @@ jQuery.fn.isOnScreen = function(){
 			var fold = "";
 			var fdata = jQuery('#'+split[n]);
 
-			if (typeof fdata != "undefined") {
+			var currentData = jQuery('#'+split[n]).attr('data-fold');
+			if (typeof(fdata) !== 'undefined' && typeof(currentData) !== 'undefined') {
 				fold += jQuery('#'+split[n]).attr('data-fold'); // All what's already there	
 			}
 			if (fold != "") {
 				fold += ",";
 			}
 			fold += id;
+
 			jQuery('#'+split[n]).attr('data-fold', fold);		
 			verify_fold(jQuery('#'+split[n]));
 			
