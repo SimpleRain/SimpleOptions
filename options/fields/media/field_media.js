@@ -51,7 +51,7 @@ jQuery(document).ready(function($){
 			if (attachment.attributes.type != "image") {
 				return;
 			}
-			console.log(attachment.attributes);
+			//console.log(attachment.attributes);
 			selector.find('.upload').val(attachment.attributes.url);
 			selector.find('.upload-id').val(attachment.attributes.id);
 			if ( attachment.attributes.type == 'image' ) {
