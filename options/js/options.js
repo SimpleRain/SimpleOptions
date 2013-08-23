@@ -5,7 +5,10 @@ jQuery('.sof-action_bar').click(function() {
 function verify_fold(variable) {
 	jQuery(document).ready(function($){		
 		// Hide errors if the user changed the field
+		
+		
 		if (variable.hasClass('fold')) {
+			var varVisible = jQuery('#'+variable.attr('id')).closest('td').is(":visible");
 			var data = variable.data();
 			var fold = variable.attr('data-fold').split(',');
 			var value = variable.val();
@@ -25,10 +28,20 @@ function verify_fold(variable) {
 				if (!hide && jQuery.inArray(value, theData) != -1) {
 					hide = true;
 				} 
-				if ( hide ) {
-					jQuery('#foldChild-'+fold[n]).parent().parent().fadeOut();
+				var foldChild = jQuery('#'+fold[n]);
+
+				if ( !hide && varVisible ) {
+					jQuery('#foldChild-'+fold[n]).parent().parent().fadeIn('medium', function() {
+						if (foldChild.hasClass('fold')) {
+							verify_fold(foldChild);
+						}
+					});					
 				} else {
-					jQuery('#foldChild-'+fold[n]).parent().parent().fadeIn();
+					jQuery('#foldChild-'+fold[n]).parent().parent().fadeOut('medium', function() {						
+						if (foldChild.hasClass('fold')) {
+							verify_fold(foldChild);
+						}
+					});					
 				}
 			});
 		}

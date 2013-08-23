@@ -265,6 +265,7 @@ $sections[] = array(
 					array(
 						'id' => 'switch-fold', //must be unique
 						'type' => 'switch', 
+						'fold' => array('switch-custom'),						
 						'title' => __('Switch - With Hidden Items', 'simple-options'),
 						'sub_desc'=> __('Also called a "fold" parent.', 'simple-options'),
 						'desc' => __('Items set with a fold to this ID will hide unless this is set to the appropriate value.', 'simple-options'),
