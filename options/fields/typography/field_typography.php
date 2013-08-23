@@ -39,7 +39,7 @@ class Simple_Options_typography extends Simple_Options{
 
 		// No errors please
 		$defaults = array(
-			'face' => '',
+			'family' => '',
 			'size' => '',
 			'style' => '',
 			'color' => '',

@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.1.4';
+		protected $framework_version = '0.1.5';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -61,7 +61,7 @@ if ( ! class_exists('Simple_Options') ){
 			$defaults['dev_mode'] = true;
 			$defaults['stylesheet_override'] = false;
 			
-			$defaults['footer_credit'] = __('<span id="footer-thankyou">Options Panel created using the <a href="'.$this->framework_url.'" target="_blank">'.$this->framework_name.'</a> Version '.$this->framework_version.'</span>', 'simple-options');
+			//$defaults['footer_credit'] = __('<span id="footer-thankyou">Options Panel created using the <a href="'.$this->framework_url.'" target="_blank">'.$this->framework_name.'</a> Version '.$this->framework_version.'</span>', 'simple-options');
 			
 			$defaults['help_tabs'] = array();
 			$defaults['help_sidebar'] = __('', 'simple-options');
@@ -515,11 +515,10 @@ if ( ! class_exists('Simple_Options') ){
 		
 		
 		function admin_footer_text($footer_text){
-			return $this->args['footer_credit'];
+			if (!empty($this->args['footer_credit'])) {
+				return $this->args['footer_credit'];	
+			}
 		}//function
-		
-		
-		
 		
 		/**
 		 * Register Option for use
@@ -1158,34 +1157,30 @@ if ( ! class_exists('Simple_Options') ){
 		*/
 		function _field_input($field){
 
-						if (!empty($field['fold'])) {
-							if ( !is_array( $field['fold'] ) ) {
-								$field['fold'] = array($field['fold']=>1);
-							}
-							
+			// Setup the fold hidden object to be used by the JS
+			if (!empty($field['fold'])) {
 
-							
-							$data = "";
-							$countFold = 0;
-							print_r($field['fold']);
-							foreach( $field['fold'] as $foldk => $foldv ) {
-								if (is_array($foldv)) {
-									if ($foldk == $countFold) {
-										$foldk = $foldv;
-										$foldv = 1;
-									}
-									$data .= ' data-'.$foldk.'="'.$foldv.'"';
+				if ( !is_array( $field['fold'] ) ) {
+					$field['fold'] = array($field['fold']=>'0');
+				}
 
-								} 
+				$data = $val = "";
+				foreach( $field['fold'] as $foldk => $foldv ) {
+					if ($foldv === true || $foldv === "1" || (is_int($foldv) && $foldv === 1)) {
+						$foldv = array(1);
+					} else if ($foldv === false || $foldv === null) {
+						$foldv = array(0);
+					} else if (!is_array($foldv)) {
+						$foldk = $foldv;
+						$foldv = array("0");
+					}
 
-								$data .= ' data-'.$foldk.'="'.$foldv.'"';
-
-								$countFold++;
-							}
-
-							echo '<input type="hidden" '.$data.' id="foldChild-'.$field['id'].'" class="fold-data" value="'.htmlspecialchars(json_encode($field['fold']), ENT_QUOTES, 'UTF-8').'" />';
-							
-						}			
+					$data .= ' data-'.$foldk.'="'.implode(",", $foldv).'"';
+					$val .= $foldk.",";
+				}
+				$val = rtrim($val, ',');
+				echo '<input type="hidden" '.$data.' id="foldChild-'.$field['id'].'" class="fold-data" value="'.$val.'" />';
+			}			
 
 			if(isset($field['callback']) && function_exists($field['callback'])){
 				$value = (isset($this->options[$field['id']]))?$this->options[$field['id']]:'';

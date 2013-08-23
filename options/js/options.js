@@ -1,23 +1,61 @@
-	function sof_change() {
-		//window.onbeforeunload = confirmOnPageExit;
-		jQuery(document).ready(function($){		
-			console.log('here');
-			// Hide errors if the user changed the field
-			if (jQuery(this).hasClass('simple-options-field-error')) {
-				jQuery(this).removeClass('simple-options-field-error');
-				jQuery(this).parent().find('.simple-options-th-error').slideUp();
-				var parentID = jQuery(this).closest('.simple-options-group-tab').attr('id');
-				var hideError = true;
-				jQuery('#'+parentID+' .simple-options-field-error').each(function() {
-					hideError = false;
-				});
-				if (hideError) {
-					jQuery('#'+parentID+'_li .simple-options-menu-error').hide();
-				}			
-			}
-			jQuery('#simple-options-save-warn').slideDown();	
-		});	
-	}
+jQuery('.sof-action_bar').click(function() {
+	window.onbeforeunload = null;
+});
+
+function verify_fold(variable) {
+	jQuery(document).ready(function($){		
+		// Hide errors if the user changed the field
+		if (variable.hasClass('fold')) {
+			var data = variable.data();
+			var fold = variable.attr('data-fold').split(',');
+			var value = variable.val();
+			jQuery.each(fold,function(n){
+				var theData = variable.data(fold[n]);
+				var hide = false;
+				if( theData == value ) {
+    			hide = true;
+				}
+				if (theData instanceof String) {
+					if (theData.indexOf(",") != -1) {
+						theData = theData.split(",");
+					} else {
+						theData = theData.split();
+					}
+				}
+				if (!hide && jQuery.inArray(value, theData) != -1) {
+					hide = true;
+				} 
+				if ( hide ) {
+					jQuery('#foldChild-'+fold[n]).parent().parent().fadeOut();
+				} else {
+					jQuery('#foldChild-'+fold[n]).parent().parent().fadeIn();
+				}
+			});
+		}
+	});
+}
+
+function sof_change(variable) {
+	
+	window.onbeforeunload = confirmOnPageExit;
+	jQuery(document).ready(function($){		
+		verify_fold(variable); // Verify if the variable is visible
+		if (jQuery(this).hasClass('simple-options-field-error')) {
+			jQuery(this).removeClass('simple-options-field-error');
+			jQuery(this).parent().find('.simple-options-th-error').slideUp();
+			var parentID = jQuery(this).closest('.simple-options-group-tab').attr('id');
+			var hideError = true;
+			jQuery('#'+parentID+' .simple-options-field-error').each(function() {
+				hideError = false;
+			});
+			if (hideError) {
+				jQuery('#'+parentID+'_li .simple-options-menu-error').hide();
+			}			
+		}
+		jQuery('#simple-options-save-warn').slideDown();	
+	});	
+}
+
 
 var confirmOnPageExit = function (e) {
     // If we haven't been passed the event get the window.event
@@ -178,7 +216,7 @@ var confirmOnPageExit = function (e) {
 	}	
 	
 	jQuery('input, textarea, select').live('change',function() {
-		sof_change();
+		sof_change(jQuery(this));
 	});
 	
 
@@ -265,44 +303,40 @@ jQuery.fn.isOnScreen = function(){
   });
 
 	jQuery('.fold-data').each(function() {
-		//console.log(jQuery.parseJSON(jQuery(this).val()));
-		
-		var data = jQuery.parseJSON(jQuery(this).val());
-		console.log(data);
-		var parent = jQuery(this).parent().parent();
-		var parents = "";
-		for (var key in data) {
-			var theparent = jQuery('#'+key).closest('tr');
-			theparent.addClass('fold');
-			theparent.attr('rel',theparent.attr('rel')+'|'+jQuery(this).attr('id').replace("foldChild-",""));
-		}
-		parent.addClass('fold-child');
-		parent.attr('rel', 'test');
+		var id = jQuery(this).attr('id').replace("foldChild-","");
+		var foldata = jQuery(this).attr('id');
+		var data = jQuery(this).val(); // Items that make this element fold
+		var split = data.split(',');
 
+		jQuery.each(split,function(n){
+			var fid = jQuery('#'+split[n]); // ID of the unit that causes a fold
+			fid.addClass('fold'); // Add the fold class
+			var ndata = jQuery('#'+foldata).attr('data-'+split[n]); // The values of fid that cause the fold
+			if (fid.attr('data-'+id)) { // If this fold object already has values that cause a fold
+				ndata = fid.attr('data-'+id)+","+ndata;
+			}		
+			fid.attr('data-'+id, ndata);
 
-		var ndata = parent.data();
+			// This is where we say, these are the elements that cause you to hide!
+			var fold = "";
+			var fdata = jQuery('#'+split[n]);
 
-		console.log(ndata);
-
-		var keys = [];
- 		for (var key in data) {      
-    	if (data.hasOwnProperty(key)) keys.push(key);
- 		}
- 		//console.log(keys);
- 		var valueUsed = false;
-		for (var i = 0; i < keys.length; ++i) {
-			jQuery('#'+keys[i]).addClass('hasFold');
-			//console.log(keys[i]);
-			//console.log(data[keys[i]]);
-			if (jQuery('#'+keys[i]).val() == data[keys[i]] || valueUsed) {
-				valueUsed = true;
-				continue;
+			if (typeof fdata != "undefined") {
+				fold += jQuery('#'+split[n]).attr('data-fold'); // All what's already there	
 			}
-			parent.hide();
-		}
-		
+			if (fold != "") {
+				fold += ",";
+			}
+			fold += id;
+			jQuery('#'+split[n]).attr('data-fold', fold);		
+			verify_fold(jQuery('#'+split[n]));
+			
+    });
 	});  
 	
+
+
+	// Markdown Viewer for Theme Documentation
 	if ($('#theme_docs_section_group').length != 0) {
 		var converter = new Showdown.converter();
 		var text = jQuery('#theme_docs_section_group').html();

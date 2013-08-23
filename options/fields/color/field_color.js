@@ -71,5 +71,13 @@ jQuery(document).ready(function(){
 		return value;
 	}
 
+/*
+	jQuery('#color-background').val('#000000');
+	if (jQuery('#color-background').hasClass('sof-color')) {
+		jQuery('#color-background').change();
+		jQuery('#color-background').keyup();
+	}
+*/
+
 });  	
 

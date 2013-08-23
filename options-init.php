@@ -273,7 +273,7 @@ $sections[] = array(
 					array(
 						'id' => 'layout', //must be unique
 						'type' => 'layout', 
-						'fold' => array('switch-fold'=>array(1,2)),
+						'fold' => array('switch-fold'),
 						'title' => __('Homepage Layout Manager', 'simple-options'),
 						'sub_desc'=> __('Organize how you want the layout to appear on the homepage.', 'simple-options'),
 						),
@@ -289,6 +289,7 @@ $sections[] = array(
 						'id' => 'patterns', //must be unique
 						'type' => 'images', 
 						'pattern' => true,
+						'fold' => array('switch-fold'=>array(0)),
 						'title' => __('Images Option (with pattern=>true)', 'simple-options'),
 						'sub_desc'=> __('Select a background pattern.', 'simple-options'),
 						'std' 		=> 0,

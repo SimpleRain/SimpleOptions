@@ -17,8 +17,9 @@ jQuery(document).ready(function(){
 			step: parseInt(sliderParam.step),
 			range: "min",
 			slide: function( event, ui ) {
-				jQuery("#" + sliderParam.id).val( ui.value );
-				sof_change();
+				var input = jQuery("#" + sliderParam.id);
+				input.val( ui.value );
+				sof_change(input);
 			}
 		});
 
