@@ -63,162 +63,162 @@ class Simple_Options_typography extends Simple_Options{
 	  echo '<div id="'.$this->field['id'].'-container" class="sof-typography-container" data-id="'.$this->field['id'].'" data-units="'.$unit.'">';
 
 	  /**
-		Font Family
-	  **/
-    echo '<div class="select_wrapper typography-family" original-title="Font family" style="width: 220px; margin-right: 5px;">';
-    echo '<select class="sof-typography sof-typography-family sof-select-item" id="'.$this->field['id'].'-family" name="'.$this->args['opt_name'].'['.$this->field['id'].'][family]" data-id="'.$this->field['id'].'">';
-	 	echo '<optgroup label="Standard Fonts">';
-    $faces = array(
-      "Arial, Helvetica, sans-serif" => "Arial, Helvetica, sans-serif",
-      "'Arial Black', Gadget, sans-serif" => "'Arial Black', Gadget, sans-serif",
-      "'Bookman Old Style', serif" => "'Bookman Old Style', serif",
-      "'Comic Sans MS', cursive" => "'Comic Sans MS', cursive",
-      "Courier, monospace" => "Courier, monospace",
-      "Garamond, serif" => "Garamond, serif",
-      "Georgia, serif" => "Georgia, serif",
-      "Impact, Charcoal, sans-serif" => "Impact, Charcoal, sans-serif",
-      "'Lucida Console', Monaco, monospace" => "'Lucida Console', Monaco, monospace",
-      "'Lucida Sans Unicode', 'Lucida Grande', sans-serif" => "'Lucida Sans Unicode', 'Lucida Grande', sans-serif",
-      "'MS Sans Serif', Geneva, sans-serif" => "'MS Sans Serif', Geneva, sans-serif",
-      "'MS Serif', 'New York', sans-serif" =>"'MS Serif', 'New York', sans-serif",
-      "'Palatino Linotype', 'Book Antiqua', Palatino, serif" => "'Palatino Linotype', 'Book Antiqua', Palatino, serif",
-      "Tahoma, Geneva, sans-serif" =>"Tahoma, Geneva, sans-serif",
-      "'Times New Roman', Times, serif" => "'Times New Roman', Times, serif",
-      "'Trebuchet MS', Helvetica, sans-serif" => "'Trebuchet MS', Helvetica, sans-serif",
-      "Verdana, Geneva, sans-serif" => "Verdana, Geneva, sans-serif",
-    );
+			Font Family
+		**/
+	  if (!empty($field['display']['family'])):	  
+	    echo '<div class="select_wrapper typography-family" original-title="Font family" style="width: 220px; margin-right: 5px;">';
+	    echo '<select class="sof-typography sof-typography-family sof-select-item" id="'.$this->field['id'].'-family" name="'.$this->args['opt_name'].'['.$this->field['id'].'][family]" data-id="'.$this->field['id'].'">';
+		 	echo '<optgroup label="Standard Fonts">';
+	    $faces = array(
+	      "Arial, Helvetica, sans-serif" => "Arial, Helvetica, sans-serif",
+	      "'Arial Black', Gadget, sans-serif" => "'Arial Black', Gadget, sans-serif",
+	      "'Bookman Old Style', serif" => "'Bookman Old Style', serif",
+	      "'Comic Sans MS', cursive" => "'Comic Sans MS', cursive",
+	      "Courier, monospace" => "Courier, monospace",
+	      "Garamond, serif" => "Garamond, serif",
+	      "Georgia, serif" => "Georgia, serif",
+	      "Impact, Charcoal, sans-serif" => "Impact, Charcoal, sans-serif",
+	      "'Lucida Console', Monaco, monospace" => "'Lucida Console', Monaco, monospace",
+	      "'Lucida Sans Unicode', 'Lucida Grande', sans-serif" => "'Lucida Sans Unicode', 'Lucida Grande', sans-serif",
+	      "'MS Sans Serif', Geneva, sans-serif" => "'MS Sans Serif', Geneva, sans-serif",
+	      "'MS Serif', 'New York', sans-serif" =>"'MS Serif', 'New York', sans-serif",
+	      "'Palatino Linotype', 'Book Antiqua', Palatino, serif" => "'Palatino Linotype', 'Book Antiqua', Palatino, serif",
+	      "Tahoma, Geneva, sans-serif" =>"Tahoma, Geneva, sans-serif",
+	      "'Times New Roman', Times, serif" => "'Times New Roman', Times, serif",
+	      "'Trebuchet MS', Helvetica, sans-serif" => "'Trebuchet MS', Helvetica, sans-serif",
+	      "Verdana, Geneva, sans-serif" => "Verdana, Geneva, sans-serif",
+	    );
 
-    foreach ($faces as $i=>$face) {
-      echo '<option data-google="false" data-details="'.urlencode(json_encode(
-        array('400'=>'Normal',
-              '700'=>'Bold',
-              '400-italic'=>'Normal Italic',
-              '700-italic'=>'Bold Italic',
-            )
-        )).'" value="'. $i .'" ' . selected($this->value['family'], $i, false) . '>'. $face .'</option>';
-    }
-    echo '</optgroup>';
+	    foreach ($faces as $i=>$face) {
+	      echo '<option data-google="false" data-details="'.urlencode(json_encode(
+	        array('400'=>'Normal',
+	              '700'=>'Bold',
+	              '400-italic'=>'Normal Italic',
+	              '700-italic'=>'Bold Italic',
+	            )
+	        )).'" value="'. $i .'" ' . selected($this->value['family'], $i, false) . '>'. $face .'</option>';
+	    }
+	    echo '</optgroup>';
 
-    $google = "false";
-    if ( isset( $gfonts ) ) {
-    	echo '<optgroup label="Google Web Fonts">';
-      foreach ($gfonts as $i => $face) {
-        if ( $i == $this->value['family'] )
-          $google = "true";
-        
-        echo '<option data-details="'.urlencode(json_encode($face)).'" data-google="true" value="'.$i.'" ' . selected($this->value['family'], $i, false) . '>'. $i .'</option>';
+	    $google = "false";
+	    if ( isset( $gfonts ) ) {
+	    	echo '<optgroup label="Google Web Fonts">';
+	      foreach ($gfonts as $i => $face) {
+	        if ( $i == $this->value['family'] )
+	          $google = "true";
+	        
+	        echo '<option data-details="'.urlencode(json_encode($face)).'" data-google="true" value="'.$i.'" ' . selected($this->value['family'], $i, false) . '>'. $i .'</option>';
+	      }
+	      echo '</optgroup>';
+	    }
+
+	    echo '</select></div>';
+	  
+	  endif;
+
+
+
+    /** 
+    Font Weight 
+    **/
+    if(!empty($this->value['display']['style']))):
+      echo '<div class="select_wrapper typography-style" original-title="Font style">';
+      echo '<select class="sof-typography sof-typography-style select" original-title="Font style" name="'.$this->field['id'].'[style]" id="'. $this->field['id'].'_style" data-id="'.$this->field['id'].'">';
+		 	if (empty($this->value['style'])) {
+		 		echo '<option value="">Inherit</option>';
+		 	}
+      $styles = array('100'=>'Ultra-Light 100',
+                '200'=>'Light 200',
+                '300'=>'Book 300',
+                '400'=>'Normal 400',
+                '500'=>'Medium 500',
+                '600'=>'Semi-Bold 600',
+                '700'=>'Bold 700',
+                '800'=>'Extra-Bold 800',
+                '900'=>'Ultra-Bold 900',
+                '100-italic'=>'Ultra-Light 100 Italic',
+                '200-italic'=>'Light 200 Italic',
+                '300-italic'=>'Book 300 Italic',
+                '400-italic'=>'Normal 400 Italic',
+                '500-italic'=>'Medium 500 Italic',
+                '600-italic'=>'Semi-Bold 600 Italic',
+                '700-italic'=>'Bold 700 Italic',
+                '800-italic'=>'Extra-Bold 800 Italic',
+                '900-italic'=>'Ultra-Bold 900 Italic',
+              );
+      $nonGStyles = array('200'=>'Lighter','400'=>'Normal','700'=>'Bold','900'=>'Bolder');
+      if (isset($gfonts[$this->value['family']])) {
+        $styles = array();
+        foreach ($gfonts[$this->value['family']]['variants'] as $k=>$v) {
+          echo '<option value="'. $v['id'] .'" ' . selected($this->value['style'], $v['id'], false) . '>'. $v['name'] .'</option>';
+        }
+      } else {
+        foreach ($nonGStyles as $i=>$style){
+          if (!isset($this->value['style']))
+            $this->value['style'] = false;
+          echo '<option value="'. $i .'" ' . selected($this->value['style'], $i, false) . '>'. $style .'</option>';
+        }
       }
-      echo '</optgroup>';
-    }
 
-    echo '</select></div>';
+      echo '</select></div>';
 
-
+    endif;
 
 
-	    /** 
-	    Font Weight 
-	    **/
-	    //if(isset($this->value['style'])) {
-	      echo '<div class="select_wrapper typography-style" original-title="Font style">';
-	      echo '<select class="sof-typography sof-typography-style select" original-title="Font style" name="'.$this->field['id'].'[style]" id="'. $this->field['id'].'_style" data-id="'.$this->field['id'].'">';
-			 	if (empty($this->value['style'])) {
-			 		echo '<option value="">Inherit</option>';
-			 	}
-	      $styles = array('100'=>'Ultra-Light 100',
-	                '200'=>'Light 200',
-	                '300'=>'Book 300',
-	                '400'=>'Normal 400',
-	                '500'=>'Medium 500',
-	                '600'=>'Semi-Bold 600',
-	                '700'=>'Bold 700',
-	                '800'=>'Extra-Bold 800',
-	                '900'=>'Ultra-Bold 900',
-	                '100-italic'=>'Ultra-Light 100 Italic',
-	                '200-italic'=>'Light 200 Italic',
-	                '300-italic'=>'Book 300 Italic',
-	                '400-italic'=>'Normal 400 Italic',
-	                '500-italic'=>'Medium 500 Italic',
-	                '600-italic'=>'Semi-Bold 600 Italic',
-	                '700-italic'=>'Bold 700 Italic',
-	                '800-italic'=>'Extra-Bold 800 Italic',
-	                '900-italic'=>'Ultra-Bold 900 Italic',
-	              );
-	      $nonGStyles = array('200'=>'Lighter','400'=>'Normal','700'=>'Bold','900'=>'Bolder');
-	      if (isset($gfonts[$this->value['family']])) {
-	        $styles = array();
-	        foreach ($gfonts[$this->value['family']]['variants'] as $k=>$v) {
-	          echo '<option value="'. $v['id'] .'" ' . selected($this->value['style'], $v['id'], false) . '>'. $v['name'] .'</option>';
-	        }
-	      } else {
-	        foreach ($nonGStyles as $i=>$style){
-	          if (!isset($this->value['style']))
-	            $this->value['style'] = false;
-	          echo '<option value="'. $i .'" ' . selected($this->value['style'], $i, false) . '>'. $style .'</option>';
-	        }
-	      }
+    /** 
+    Font Script 
+    **/
+    if(!empty($this->value['display']['script']))):
+      echo '<div class="select_wrapper typography-script tooltip" original-title="Font Script">';
+      echo '<select class="sof-typography sof-typography-script" original-title="Font script"  id="'.$this->field['id'].'-script" name="'.$this->args['opt_name'].'['.$this->field['id'].'][script]">';
+      if (isset($gfonts[$this->value['family']])) {
+        $styles = array();
+        foreach ($gfonts[$this->value['family']]['subsets'] as $k=>$v) {
+          echo '<option value="'. $v['id'] .'" ' . selected($this->value['style'], $v['id'], false) . '>'. $v['name'] .'</option>';
+        }
+      }
+      echo '</select></div>';
 
-	      echo '</select></div>';
+    endif
 
-
-
-	      /** 
-	      Font Script 
-	      **/
-	      echo '<div class="select_wrapper typography-script tooltip" original-title="Font Script">';
-	      echo '<select class="sof-typography sof-typography-script" original-title="Font script"  id="'.$this->field['id'].'-script" name="'.$this->args['opt_name'].'['.$this->field['id'].'][script]">';
-	      if (isset($gfonts[$this->value['family']])) {
-	        $styles = array();
-	        foreach ($gfonts[$this->value['family']]['subsets'] as $k=>$v) {
-	          echo '<option value="'. $v['id'] .'" ' . selected($this->value['style'], $v['id'], false) . '>'. $v['name'] .'</option>';
-	        }
-	      }
-	      echo '</select></div>';
-
-
-	    //}
 
 		/**
 		Font Size
 		**/
-
-    //if(isset($this->value['size'])) {
-
-  
-      echo '<div class="input-append"><input type="text" class="span2 sof-typography-size mini" original-title="Font size" id="'.$this->field['id'].'-size" name="'.$this->args['opt_name'].'['.$this->field['id'].'][size]" value="'.$this->value['size'].'"><span class="add-on">'.$unit.'</span></div>';
-    //}
-
-
+  	if(!empty($this->value['display']['size']))):
+    	echo '<div class="input-append"><input type="text" class="span2 sof-typography-size mini" original-title="Font size" id="'.$this->field['id'].'-size" name="'.$this->args['opt_name'].'['.$this->field['id'].'][size]" value="'.$this->value['size'].'"><span class="add-on">'.$unit.'</span></div>';
+  	endif;
 
 
 		/**
 		Line Height 
 		**/
-		//if(isset($this->value['height'])) {
+		if(!empty($this->value['display']['height']))):
 		 	echo '<div class="input-append"><input type="text" class="span2 sof-typography sof-typography-height mini" original-title="Font height" id="'.$this->field['id'].'-height" name="'.$this->args['opt_name'].'['.$this->field['id'].'][height]" value="'.$this->value['height'].'"><span class="add-on">'.$unit.'</span></div>';
-		//}
+		endif;
 
 
 
 
-	    /** 
-	    Font Color 
-	    **/
-	    //if(isset($this->value['color'])) {
-	    	$default = "";
-	    	if (empty($this->field['std']['color']) && !empty($this->field['color'])) {
-	    		$default = $this->value['color'];
-				} else if (!empty($this->field['std']['color'])) {
-					$default = $this->field['std']['color'];
-				}
-	      echo '<div id="' . $this->field['id'] . '_color_picker" class="colorSelector typography-color"><div style="background-color: '.$this->value['color'].'"></div></div>';
-	      echo '<input data-default-color="'.$default.'" class="sof-color sof-typography-color" original-title="Font color" id="'.$this->field['id'].'-color" name="'.$this->args['opt_name'].'['.$this->field['id'].'][color]" type="text" value="'. $this->value['color'] .'" data-id="'.$this->field['id'].'" />';
-	    //}   	
+    /** 
+    Font Color 
+    **/
+    if(!empty($this->value['display']['color']))):
+    	$default = "";
+    	if (empty($this->field['std']['color']) && !empty($this->field['color'])) {
+    		$default = $this->value['color'];
+			} else if (!empty($this->field['std']['color'])) {
+				$default = $this->field['std']['color'];
+			}
+      echo '<div id="' . $this->field['id'] . '_color_picker" class="colorSelector typography-color"><div style="background-color: '.$this->value['color'].'"></div></div>';
+      echo '<input data-default-color="'.$default.'" class="sof-color sof-typography-color" original-title="Font color" id="'.$this->field['id'].'-color" name="'.$this->args['opt_name'].'['.$this->field['id'].'][color]" type="text" value="'. $this->value['color'] .'" data-id="'.$this->field['id'].'" />';
+    endif;
 
-	    /**
-			Font Preview
-	    **/
 
+    /**
+		Font Preview
+    **/
+		if(!empty($this->value['display']['preview']))):
 	    if(isset($value['preview']['text'])){
 	      $g_text = $value['preview']['text'];
 	    } else {
@@ -234,6 +234,8 @@ class Simple_Options_typography extends Simple_Options{
 	    echo "</div>";
 
 	    echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
+    endif;
+
 	}//function
 	
 	
