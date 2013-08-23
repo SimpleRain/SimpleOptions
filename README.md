@@ -7,6 +7,16 @@ SOF is a back-end framework for creating and managing options inside WordPress t
 
 The main feature of SMOF is its intuitive, user-friendly interface that aims to look as native as possible to WordPress. Additionally, it comes loaded with some awesome features that makes it even more usable to you as a theme author. 
 
+## Donate
+Should you feel pleased with Simple Options, consider donating to the developer. The time that has been put into this framework has been intense and I've given it away. Every contribution helps.
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="3WQGEY4NSYE38">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+
 ## Downloading
 ### If you download the zip you get the development version. To get a stable version, please visit here and find the latest release: 
 ### [https://github.com/SimpleRain/SimpleOptions/releases](https://github.com/SimpleRain/SimpleOptions/releases)
@@ -83,7 +93,7 @@ SOF is a fork of the following option frameworks. Each have their own credits ou
 SOF is released under GPLv3 - [http://www.gnu.org/copyleft/gpl.html](http://www.gnu.org/copyleft/gpl.html). You are free to redistribute & modify copies of the plugin under the following conditions:
 
 * All links & credits must be kept intact
-* For commercial usage (e.g in themes you're selling on any marketplace, or a commercial website), you are **strongly recommended** to link back to my [Themeforest Profile Page](http://themeforest.net/user/SimpleRain) using the following text: [Simple Options Framework](https://github.com/SimpleRain/SimpleOptions) by [SimpleRain](http://themeforest.net/user/SimpleRain)
+* <b>For commercial usage</b> (e.g in themes you're selling on any marketplace, or a commercial website), you are **strongly recommended** to link back to my [Themeforest Profile Page](http://themeforest.net/user/SimpleRain) using the following text: [Simple Options Framework](https://github.com/SimpleRain/SimpleOptions) by [SimpleRain](http://themeforest.net/user/SimpleRain).
 
 ### Contacts
 
