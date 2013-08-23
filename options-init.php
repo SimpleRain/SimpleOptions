@@ -301,8 +301,20 @@ $sections[] = array(
 										'4' => array('alt' => '3 Column Middle', 'img' => SOF_OPTIONS_URL.'img/3cm.png'),
 										'5' => array('alt' => '3 Column Left', 'img' => SOF_OPTIONS_URL.'img/3cl.png'),
 										'6' => array('alt' => '3 Column Right', 'img' => SOF_OPTIONS_URL.'img/3cr.png')
-											),//Must provide key => value(array:title|img) pairs for radio options						
+											),
 						),		
+					array(
+						'id' => 'presets', //must be unique
+						'type' => 'images', 
+						'presets' => true,
+						'title' => __('Preset', 'simple-options'),
+						'sub_desc'=> __('Select a background pattern.', 'simple-options'),
+						'std' 		=> 0,
+						'options' => array(
+										'1' => array('alt' => '1 Column', 'img' => SOF_OPTIONS_URL.'img/1col.png', 'presets'=>array('slider2'=>12,'patterns'=>2)),
+										'2' => array('alt' => '2 Column Left', 'img' => SOF_OPTIONS_URL.'img/2cl.png', 'presets'=>'{"slider2":"30", "patterns":"5"}'),
+											),
+						),					
 
 					array(
 						'id' => 'typography', //must be unique

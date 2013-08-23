@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.1.6';
+		protected $framework_version = '0.1.7';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -96,7 +96,20 @@ if ( ! class_exists('Simple_Options') ){
 			
 			//hook into the wp feeds for downloading the exported settings
 			add_action('do_feed_simple-options-'.$this->args['opt_name'], array(&$this, '_download_options'), 1, 1);
-			
+		
+			// Hook to allow ajax functions
+			add_action('wp_ajax_of_ajax_post_action', array(&$this, '_ajax_callback'));
+
+			// Shortcodes used within the framework
+			add_shortcode('site-url', array(&$this, 'shortcode_site_url'));
+			add_shortcode('theme-url', array(&$this, 'shortcode_theme_url'));
+			add_shortcode('wp-url', array(&$this, 'shortcode_wp_url'));
+			add_shortcode('login-url', array(&$this, 'shortcode_login_url'));
+			add_shortcode('logout-url', array(&$this, 'shortcode_logout_url'));
+			add_shortcode('site-title', array(&$this, 'shortcode_site_title'));
+			add_shortcode('site-tagline', array(&$this, 'shortcode_site_tagline'));
+			add_shortcode('current-year', array(&$this, 'shortcode_current_year'));
+
 			//get the options for use later on
 			$this->options = get_option($this->args['opt_name']);
 			
@@ -404,7 +417,7 @@ if ( ! class_exists('Simple_Options') ){
 				true
 			);	
 
-			wp_localize_script('simple-options-js', 'sof_opts', array('save_pending' => __('You have changes that are not saved. Would you like to save them now?', 'simple-options'), 'reset_confirm' => __('Are you sure? Resetting will loose all custom values.', 'simple-options'), 'opt_name' => $this->args['opt_name']));
+			wp_localize_script('simple-options-js', 'sof_opts', array('save_pending' => __('You have changes that are not saved. Would you like to save them now?', 'simple-options'), 'reset_confirm' => __('Are you sure? Resetting will loose all custom values.', 'simple-options'), 'preset_confirm' => __('Your current options will be replaced with the values of this preset. Would you like to proceed?', 'simple-options'), 'opt_name' => $this->args['opt_name']));
 			
 			do_action('simple-options-enqueue-'.$this->args['opt_name']);
 
@@ -446,17 +459,16 @@ if ( ! class_exists('Simple_Options') ){
 		*/
 		function _download_options(){
 			//-'.$this->args['opt_name']
-			if(!isset($_GET['secret']) || $_GET['secret'] != md5(AUTH_KEY.SECURE_AUTH_KEY)){wp_die('Invalid Secret for options use');exit;}
+			if(!isset($_GET['secret']) || $_GET['secret'] != md5(AUTH_KEY.SECURE_AUTH_KEY)){wp_die('Invalid Secret - Smart Options Framework');exit;}
 			if(!isset($_GET['feed'])){wp_die('No Feed Defined');exit;}
 			$backup_options = get_option(str_replace('simple-options-','',$_GET['feed']));
 			$backup_options['simple-options-backup'] = '1';
-			$content = '###'.serialize($backup_options).'###';
-			
+			$content = json_encode($backup_options);
 			
 			if(isset($_GET['action']) && $_GET['action'] == 'download_options'){
 				header('Content-Description: File Transfer');
 				header('Content-type: application/txt');
-				header('Content-Disposition: attachment; filename="'.str_replace('simple-options-','',$_GET['feed']).'_options_'.date('d-m-Y').'.txt"');
+				header('Content-Disposition: attachment; filename="'.str_replace('simple-options-','',$_GET['feed']).'_options_'.date('d-m-Y').'.json"');
 				header('Content-Transfer-Encoding: binary');
 				header('Expires: 0');
 				header('Cache-Control: must-revalidate');
@@ -464,6 +476,13 @@ if ( ! class_exists('Simple_Options') ){
 				echo $content;
 				exit;
 			}else{
+				header( 'Content-type: text/json' );
+				header( 'Content-type: application/json' );
+				header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' ); 
+				header( 'Last-Modified: ' . gmdate( 'D, d M Y H:i:s' ) . ' GMT' ); 
+				header( 'Cache-Control: no-store, no-cache, must-revalidate' ); 
+				header( 'Cache-Control: post-check=0, pre-check=0', false ); 
+				header( 'Pragma: no-cache' ); 
 				echo $content;
 				exit;
 			}
@@ -674,8 +693,6 @@ if ( ! class_exists('Simple_Options') ){
 		*/
 		function _validate_options($plugin_options){
 
-
-			
 			set_transient('simple-options-saved', '1', 1000 );
 			
 			if(!empty($plugin_options['import'])){
@@ -686,12 +703,16 @@ if ( ! class_exists('Simple_Options') ){
 					$import = wp_remote_retrieve_body( wp_remote_get($plugin_options['import_link']) );
 				}
 				
-				$imported_options = unserialize(trim($import,'###'));
+				$imported_options = json_decode(htmlspecialchars_decode($import), true);
+
 				if(is_array($imported_options) && isset($imported_options['simple-options-backup']) && $imported_options['simple-options-backup'] == '1'){
+					$imported_options = wp_parse_args( $imported_options, $plugin_options );
 					$imported_options['imported'] = 1;
+					if ($_COOKIE["sof_current_tab"] == "import_export_default") {
+						setcookie('sof_current_tab', '', 1, '/');
+					}					
 					return $imported_options;
 				}
-				
 				
 			}
 			
@@ -817,6 +838,7 @@ if ( ! class_exists('Simple_Options') ){
 		function _options_page_html(){
 			
 			echo '<div class="clear"></div><div class="wrap">
+			<input type="hidden" id="security" name="security" value="'.wp_create_nonce('of_ajax_nonce').'" />
 				<noscript><div class="no-js">Warning- This options panel will not work properly without javascript!</div></noscript>';
 				if ( $title = get_admin_page_title() && get_admin_page_title() != "" ) {
 					echo '<div id="'.$this->args['page_icon'].'" class="icon32"><br/></div>';
@@ -846,7 +868,7 @@ if ( ! class_exists('Simple_Options') ){
 						echo '<div id="info_bar">';
 							echo '<a href="#" id="expand_options">Expand</a>';
 							echo '<div class="sof-action_bar">';
-								submit_button('', 'primary', 'of_save', false);
+								submit_button('', 'primary', 'sof_save', false);
 								echo "&nbsp;";
 								submit_button(__('Reset to Defaults', 'simple-options'), 'secondary', $this->args['opt_name'].'[defaults]', false);
 							echo "</div>";
@@ -943,7 +965,7 @@ if ( ! class_exists('Simple_Options') ){
 									
 									echo '</div>';
 									
-									echo '<textarea id="import-code-value" name="'.$this->args['opt_name'].'[import_code]" class="large-text" rows="8"></textarea>';
+									echo '<textarea id="import-code-value" name="'.$this->args['opt_name'].'[import_code]" class="large-text noUpdate" rows="8"></textarea>';
 								
 								echo '</div>';
 								
@@ -956,7 +978,7 @@ if ( ! class_exists('Simple_Options') ){
 									
 									echo '</div>';
 
-									echo '<input type="text" id="import-link-value" name="'.$this->args['opt_name'].'[import_link]" class="large-text" value="" />';
+									echo '<input type="text" id="import-link-value" name="'.$this->args['opt_name'].'[import_link]" class="large-text noUpdate" value="" />';
 								
 								echo '</div>';
 								
@@ -973,10 +995,10 @@ if ( ! class_exists('Simple_Options') ){
 									echo '<p><a href="javascript:void(0);" id="simple-options-export-code-copy" class="button-secondary">Copy</a> <a href="'.add_query_arg(array('feed' => 'simple-options-'.$this->args['opt_name'], 'action' => 'download_options', 'secret' => md5(AUTH_KEY.SECURE_AUTH_KEY)), site_url()).'" id="simple-options-export-code-dl" class="button-primary">Download</a> <a href="javascript:void(0);" id="simple-options-export-link" class="button-secondary">Copy Link</a></p>';
 									$backup_options = $this->options;
 									$backup_options['simple-options-backup'] = '1';
-									$encoded_options = '###'.serialize($backup_options).'###';
-									echo '<textarea class="large-text" id="simple-options-export-code" rows="8">';print_r($encoded_options);echo '</textarea>';
-									echo '<input type="text" class="large-text" id="simple-options-export-link-value" value="'.add_query_arg(array('feed' => 'simple-options-'.$this->args['opt_name'], 'secret' => md5(AUTH_KEY.SECURE_AUTH_KEY)), site_url()).'" />';
-								
+									$encoded_options = json_encode($backup_options);
+									echo '<textarea class="large-text noUpdate" id="simple-options-export-code" rows="8">';print_r($encoded_options);echo '</textarea>';
+									echo '<input type="text" class="large-text noUpdate" id="simple-options-export-link-value" value="'.add_query_arg(array('feed' => 'simple-options-'.$this->args['opt_name'], 'secret' => md5(AUTH_KEY.SECURE_AUTH_KEY)), site_url()).'" />';
+
 							echo '</div>';
 						}
 						
@@ -1027,7 +1049,7 @@ if ( ! class_exists('Simple_Options') ){
 						}
 						
 							echo '<div class="sof-action_bar">';
-								submit_button('', 'primary', 'of_save', false);
+								submit_button('', 'primary', 'sof_save', false);
 								echo "&nbsp;";
 								submit_button(__('Reset to Defaults', 'simple-options'), 'secondary', $this->args['opt_name'].'[defaults]', false);
 							echo "</div>";
@@ -1265,81 +1287,178 @@ if ( ! class_exists('Simple_Options') ){
 
 		}//if		
 
+	/**
+	
+	 SimpleOptions Shortcodes. For use within field values.
+	
+	 @since Simple_Options 0.0.9
+	
+	*/
+
+		/**
+			Shortcode - Site URL (URI/Link)
+		**/
+
+		function shortcode_site_url($atts,$content=NULL) {
+			return 'THIS IS THE SITE URL';
+		}
+
+		/**
+			Shortcode - Site URL (URI/Link)
+		**/
+
+		function shortcode_wp_url($atts,$content=NULL) {
+			return 'THIS IS THE BASE URL';
+		}
+
+		/**
+			Shortcode - Theme URL (URI/Link)
+		**/
+		function shortcode_theme_url($atts,$content=NULL) {
+			return 'THIS IS THE THEME URL';
+		}
+
+		/**
+			Shortcode - Login URL (URI/Link)
+		**/
+		function shortcode_login_url($atts,$content=NULL) {
+			return 'THIS IS THE LOGIN URL';
+		}
+
+		/**
+			Shortcode - Logout URL (URI/Link)
+		**/
+		function shortcode_logout_url($atts,$content=NULL) {
+			return 'THIS IS THE LOGOUT URL';
+		}
+
+		/**
+			Shortcode - Site Title
+		**/
+		function shortcode_site_title($atts,$content=NULL) {
+			return 'THIS IS THE SITE TITLE';
+		}
+
+		/**
+			Shortcode - Site Tagline
+		**/
+		function shortcode_site_tagline($atts,$content=NULL) {
+			return 'THIS IS THE SITE TITLE';
+		}
+
+		/**
+			Shortcode - Current Year
+		**/
+		function shortcode_current_year($atts,$content=NULL) {
+			return 'THIS IS THE CURRENT YEAR';
+		}
+
+		/**
+		  Ajax Callback Function
+		
+		  @since 1.0.0
+		 */
+		function _ajax_callback() {
+
+			$nonce=$_POST['security'];
+			
+			if (! wp_verify_nonce($nonce, 'of_ajax_nonce') ) die('-1'); 
+			
+			$save_type = $_POST['type'];
+			
+			print_r($_POST);
+			die('1');
+			
+			//Uploads
+			if($save_type == 'upload')
+			{
+				
+				$clickedID = $_POST['data']; // Acts as the name
+				$filename = $_FILES[$clickedID];
+		       	$filename['name'] = preg_replace('/[^a-zA-Z0-9._\-]/', '', $filename['name']); 
+				
+				$override['test_form'] = false;
+				$override['action'] = 'wp_handle_upload';    
+				$uploaded_file = wp_handle_upload($filename,$override);
+				 
+					$upload_tracking[] = $clickedID;
+						
+					//update $options array w/ image URL			  
+					$upload_image = $all; //preserve current data
+					
+					$upload_image[$clickedID] = $uploaded_file['url'];
+					
+					sof_save_options($upload_image);
+				
+						
+				 if(!empty($uploaded_file['error'])) {echo 'Upload Error: ' . $uploaded_file['error']; }	
+				 else { echo $uploaded_file['url']; } // Is the Response
+				 
+			}
+			elseif($save_type == 'image_reset')
+			{
+					
+					$id = $_POST['data']; // Acts as the name
+					
+					$delete_image = $all; //preserve rest of data
+					$delete_image[$id] = ''; //update array key with empty value	 
+					sof_save_options($delete_image ) ;
+			
+			}
+			elseif($save_type == 'backup_options')
+			{
+					
+				$backup = $all;
+				$backup['backup_log'] = date('r');
+				
+				sof_save_options($backup, BACKUPS) ;
+					
+				die('1'); 
+			}
+			elseif($save_type == 'restore_options')
+			{
+					
+				$smof_data = of_get_options(BACKUPS);
+
+				sof_save_options($smof_data);
+				
+				die('1'); 
+			}
+			elseif($save_type == 'import_options'){
+
+
+				$smof_data = unserialize(base64_decode($_POST['data'])); //100% safe - ignore theme check nag
+				sof_save_options($smof_data);
+
+				
+				die('1'); 
+			}
+			elseif ($save_type == 'save')
+			{
+
+				wp_parse_str(stripslashes($_POST['data']), $smof_data);
+				unset($smof_data['security']);
+				unset($smof_data['sof_save']);
+				sof_save_options($smof_data);
+				
+				
+				die('1');
+			}
+			elseif ($save_type == 'reset')
+			{
+				sof_save_options($options_machine->Defaults);
+				
+		        die('1'); //options reset
+			}
+
+		  	die();
+		}		
 
 	}//class
 }//if
 
 
 
-/**
-* SimpleOptions Shortcodes. For use within field values.
-*
-* @since Simple_Options 0.0.9
-*
-*/
 
-/**
-	Site URL (URI/Link)
-**/
 
-function SimpleOptions_site_url($atts,$content=NULL) {
-	return 'THIS IS THE SITE URL';
-}
-add_shortcode('site-url','SimpleOptions_site_url');
 
-/**
-	Site URL (URI/Link)
-**/
-
-function SimpleOptions_wp_url($atts,$content=NULL) {
-	return 'THIS IS THE BASE URL';
-}
-add_shortcode('wp-url','SimpleOptions_wp_url');
-
-/**
-	Theme URL (URI/Link)
-**/
-function SimpleOptions_theme_url($atts,$content=NULL) {
-	return 'THIS IS THE THEME URL';
-}
-add_shortcode('theme-url','SimpleOptions_theme_url');
-
-/**
-	Login URL (URI/Link)
-**/
-function SimpleOptions_login_url($atts,$content=NULL) {
-	return 'THIS IS THE LOGIN URL';
-}
-add_shortcode('login-url','SimpleOptions_login_url');
-
-/**
-	Logout URL (URI/Link)
-**/
-function SimpleOptions_logout_url($atts,$content=NULL) {
-	return 'THIS IS THE LOGOUT URL';
-}
-add_shortcode('logout-url','SimpleOptions_logout_url');
-
-/**
-	Site Title
-**/
-function SimpleOptions_site_title($atts,$content=NULL) {
-	return 'THIS IS THE SITE TITLE';
-}
-add_shortcode('site-title','SimpleOptions_site_title');
-
-/**
-	Site Tagline
-**/
-function SimpleOptions_site_tagline($atts,$content=NULL) {
-	return 'THIS IS THE SITE TITLE';
-}
-add_shortcode('site-tagline','SimpleOptions_site_tagline');
-
-/**
-	Current Year
-**/
-function SimpleOptions_current_year($atts,$content=NULL) {
-	return 'THIS IS THE CURRENT YEAR';
-}
-add_shortcode('current-year','SimpleOptions_current_year');

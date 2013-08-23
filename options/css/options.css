@@ -807,21 +807,13 @@ label.radio, label.multicheck {
 }
 
 #simple-options-main input.button-primary {
-	padding: 0 10px 1px;
-	background-color: #21759B;
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#2A95C5),to(#21759B));
-	background-image: -webkit-linear-gradient(top,#2A95C5,#21759B);
-	background-image: -moz-linear-gradient(top,#2A95C5,#21759B);
-	background-image: -ms-linear-gradient(top,#2A95C5,#21759B);
-	background-image: -o-linear-gradient(top,#2A95C5,#21759B);
-	background-image: linear-gradient(to bottom,#2A95C5,#21759B);
 	border-color: #21759B;
 	border-bottom-color: #1E6A8D;
 	-webkit-box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5);
 	box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5);
-	color: #FFF;
-	text-decoration: none;
-	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+#simple-options-main .button, #simple-options-main .button-secondary, #simple-options-main .button-primary {
+	padding: 0 10px 1px;
 }
 
 #simple-options-main input.large-text {

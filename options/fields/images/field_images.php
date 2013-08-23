@@ -61,13 +61,28 @@ class Simple_Options_images extends Simple_Options{
 				}	
 
 				$selected = (checked($this->value, $k, false) != '')?' sof-images-selected':'';
+
+				$presets = "";
+				if (!empty($this->field['presets']) && $this->field['presets'] && !empty($v['presets'])) {
+					
+					if (!is_array($v['presets'])) {
+						$v['presets'] = json_decode($v['presets'], true);
+					}
+					$v['presets']['simple-options-backup'] = 1;
+
+					$presets = ' data-presets="'.htmlspecialchars(json_encode($v['presets']), ENT_QUOTES, 'UTF-8').'"';
+					$selected = "";
+					$class .= " sof-presets";
+				}				
+
+				
 				echo '<li class="sof-images' . $class . '">';
 				echo '<label class="'.$selected.' sof-images-'.$this->field['id'].'" for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
-				echo '<input type="radio" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$k.'" '.checked($this->value, $k, false).'/>';
+				echo '<input type="radio" class="noUpdate" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$k.'" '.checked($this->value, $k, false).$presets.'/>';
 				if (!empty($this->field['pattern']) && $this->field['pattern'] == true) {
 					echo '<span class="pattern" style="background-image: url('.$v['img'].');">&nbsp;</span>';
 				} else {
-					echo '<img src="'.$v['img'].'" alt="'.$v['alt'].'" style="'.$style.'" />';	
+					echo '<img src="'.$v['img'].'" alt="'.$v['alt'].'" style="'.$style.'"'.$presets.' />';	
 				}
 				
 				if ($v['title'] != "") {
@@ -78,6 +93,9 @@ class Simple_Options_images extends Simple_Options{
 			}//foreach
 				
 			echo '</ul>';		
+			if (!empty($this->field['presets']) && $this->field['presets']) {
+				echo '<div class="sof-presets-bar"><input type="button" class="sof-save-preset button-primary" value="Load Preset"></div>';
+			}
 
 		}
 

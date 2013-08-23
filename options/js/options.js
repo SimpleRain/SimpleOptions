@@ -1,4 +1,4 @@
-jQuery('.sof-action_bar').click(function() {
+jQuery('.sof-action_bar, .sof-presets-bar').click(function() {
 	window.onbeforeunload = null;
 });
 
@@ -122,7 +122,6 @@ var confirmOnPageExit = function (e) {
 	/**
 		Current tab checks, based on cookies
 	**/
-
 	jQuery('.simple-options-group-tab-link-a').click(function(){
 		relid = jQuery(this).data('rel'); // The group ID of interest
 		// Set the proper page cookie
@@ -157,11 +156,13 @@ var confirmOnPageExit = function (e) {
 		$.removeCookie('sof_current_tab_get');
 	}
 
+	console.log($.cookie("sof_current_tab"));
+	var sTab = jQuery('#'+$.cookie("sof_current_tab")+'_section_group_li_a');
 	// Tab the first item or the saved one
-	if($.cookie("sof_current_tab") === null){
+	if($.cookie("sof_current_tab") === null || typeof($.cookie("sof_current_tab")) == "undefined" || sTab.length == 0){
 		jQuery('.simple-options-group-tab-link-a:first').click();
 	}else{
-		jQuery('#'+$.cookie("sof_current_tab")+'_section_group_li_a').delay(300).click();
+		sTab.delay(300).click();
 	}
 
 
@@ -229,7 +230,9 @@ var confirmOnPageExit = function (e) {
 	}	
 	
 	jQuery('input, textarea, select').live('change',function() {
-		sof_change(jQuery(this));
+		if (!jQuery(this).hasClass('noUpdate')) {
+			sof_change(jQuery(this));	
+		}
 	});
 	
 
