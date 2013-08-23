@@ -121,7 +121,7 @@ class Simple_Options_typography extends Simple_Options{
     /** 
     Font Weight 
     **/
-    if(!empty($this->value['display']['style']))):
+    if(!empty($this->value['display']['style'])):
       echo '<div class="select_wrapper typography-style" original-title="Font style">';
       echo '<select class="sof-typography sof-typography-style select" original-title="Font style" name="'.$this->field['id'].'[style]" id="'. $this->field['id'].'_style" data-id="'.$this->field['id'].'">';
 		 	if (empty($this->value['style'])) {
@@ -168,7 +168,7 @@ class Simple_Options_typography extends Simple_Options{
     /** 
     Font Script 
     **/
-    if(!empty($this->value['display']['script']))):
+    if(!empty($this->value['display']['script'])):
       echo '<div class="select_wrapper typography-script tooltip" original-title="Font Script">';
       echo '<select class="sof-typography sof-typography-script" original-title="Font script"  id="'.$this->field['id'].'-script" name="'.$this->args['opt_name'].'['.$this->field['id'].'][script]">';
       if (isset($gfonts[$this->value['family']])) {
@@ -179,13 +179,13 @@ class Simple_Options_typography extends Simple_Options{
       }
       echo '</select></div>';
 
-    endif
+    endif;
 
 
 		/**
 		Font Size
 		**/
-  	if(!empty($this->value['display']['size']))):
+  	if(!empty($this->value['display']['size'])):
     	echo '<div class="input-append"><input type="text" class="span2 sof-typography-size mini" original-title="Font size" id="'.$this->field['id'].'-size" name="'.$this->args['opt_name'].'['.$this->field['id'].'][size]" value="'.$this->value['size'].'"><span class="add-on">'.$unit.'</span></div>';
   	endif;
 
@@ -193,7 +193,7 @@ class Simple_Options_typography extends Simple_Options{
 		/**
 		Line Height 
 		**/
-		if(!empty($this->value['display']['height']))):
+		if(!empty($this->value['display']['height'])):
 		 	echo '<div class="input-append"><input type="text" class="span2 sof-typography sof-typography-height mini" original-title="Font height" id="'.$this->field['id'].'-height" name="'.$this->args['opt_name'].'['.$this->field['id'].'][height]" value="'.$this->value['height'].'"><span class="add-on">'.$unit.'</span></div>';
 		endif;
 
@@ -203,7 +203,7 @@ class Simple_Options_typography extends Simple_Options{
     /** 
     Font Color 
     **/
-    if(!empty($this->value['display']['color']))):
+    if(!empty($this->value['display']['color'])):
     	$default = "";
     	if (empty($this->field['std']['color']) && !empty($this->field['color'])) {
     		$default = $this->value['color'];
@@ -218,7 +218,7 @@ class Simple_Options_typography extends Simple_Options{
     /**
 		Font Preview
     **/
-		if(!empty($this->value['display']['preview']))):
+		if(!empty($this->value['display']['preview'])):
 	    if(isset($value['preview']['text'])){
 	      $g_text = $value['preview']['text'];
 	    } else {
