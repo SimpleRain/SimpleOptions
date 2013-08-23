@@ -7,15 +7,10 @@ SOF is a back-end framework for creating and managing options inside WordPress t
 
 The main feature of SMOF is its intuitive, user-friendly interface that aims to look as native as possible to WordPress. Additionally, it comes loaded with some awesome features that makes it even more usable to you as a theme author. 
 
-## Donate
+## Donate to the Framework
 Should you feel pleased with Simple Options, consider donating to the developer. The time that has been put into this framework has been intense and I've given it away. Every contribution helps.
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="3WQGEY4NSYE38">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
 
+[![Donate to the framework](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif "Donate to the framework")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3WQGEY4NSYE38)
 
 ## Downloading
 ### If you download the zip you get the development version. To get a stable version, please visit here and find the latest release: 
