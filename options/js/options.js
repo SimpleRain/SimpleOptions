@@ -310,8 +310,8 @@ jQuery.fn.isOnScreen = function(){
   });
 
 	
-  jQuery('#simple-options-save').delay(3000).slideUp();
-  jQuery('#simple-options-field-errors').delay(4000).slideUp();
+  jQuery('#simple-options-save, #simple-options-imported').delay(4000).slideUp();
+  jQuery('#simple-options-field-errors').delay(5000).slideUp();
 
 
   jQuery('.of-save').click(function() {
