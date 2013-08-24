@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.1.9';
+		protected $framework_version = '0.2.0';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -71,6 +71,10 @@ if ( ! class_exists('Simple_Options') ){
 			//$this->args filter hook
 			$this->args = apply_filters('simple-options-args-'.$this->args['opt_name'], $this->args);
 			
+			if(!defined('SOF_GOOGLE_KEY')){
+				define('SOF_GOOGLE_KEY', $this->args['google_api_key']);
+			}
+
 			//get sections
 			$this->sections = apply_filters('simple-options-sections-'.$this->args['opt_name'], $sections);
 			

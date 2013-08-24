@@ -90,6 +90,7 @@ function setup_framework_options(){
 
 	//google api key MUST BE DEFINED IF YOU WANT TO USE GOOGLE WEBFONTS
 	$args['google_api_key'] = 'AIzaSyAX_2L_UzCDPEnAHTG7zhESRVpMPS4ssII';
+	// ** PLEASE PLEASE for production use your own key! **
 
 	//Remove the default stylesheet? make sure you enqueue another one all the page will look whack!
 	//$args['stylesheet_override'] = true;
