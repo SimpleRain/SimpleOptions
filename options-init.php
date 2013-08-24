@@ -191,15 +191,13 @@ $sections[] = array(
 				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_020_home.png',
 				'fields' => array(
 					
-					array(
-						'id' => 'media', //must be unique
+					"media"=>array( //must be unique
 						'type' => 'media', 
 						'title' => __('Media', 'simple-options'),
 						'sub_desc' => __('Upload any media using the Wordpress native uploader', 'simple-options'),
 						),
 
-					array(
-						'id' => 'media-min', //must be unique
+					"media-min"=>array( //must be unique
 						'type' => 'media', 
 						'mode'=> 'min',
 						'title' => __('Media Minimalistic (min)', 'simple-options'),
@@ -207,15 +205,14 @@ $sections[] = array(
 						'sub_desc' => __('Upload any media using the Wordpress native uploader', 'simple-options'),
 						),				
 				
-					array(
+					"gallery"=>array( //must be unique
 						'id' => 'gallery', //must be unique
 						'type' => 'gallery', 
 						'title' => __('Gallery', 'simple-options'),
 						'desc'=> __('Add a gallery using the integrated media gallery of wordpress. No preview, but fully supports order, etc.', 'simple-options'),
 						),		
 						
-					array(
-						'id' => 'slider1', //must be unique
+					"slider1"=>array( //must be unique
 						'type' => 'slider', 
 						'title' => __('JQuery UI Slider Example 1', 'simple-options'),
 						'desc'=> __('JQuery UI slider description. Min: 1, max: 500, step: 3, default value: 45', 'simple-options'),
@@ -225,8 +222,7 @@ $sections[] = array(
 						"max" 		=> "500",
 						),	
 
-					array(
-						'id' => 'slider2', //must be unique
+					"slider2"=>array( //must be unique
 						'type' => 'slider', 
 						'title' => __('JQuery UI Slider Example 2 w/ Steps (5)', 'simple-options'),
 						'desc'=> __('JQuery UI slider description. Min: 0, max: 300, step: 5, default value: 75', 'simple-options'),
@@ -236,24 +232,21 @@ $sections[] = array(
 						"max" 		=> "300",
 						),	
 
-					array(
-						'id' => 'switch-on', //must be unique
+					"switch-on"=>array( //must be unique
 						'type' => 'switch', 
 						'title' => __('Switch On', 'simple-options'),
 						'sub_desc'=> __('Look, it\'s on!', 'simple-options'),
 						"std" 		=> 1,
 						),	
 
-					array(
-						'id' => 'switch-off', //must be unique
+					"switch-off"=>array( //must be unique
 						'type' => 'switch', 
 						'title' => __('Switch Off', 'simple-options'),
 						'sub_desc'=> __('Look, it\'s on!', 'simple-options'),
 						"std" 		=> 0,
 						),	
 
-					array(
-						'id' => 'switch-custom', //must be unique
+					"switch-custom"=>array( //must be unique
 						'type' => 'switch', 
 						'title' => __('Switch - Custom Titles', 'simple-options'),
 						'sub_desc'=> __('Look, it\'s on!', 'simple-options'),
@@ -262,8 +255,7 @@ $sections[] = array(
 						'off' => 'Disabled',
 						),	
 
-					array(
-						'id' => 'switch-fold', //must be unique
+					"switch-fold"=>array( //must be unique
 						'type' => 'switch', 
 						'fold' => array('switch-custom'),						
 						'title' => __('Switch - With Hidden Items', 'simple-options'),
@@ -271,23 +263,20 @@ $sections[] = array(
 						'desc' => __('Items set with a fold to this ID will hide unless this is set to the appropriate value.', 'simple-options'),
 						'std' 		=> 0,
 						),	
-					array(
-						'id' => 'layout', //must be unique
+					"layout2"=>array( //must be unique
 						'type' => 'layout', 
 						'fold' => array('switch-fold'),
 						'title' => __('Homepage Layout Manager', 'simple-options'),
 						'sub_desc'=> __('Organize how you want the layout to appear on the homepage.', 'simple-options'),
 						),
 
-					array(
-						'id' => 'slides', //must be unique
+					"slides"=>array( //must be unique
 						'type' => 'slides', 
 						'title' => __('Slides Options', 'simple-options'),
 						'sub_desc'=> __('Unlimited slider with drag and drop sortings.', 'simple-options'),
 						),
 
-					array(
-						'id' => 'patterns', //must be unique
+					"patterns"=>array( //must be unique
 						'type' => 'images', 
 						'pattern' => true,
 						'fold' => array('switch-fold'=>array(0)),
@@ -303,8 +292,7 @@ $sections[] = array(
 										'6' => array('alt' => '3 Column Right', 'img' => SOF_OPTIONS_URL.'img/3cr.png')
 											),
 						),		
-					array(
-						'id' => 'presets', //must be unique
+					"presets"=>array( //must be unique
 						'type' => 'images', 
 						'presets' => true,
 						'title' => __('Preset', 'simple-options'),
@@ -316,7 +304,7 @@ $sections[] = array(
 											),
 						),					
 
-					array(
+					"typography"=>array( //must be unique
 						'id' => 'typography', //must be unique
 						'type' => 'typography', 
 						'title' => __('Typography', 'simple-options'),
@@ -329,15 +317,16 @@ $sections[] = array(
 
 
 
-
+$sections[] = array(
+				'type' => 'divide',
+);
 
 
 $sections[] = array(
 				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_280_settings.png',
 				'title' => __('General Settings', 'simple-options'),
 				'fields' => array(
-					array(
-						'id' => 'layout',
+					"layout"=>array( //must be unique
 						'type' => 'images',
 						'title' => __('Main Layout', 'simple-options'), 
 						'sub_desc' => __('Select main content and sidebar alignment. Choose between 1, 2 or 3 column layout.', 'simple-options'),
@@ -352,8 +341,7 @@ $sections[] = array(
 						'std' => '2'
 						),
 
-					array(
-						'id' => 'tracking-code',
+					"tracking-code"=>array( //must be unique
 						'type' => 'textarea',
 						'title' => __('Tracking Code', 'simple-options'), 
 						'sub_desc' => __('Paste your Google Analytics (or other) tracking code here. This will be added into the footer template of your theme.', 'simple-options'),
@@ -361,8 +349,7 @@ $sections[] = array(
 						'desc' => 'Validate that it\'s javascript!',
 						),
 
-					array(
-						'id' => 'footer-text',
+					"footer-text"=>array( //must be unique
 						'type' => 'editor',
 						'title' => __('Footer Text', 'simple-options'), 
 						'sub_desc' => __('You can use the following shortcodes in your footer text: [wp-url] [site-url] [theme-url] [login-url] [logout-url] [site-title] [site-tagline] [current-year]', 'simple-options'),
@@ -380,7 +367,7 @@ $sections[] = array(
 				'title' => __('Styling Options', 'simple-options'),
 				'fields' => array(
 
-					array(
+					"stylesheet"=>array( //must be unique
 						'id' => 'stylesheet',
 						'type' => 'select',
 						'title' => __('Theme Stylesheet', 'simple-options'), 
@@ -388,40 +375,35 @@ $sections[] = array(
 						'options' => array('default.css'=>'default.css', 'color1.css'=>'color1.css'),
 						'std' => 'default.css',
 						),
-					array(
-						'id' => 'color-background',
+					"color-background"=>array( //must be unique
 						'type' => 'color',
 						'title' => __('Body Background Color', 'simple-options'), 
 						'sub_desc' => __('Pick a background color for the theme (default: #fff).', 'simple-options'),
 						'std' => '#FFFFFF',
 						'validate' => 'color',
 						),
-					array(
-						'id' => 'color-footer',
+					"color-footer"=>array( //must be unique
 						'type' => 'color',
 						'title' => __('Footer Background Color', 'simple-options'), 
 						'sub_desc' => __('Pick a background color for the footer (default: #dd9933).', 'simple-options'),
 						'std' => '#dd9933',
 						'validate' => 'color',
 						),
-					array(
-						'id' => 'color-header',
+					"color-header"=>array( //must be unique
 						'type' => 'color_gradient',
 						'title' => __('Header Gradient Color Option', 'simple-options'),
 						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'std' => array('from' => '#1e73be', 'to' => '#00897e')
 						),
-					array(
-						'id' => 'header-border',
+					"header-border"=>array( //must be unique
 						'type' => 'border',
 						'title' => __('Header Border Option', 'simple-options'),
 						'sub_desc' => __('Only color validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'std' => array('color' => '#1e73be', 'style' => 'solid', 'width'=>'3')
 						),					
-					array(
-						'id' => 'body-font',
+					"body-font"=>array( //must be unique
 						'type' => 'typography',
 						'title' => __('Body Font', 'simple-options'),
 						'sub_desc' => __('Specify the body font properties.', 'simple-options'),
@@ -432,8 +414,7 @@ $sections[] = array(
 							'font-weight'=>'Normal',
 							),
 						),					
-					array(
-						'id' => 'custom-css',
+					"custom-css"=>array( //must be unique
 						'type' => 'textarea',
 						'title' => __('Custom CSS', 'simple-options'), 
 						'sub_desc' => __('Quickly add some CSS to your theme by adding it to this block.', 'simple-options'),
@@ -448,8 +429,7 @@ $sections[] = array(
 				'title' => __('Field Validation', 'simple-options'),
 				'desc' => __('<p class="description">This is the Description. Again HTML is allowed2</p>', 'simple-options'),
 				'fields' => array(
-					array(
-						'id' => '2',
+					"2"=>array( //must be unique
 						'type' => 'text',
 						'title' => __('Text Option - Email Validated', 'simple-options'),
 						'sub_desc' => __('This is a little space under the Field Title in the Options table, additonal info is good in here.', 'simple-options'),
@@ -458,15 +438,13 @@ $sections[] = array(
 						'msg' => 'custom error message',
 						'std' => 'test@test.com'
 						),
-					array(
-						'id' => 'multi_text',
+					"multi_text"=>array( //must be unique
 						'type' => 'multi_text',
 						'title' => __('Multi Text Option', 'simple-options'),
 						'sub_desc' => __('This is a little space under the Field Title in the Options table, additonal info is good in here.', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
 						),
-					array(
-						'id' => '3',
+					"3"=>array( //must be unique
 						'type' => 'text',
 						'title' => __('Text Option - URL Validated', 'simple-options'),
 						'sub_desc' => __('This must be a URL.', 'simple-options'),
@@ -474,8 +452,7 @@ $sections[] = array(
 						'validate' => 'url',
 						'std' => 'http://no-half-pixels.com'
 						),
-					array(
-						'id' => '4',
+					"4"=>array( //must be unique
 						'type' => 'text',
 						'title' => __('Text Option - Numeric Validated', 'simple-options'),
 						'sub_desc' => __('This must be numeric.', 'simple-options'),
@@ -484,8 +461,7 @@ $sections[] = array(
 						'std' => '0',
 						'class' => 'small-text'
 						),
-					array(
-						'id' => 'comma_numeric',
+					"comma_numeric"=>array( //must be unique
 						'type' => 'text',
 						'title' => __('Text Option - Comma Numeric Validated', 'simple-options'),
 						'sub_desc' => __('This must be a comma seperated string of numerical values.', 'simple-options'),
@@ -494,8 +470,7 @@ $sections[] = array(
 						'std' => '0',
 						'class' => 'small-text'
 						),
-					array(
-						'id' => 'no_special_chars',
+					"no_special_chars"=>array( //must be unique
 						'type' => 'text',
 						'title' => __('Text Option - No Special Chars Validated', 'simple-options'),
 						'sub_desc' => __('This must be a alpha numeric only.', 'simple-options'),
@@ -503,8 +478,7 @@ $sections[] = array(
 						'validate' => 'no_special_chars',
 						'std' => '0'
 						),
-					array(
-						'id' => 'str_replace',
+					"str_replace"=>array( //must be unique
 						'type' => 'text',
 						'title' => __('Text Option - Str Replace Validated', 'simple-options'),
 						'sub_desc' => __('You decide.', 'simple-options'),
@@ -513,8 +487,7 @@ $sections[] = array(
 						'str' => array('search' => ' ', 'replacement' => 'thisisaspace'),
 						'std' => '0'
 						),
-					array(
-						'id' => 'preg_replace',
+					"preg_replace"=>array( //must be unique
 						'type' => 'text',
 						'title' => __('Text Option - Preg Replace Validated', 'simple-options'),
 						'sub_desc' => __('You decide.', 'simple-options'),
@@ -523,8 +496,7 @@ $sections[] = array(
 						'preg' => array('pattern' => '/[^a-zA-Z_ -]/s', 'replacement' => 'no numbers'),
 						'std' => '0'
 						),
-					array(
-						'id' => 'custom_validate',
+					"custom_validate"=>array( //must be unique
 						'type' => 'text',
 						'title' => __('Text Option - Custom Callback Validated', 'simple-options'),
 						'sub_desc' => __('You decide.', 'simple-options'),
@@ -532,8 +504,7 @@ $sections[] = array(
 						'validate_callback' => 'validate_callback_function',
 						'std' => '0'
 						),
-					array(
-						'id' => '5',
+					"5"=>array( //must be unique
 						'type' => 'textarea',
 						'title' => __('Textarea Option - No HTML Validated', 'simple-options'), 
 						'sub_desc' => __('All HTML will be stripped', 'simple-options'),
@@ -541,8 +512,7 @@ $sections[] = array(
 						'validate' => 'no_html',
 						'std' => 'No HTML is allowed in here.'
 						),
-					array(
-						'id' => '6',
+					"6"=>array( //must be unique
 						'type' => 'textarea',
 						'title' => __('Textarea Option - HTML Validated', 'simple-options'), 
 						'sub_desc' => __('HTML Allowed (wp_kses)', 'simple-options'),
@@ -550,8 +520,7 @@ $sections[] = array(
 						'validate' => 'html', //see http://codex.wordpress.org/Function_Reference/wp_kses_post
 						'std' => 'HTML is allowed in here.'
 						),
-					array(
-						'id' => '7',
+					"7"=>array( //must be unique
 						'type' => 'textarea',
 						'title' => __('Textarea Option - HTML Validated Custom', 'simple-options'), 
 						'sub_desc' => __('Custom HTML Allowed (wp_kses)', 'simple-options'),
@@ -560,8 +529,7 @@ $sections[] = array(
 						'std' => 'Some HTML is allowed in here.',
 						'allowed_html' => array('') //see http://codex.wordpress.org/Function_Reference/wp_kses
 						),
-					array(
-						'id' => '8',
+					"8"=>array( //must be unique
 						'type' => 'textarea',
 						'title' => __('Textarea Option - JS Validated', 'simple-options'), 
 						'sub_desc' => __('JS will be escaped', 'simple-options'),
@@ -576,16 +544,14 @@ $sections[] = array(
 				'title' => __('Radio/Checkbox Fields', 'simple-options'),
 				'desc' => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'simple-options'),
 				'fields' => array(
-					array(
-						'id' => '10',
+					"10"=>array( //must be unique
 						'type' => 'checkbox',
 						'title' => __('Checkbox Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'std' => '1'// 1 = on | 0 = off
 						),
-					array(
-						'id' => '11',
+					"11"=>array( //must be unique
 						'type' => 'checkbox',
 						'title' => __('Multi Checkbox Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
@@ -593,16 +559,14 @@ $sections[] = array(
 						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for multi checkbox options
 						'std' => array('1' => '1', '2' => '0', '3' => '0')//See how std has changed? you also dont need to specify opts that are 0.
 						),
-					array(
-						'id' => 'checkbox-data',
+					"checkbox-data"=>array( //must be unique
 						'type' => 'checkbox',
 						'title' => __('Multi Checkbox Option (with menu data)', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'data' => "menu"
 						),					
-					array(
-						'id' => '12',
+					"12"=>array( //must be unique
 						'type' => 'radio',
 						'title' => __('Radio Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
@@ -610,16 +574,14 @@ $sections[] = array(
 						'options' => array('1' => 'Opt 1', '2' => 'Opt 2', '3' => 'Opt 3'),//Must provide key => value pairs for radio options
 						'std' => '2'
 						),
-					array(
-						'id' => 'radio-data',
+					"radio-data"=>array( //must be unique
 						'type' => 'radio',
 						'title' => __('Multi Checkbox Option (with menu data)', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						'data' => "menu"
 						),					
-					array(
-						'id' => '13',
+					"13"=>array( //must be unique
 						'type' => 'images',
 						'title' => __('Images Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
@@ -632,8 +594,7 @@ $sections[] = array(
 											),//Must provide key => value(array:title|img) pairs for radio options
 						'std' => '2'
 						),
-					array(
-						'id' => 'images',
+					"images"=>array( //must be unique
 						'type' => 'images',
 						'title' => __('Images Option for Layout', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
@@ -655,8 +616,7 @@ $sections[] = array(
 				'title' => __('Select Fields', 'simple-options'),
 				'desc' => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'simple-options'),
 				'fields' => array(
-					array(
-						'id' => 'select',
+					"select"=>array( //must be unique
 						'type' => 'select',
 						'title' => __('Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
@@ -664,8 +624,7 @@ $sections[] = array(
 						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for select options
 						'std' => '2'
 						),
-					array(
-						'id' => '15',
+					"15"=>array( //must be unique
 						'type' => 'select',
 						'multi' => true,
 						'title' => __('Multi Select Option', 'simple-options'), 
@@ -674,24 +633,18 @@ $sections[] = array(
 						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
 						'std' => array('2','3')
 						),
-
-					array(
-						'id' => 'multi-info',
+					"multi-info"=>array( //must be unique
 						'type' => 'info',
 						'desc' => __('You can easily add a variety of data from wordpress.', 'simple-options'),
 						),
-
-					array(
-						'id' => 'select-categories',
+					"select-categories"=>array( //must be unique
 						'type' => 'select',
 						'data' => 'categories',
 						'title' => __('Categories Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),
-
-					array(
-						'id' => 'select-categories-multi',
+					"select-categories-multi"=>array( //must be unique
 						'type' => 'select',
 						'data' => 'categories',
 						'multi' => true,
@@ -699,16 +652,14 @@ $sections[] = array(
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),
-					array(
-						'id' => 'select-pages',
+					"select-pages"=>array( //must be unique
 						'type' => 'select',
 						'data' => 'pages',
 						'title' => __('Pages Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),
-					array(
-						'id' => 'pages-multi_select',
+					"pages-multi_select"=>array( //must be unique
 						'type' => 'select',
 						'data' => 'pages',
 						'multi' => true,
@@ -716,16 +667,14 @@ $sections[] = array(
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),	
-					array(
-						'id' => 'select-tags',
+					"select-tags"=>array( //must be unique
 						'type' => 'select',
 						'data' => 'tags',
 						'title' => __('Tags Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),
-					array(
-						'id' => 'tags-multi_select',
+					"tags-multi_select"=>array( //must be unique
 						'type' => 'select',
 						'data' => 'tags',
 						'multi' => true,
@@ -733,16 +682,14 @@ $sections[] = array(
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),	
-					array(
-						'id' => 'select-menus',
+					"select-menus"=>array( //must be unique
 						'type' => 'select',
 						'data' => 'menus',
 						'title' => __('Menus Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),
-					array(
-						'id' => 'menus-multi_select',
+					"menus-multi_select"=>array( //must be unique
 						'type' => 'select',
 						'data' => 'menu',
 						'multi' => true,
@@ -750,16 +697,14 @@ $sections[] = array(
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),	
-						array(
-						'id' => 'select-post-type',
+					"select-post-type"=>array( //must be unique
 						'type' => 'select',
 						'data' => 'post_type',
 						'title' => __('Post Type Select Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),
-					array(
-						'id' => 'post-type-multi_select',
+					"post-type-multi_select"=>array( //must be unique
 						'type' => 'select',
 						'data' => 'post_type',
 						'multi' => true,
@@ -767,16 +712,14 @@ $sections[] = array(
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),	
-					array(
-						'id' => 'select-posts',
+					"select-posts"=>array( //must be unique
 						'type' => 'select',
 						'data' => 'post',
 						'title' => __('Posts Select Option2', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options'),
 						),
-					array(
-						'id' => 'select-posts-multi',
+					"select-posts-multi"=>array( //must be unique
 						'type' => 'select',
 						'data' => 'post',
 						'multi' => true,
@@ -792,18 +735,17 @@ $sections[] = array(
 				'desc' => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'simple-options'),
 				'fields' => array(
 
-					array(
-						'id' => '17',
+					"17"=>array( //must be unique
 						'type' => 'date',
 						'title' => __('Date Option', 'simple-options'), 
 						'sub_desc' => __('No validation can be done on this field type', 'simple-options'),
 						'desc' => __('This is the description field, again good for additional info.', 'simple-options')
 						),
-					array(
+					"21"=>array( //must be unique
 						'id' => '21',
 						'type' => 'divide'
 						),					
-					array(
+					"18"=>array( //must be unique
 						'id' => '18',
 						'type' => 'button_set',
 						'title' => __('Button Set Option', 'simple-options'), 
@@ -812,12 +754,12 @@ $sections[] = array(
 						'options' => array('1' => 'Opt 1','2' => 'Opt 2','3' => 'Opt 3'),//Must provide key => value pairs for radio options
 						'std' => '2'
 						),
-					array(
+					"23"=>array( //must be unique
 						'id' => '23',
 						'type' => 'info',
 						'desc' => __('<p class="description">This is the info field, if you want to break sections up.</p>', 'simple-options')
 						),					
-					array(
+					"custom_callback"=>array( //must be unique
 						'id' => 'custom_callback',
 						//'type' => 'nothing',//doesnt need to be called for callback fields
 						'title' => __('Custom Field Callback', 'simple-options'), 
@@ -827,10 +769,6 @@ $sections[] = array(
 						),
 					)
 				);
-
-
-
-
 
 				
 	$tabs = array();

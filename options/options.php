@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.1.7';
+		protected $framework_version = '0.1.8';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -61,13 +61,14 @@ if ( ! class_exists('Simple_Options') ){
 			$defaults['dev_mode'] = true;
 			$defaults['stylesheet_override'] = false;
 			
-			//$defaults['footer_credit'] = __('<span id="footer-thankyou">Options Panel created using the <a href="'.$this->framework_url.'" target="_blank">'.$this->framework_name.'</a> Version '.$this->framework_version.'</span>', 'simple-options');
+			$defaults['footer_credit'] = __('<span id="footer-thankyou">Options Panel created using the <a href="'.$this->framework_url.'" target="_blank">'.$this->framework_name.'</a> Version '.$this->framework_version.'</span>', 'simple-options');
 			
 			$defaults['help_tabs'] = array();
 			$defaults['help_sidebar'] = __('', 'simple-options');
 
 			//get args
 			$this->args = wp_parse_args($args, $defaults);
+			//$this->args filter hook
 			$this->args = apply_filters('simple-options-args-'.$this->args['opt_name'], $this->args);
 			
 			//get sections
@@ -97,8 +98,8 @@ if ( ! class_exists('Simple_Options') ){
 			//hook into the wp feeds for downloading the exported settings
 			add_action('do_feed_simple-options-'.$this->args['opt_name'], array(&$this, '_download_options'), 1, 1);
 		
-			// Hook to allow ajax functions
-			add_action('wp_ajax_of_ajax_post_action', array(&$this, '_ajax_callback'));
+			// Hook to allow ajax functions, not being used
+			//add_action('wp_ajax_of_ajax_post_action', array(&$this, '_ajax_callback'));
 
 			// Shortcodes used within the framework
 			add_shortcode('site-url', array(&$this, 'shortcode_site_url'));
@@ -432,6 +433,8 @@ if ( ! class_exists('Simple_Options') ){
 						
 							$field_class = 'Simple_Options_'.$field['type'];
 							
+							do_action('simple-options-get-field-'.$field['type'].'-'.$this->args['opt_name']);
+
 							if(!class_exists($field_class)){
 								require_once($this->dir.'fields/'.$field['type'].'/field_'.$field['type'].'.php');
 							}//if
@@ -552,10 +555,12 @@ if ( ! class_exists('Simple_Options') ){
 					continue;
 				}
 
+
+
 				$section = $this->_item_cleanup($section, $k);
 				$this->sections[$k] = $section;
 
-				$section = apply_filters($section['id'].'_section_modifier', $section);
+				$section = apply_filters('simple-options-section-'.$section['id'].'-modifier-'.$this->args['opt_name'], $section);
 
 				$section = $this->_item_cleanup($section, $k);
 				$this->sections[$k] = $section;
@@ -564,15 +569,19 @@ if ( ! class_exists('Simple_Options') ){
 
 				if(isset($section['fields'])){
 
-					$section['fields'] = apply_filters($section['id'].'_section_fields_modifier', $section['fields']);
+					$section['fields'] = apply_filters('simple-options-section-'.$section['id'].'fields-modifier-'.$this->args['opt_name'], $section['fields']);
 					$this->sections[$k]['fields'] = $section['fields'];
 
 					foreach($section['fields'] as $fieldk => $field){	
+
+						if (!isset($field['id']) || !is_numeric($fieldk)) {
+							$field['id'] = $fieldk;
+						}
 						
 						$field = $this->_item_cleanup($field, $fieldk);
 						$this->sections[$k]['fields'][$fieldk] = $field;
 
-						$field = apply_filters($field['id'].'_field_modifier', $field);
+						$field = apply_filters('simple-options-field-'.$field['id'].'modifier-'.$this->args['opt_name'], $field);
 						$field = $this->_item_cleanup($field, $fieldk);
 						$this->sections[$k]['fields'][$fieldk] = $field;
 						
@@ -780,12 +789,12 @@ if ( ! class_exists('Simple_Options') ){
 		
 						if(isset($field['validate'])){
 							$validate = 'SOF_Validation_'.$field['validate'];
+
+							do_action('simple-options-get-validation-'.$this->args['opt_name']);
 							
 							if(!class_exists($validate)){
 								require_once($this->dir.'validation/'.$field['validate'].'/validation_'.$field['validate'].'.php');
 							}//if
-
-							do_action('-get-validation');
 							
 							if(class_exists($validate)){
 								$validation = new $validate($field, $plugin_options[$field['id']], $options[$field['id']]);
