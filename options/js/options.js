@@ -89,6 +89,15 @@ var confirmOnPageExit = function (e) {
 
 jQuery(document).ready(function($){
 
+/**	Tipsy @since v1.3 */
+if (jQuery().tipsy) {
+	$('.tips').tipsy({
+		fade: true,
+		gravity: 's',
+		opacity: 0.7,
+	});
+}	
+
 var confirmOnPageExit = function (e) {
     // If we haven't been passed the event get the window.event
     e = e || window.event;

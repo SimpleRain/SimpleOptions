@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.1.8';
+		protected $framework_version = '0.1.9';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -586,7 +586,7 @@ if ( ! class_exists('Simple_Options') ){
 						$this->sections[$k]['fields'][$fieldk] = $field;
 						
 						if(isset($field['title'])){
-							$th = (isset($field['sub_desc']))?$field['title'].'<span class="description">'.$field['sub_desc'].'</span>':$field['title'];
+							$th = (isset($field['subtitle']))?$field['title'].'<span class="description">'.$field['subtitle'].'</span>':$field['title'];
 						}else{
 							$th = '';
 						}
@@ -677,7 +677,7 @@ if ( ! class_exists('Simple_Options') ){
 							'label' => $field['title'],
 							'section' => $section['id'].'_section',
 							'settings' => $field['id'].'_field',
-														'description' => (isset($field['sub_desc']))?'<span class="description">'.$field['sub_desc'].'</span>':'',
+														'description' => (isset($field['subtitle']))?'<span class="description">'.$field['subtitle'].'</span>':'',
 														'priority' => $theFieldPriority
 						)));
 						
@@ -1170,8 +1170,8 @@ if ( ! class_exists('Simple_Options') ){
 			
 			$id = rtrim($section['id'], '_section');
 			
-			if(isset($this->sections[$id]['desc']) && !empty($this->sections[$id]['desc'])) {
-				echo '<div class="simple-options-section-desc">'.$this->sections[$id]['desc'].'</div>';
+			if(isset($this->sections[$id]['description']) && !empty($this->sections[$id]['description'])) {
+				echo '<div class="simple-options-section-desc">'.$this->sections[$id]['description'].'</div>';
 			}
 			
 		}//function
@@ -1257,7 +1257,17 @@ if ( ! class_exists('Simple_Options') ){
 			if (!empty($item['name']) && empty($item['title'])) {
 				$item['title'] = $item['name'];
 				unset($item['name']);
-			}		
+			}
+
+			if (!empty($item['desc']) && empty($item['description'])) {
+				$item['description'] = $item['desc'];
+				unset($item['desc']);
+			}
+
+			if (!empty($item['sub_desc']) && empty($item['subtitle'])) {
+				$item['subtitle'] = $item['sub_desc'];
+				unset($item['sub_desc']);
+			}
 
 			if (empty($item['id']) && !empty($item['title'])) {
 				$item['id'] = strtolower(str_replace(' ','_', preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $item['title'])));

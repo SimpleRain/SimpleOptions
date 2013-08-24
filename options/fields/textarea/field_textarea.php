@@ -34,7 +34,7 @@ class Simple_Options_textarea extends Simple_Options{
 		
 		echo '<textarea id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" '.$placeholder.'class="'.$class.'" rows="6" >'.esc_attr($this->value).'</textarea>';
 		
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
+		echo (isset($this->field['description']) && !empty($this->field['description']))?'<div class="description">'.$this->field['description'].'</div>':'';
 		
 	}//function
 	

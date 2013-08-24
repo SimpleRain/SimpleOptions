@@ -30,7 +30,7 @@ class Simple_Options_info extends Simple_Options{
 		
 		$class = (isset($this->field['class']))?' '.$this->field['class']:'';
 		
-		echo '</td></tr></table><div class="simple-options-info-field'.$class.'">'.$this->field['desc'].'</div><table class="form-table no-border"><tbody><tr><th></th><td>';
+		echo '</td></tr></table><div class="simple-options-info-field'.$class.'">'.$this->field['description'].'</div><table class="form-table no-border"><tbody><tr><th></th><td>';
 		
 	}//function
 	

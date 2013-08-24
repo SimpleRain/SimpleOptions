@@ -84,7 +84,7 @@ class Simple_Options_slider extends Simple_Options{
 		echo '<input type="text" name="'.$this->args['opt_name'].'['.$this->field['id'].']" id="' . $this->field['id'] . '" value="'. $this->value .'" class="mini slider-input"'.$readonly.'/>';
 		echo '<div id="'.$this->field['id'].'-slider" class="sof_slider"></div>';
 		
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
+		echo (isset($this->field['description']) && !empty($this->field['description']))?'<div class="description">'.$this->field['description'].'</div>':'';
 		
 	}//function
 	

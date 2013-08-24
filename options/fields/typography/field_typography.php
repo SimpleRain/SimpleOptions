@@ -65,8 +65,8 @@ class Simple_Options_typography extends Simple_Options{
 	  /**
 			Font Family
 		**/
-	  if (!empty($field['display']['family'])):	  
-	    echo '<div class="select_wrapper typography-family" original-title="Font family" style="width: 220px; margin-right: 5px;">';
+	  if (empty($field['display']['family'])):	  
+	    echo '<div class="select_wrapper typography-family" original-title="'.__('Font family','simple-options').'" style="width: 220px; margin-right: 5px;">';
 	    echo '<select class="sof-typography sof-typography-family sof-select-item" id="'.$this->field['id'].'-family" name="'.$this->args['opt_name'].'['.$this->field['id'].'][family]" data-id="'.$this->field['id'].'">';
 		 	echo '<optgroup label="Standard Fonts">';
 	    $faces = array(
@@ -121,9 +121,9 @@ class Simple_Options_typography extends Simple_Options{
     /** 
     Font Weight 
     **/
-    if(!empty($this->value['display']['style'])):
-      echo '<div class="select_wrapper typography-style" original-title="Font style">';
-      echo '<select class="sof-typography sof-typography-style select" original-title="Font style" name="'.$this->field['id'].'[style]" id="'. $this->field['id'].'_style" data-id="'.$this->field['id'].'">';
+    if(empty($this->value['display']['style'])):
+      echo '<div class="select_wrapper typography-style" original-title="'.__('Font style','simple-options').'">';
+      echo '<select class="sof-typography sof-typography-style select" original-title="'.__('Font style','simple-options').'" name="'.$this->field['id'].'[style]" id="'. $this->field['id'].'_style" data-id="'.$this->field['id'].'">';
 		 	if (empty($this->value['style'])) {
 		 		echo '<option value="">Inherit</option>';
 		 	}
@@ -168,9 +168,9 @@ class Simple_Options_typography extends Simple_Options{
     /** 
     Font Script 
     **/
-    if(!empty($this->value['display']['script'])):
-      echo '<div class="select_wrapper typography-script tooltip" original-title="Font Script">';
-      echo '<select class="sof-typography sof-typography-script" original-title="Font script"  id="'.$this->field['id'].'-script" name="'.$this->args['opt_name'].'['.$this->field['id'].'][script]">';
+    if(empty($this->value['display']['script'])):
+      echo '<div class="select_wrapper typography-script tooltip" original-title="'.__('Font script','simple-options').'">';
+      echo '<select class="sof-typography sof-typography-script" original-title="'.__('Font script','simple-options').'"  id="'.$this->field['id'].'-script" name="'.$this->args['opt_name'].'['.$this->field['id'].'][script]">';
       if (isset($gfonts[$this->value['family']])) {
         $styles = array();
         foreach ($gfonts[$this->value['family']]['subsets'] as $k=>$v) {
@@ -185,16 +185,16 @@ class Simple_Options_typography extends Simple_Options{
 		/**
 		Font Size
 		**/
-  	if(!empty($this->value['display']['size'])):
-    	echo '<div class="input-append"><input type="text" class="span2 sof-typography-size mini" original-title="Font size" id="'.$this->field['id'].'-size" name="'.$this->args['opt_name'].'['.$this->field['id'].'][size]" value="'.$this->value['size'].'"><span class="add-on">'.$unit.'</span></div>';
+  	if(empty($this->value['display']['size'])):
+    	echo '<div class="input-append"><input type="text" class="span2 sof-typography-size mini" original-title="'.__('Font size','simple-options').'" id="'.$this->field['id'].'-size" name="'.$this->args['opt_name'].'['.$this->field['id'].'][size]" value="'.$this->value['size'].'"><span class="add-on">'.$unit.'</span></div>';
   	endif;
 
 
 		/**
 		Line Height 
 		**/
-		if(!empty($this->value['display']['height'])):
-		 	echo '<div class="input-append"><input type="text" class="span2 sof-typography sof-typography-height mini" original-title="Font height" id="'.$this->field['id'].'-height" name="'.$this->args['opt_name'].'['.$this->field['id'].'][height]" value="'.$this->value['height'].'"><span class="add-on">'.$unit.'</span></div>';
+		if(empty($this->value['display']['height'])):
+		 	echo '<div class="input-append"><input type="text" class="span2 sof-typography sof-typography-height mini" original-title="'.__('Font height','simple-options').'" id="'.$this->field['id'].'-height" name="'.$this->args['opt_name'].'['.$this->field['id'].'][height]" value="'.$this->value['height'].'"><span class="add-on">'.$unit.'</span></div>';
 		endif;
 
 
@@ -203,7 +203,7 @@ class Simple_Options_typography extends Simple_Options{
     /** 
     Font Color 
     **/
-    if(!empty($this->value['display']['color'])):
+    if(empty($this->value['display']['color'])):
     	$default = "";
     	if (empty($this->field['std']['color']) && !empty($this->field['color'])) {
     		$default = $this->value['color'];
@@ -211,14 +211,14 @@ class Simple_Options_typography extends Simple_Options{
 				$default = $this->field['std']['color'];
 			}
       echo '<div id="' . $this->field['id'] . '_color_picker" class="colorSelector typography-color"><div style="background-color: '.$this->value['color'].'"></div></div>';
-      echo '<input data-default-color="'.$default.'" class="sof-color sof-typography-color" original-title="Font color" id="'.$this->field['id'].'-color" name="'.$this->args['opt_name'].'['.$this->field['id'].'][color]" type="text" value="'. $this->value['color'] .'" data-id="'.$this->field['id'].'" />';
+      echo '<input data-default-color="'.$default.'" class="sof-color sof-typography-color" original-title="'.__('Font color','simple-options').'" id="'.$this->field['id'].'-color" name="'.$this->args['opt_name'].'['.$this->field['id'].'][color]" type="text" value="'. $this->value['color'] .'" data-id="'.$this->field['id'].'" />';
     endif;
 
 
     /**
 		Font Preview
     **/
-		if(!empty($this->value['display']['preview'])):
+		if(empty($this->value['display']['preview'])):
 	    if(isset($value['preview']['text'])){
 	      $g_text = $value['preview']['text'];
 	    } else {
@@ -233,7 +233,7 @@ class Simple_Options_typography extends Simple_Options{
 	    echo '<p class="'.$this->field['id'].'_previewer typography-preview" '. $g_size .'>'. $g_text .'</p>';
 	    echo "</div>";
 
-	    echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
+	    echo (isset($this->field['description']) && !empty($this->field['description']))?'<div class="description">'.$this->field['description'].'</div>':'';
     endif;
 
 	}//function

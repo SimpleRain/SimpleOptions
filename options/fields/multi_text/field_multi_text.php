@@ -53,7 +53,7 @@ class Simple_Options_multi_text extends Simple_Options{
 		
 		echo '<a href="javascript:void(0);" class="simple-options-multi-text-add" rel-id="'.$this->field['id'].'-ul" rel-name="'.$this->args['opt_name'].'['.$this->field['id'].'][]">'.__('Add More', 'simple-options').'</a><br/>';
 		
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
+		echo (isset($this->field['description']) && !empty($this->field['description']))?'<div class="description">'.$this->field['description'].'</div>':'';
 		
 	}//function
 	

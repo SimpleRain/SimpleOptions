@@ -109,7 +109,7 @@ class Simple_Options_radio extends Simple_Options{
 
 		echo '</fieldset>';
 
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
+		echo (isset($this->field['description']) && !empty($this->field['description']))?'<div class="description">'.$this->field['description'].'</div>':'';
 		
 	}//function
 	

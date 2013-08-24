@@ -103,15 +103,15 @@ class Simple_Options_checkbox extends Simple_Options{
 
 			echo '</ul>';	
 
-			echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
+			echo (isset($this->field['description']) && !empty($this->field['description']))?'<div class="description">'.$this->field['description'].'</div>':'';
 
 		else: 
 
-			echo ($this->field['desc'] != '')?' <label for="'.$this->field['id'].'">':'';
+			echo ($this->field['description'] != '')?' <label for="'.$this->field['id'].'">':'';
 		
 			echo '<input type="checkbox" id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="1" class="checkbox'.$class.'" '.checked($this->value, '1', false).'/>';
 		
-			echo (isset($this->field['desc']) && !empty($this->field['desc']))?' '.$this->field['desc'].'</label>':'';
+			echo (isset($this->field['description']) && !empty($this->field['description']))?' '.$this->field['description'].'</label>':'';
 
 		endif;
 

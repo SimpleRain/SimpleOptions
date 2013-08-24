@@ -27,15 +27,45 @@ class Simple_Options_border extends Simple_Options{
 	 * @since Simple_Options 1.0.0
 	*/
 	function render(){
-		return;
+
+		// No errors please
+		$defaults = array(
+			'color' => '',
+			'style' => '',
+			'size' => '',
+			);
+		$this->value = wp_parse_args( $this->value, $defaults );
+		$this->field['std'] = wp_parse_args( $this->field['std'], $defaults );	
+
+		if (empty($this->field['min'])) {
+			$this->field['min'] = 0;
+		}
+		if (empty($this->field['max'])) {
+			$this->field['max'] = 10;
+		}		
+		
 		echo '<div class="sof-border-container">';
 
-		$class = (isset($this->field['class']))?$this->field['class']:'';
+		$options = array(''=>'None', 'solid'=>'Solid', 'dashed'=>'Dashed', 'dotted'=>'Dotted');
 
-		echo '<input name="'.$this->args['opt_name'].'['.$this->field['id'].'][color]" id="' . $this->field['id'] . '" class="sof-color ' . $class . '"  type="text" value="' . $this->value['color'] . '"  data-default-color="' . $this->field['std']['color'] . '" />';
+		$class = (isset($this->field['class']))?$this->field['class']:'';
+		echo '<div class="sof-border">';
 		
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
-		
+			echo '<select original-title="'.__('Border size','simple-options').'" id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].'][size]" class="tips sof-border-size mini'.$class.'" rows="6">';
+				for ($k = $this->field['min']; $k <= $this->field['max']; $k++) {
+					echo '<option value="'.$k.'"'.selected($this->value['size'], $k, false).'>'.$k.'</option>';
+				}//foreach
+			echo '</select>';	
+			echo '<select original-title="'.__('Border style','simple-options').'" id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].'][style]" class="tips sof-border-style'.$class.'" rows="6">';
+				foreach($options as $k => $v){
+					echo '<option value="'.$k.'"'.selected($this->value['style'], $k, false).'>'.$v.'</option>';
+				}//foreach
+			echo '</select>';	
+			echo '<input name="'.$this->args['opt_name'].'['.$this->field['id'].'][color]" id="' . $this->field['id'] . '-color" class="sof-border-color sof-color ' . $class . '"  type="text" value="' . $this->value['color'] . '"  data-default-color="' . $this->field['std']['color'] . '" />';
+			
+			echo (isset($this->field['description']) && !empty($this->field['description']))?'<div class="description">'.$this->field['description'].'</div>':'';
+			
+			echo '</div>';
 		echo '</div>';
 
 	}//function

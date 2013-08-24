@@ -72,7 +72,7 @@ class Simple_Options_switch extends Simple_Options{
 						echo '<h4>The "fold" feature is still under development.</h4>';
 					}
 
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
+		echo (isset($this->field['description']) && !empty($this->field['description']))?'<div class="description">'.$this->field['description'].'</div>':'';
 		
 	}//function
 	

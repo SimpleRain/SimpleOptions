@@ -43,7 +43,7 @@ class Simple_Options_color_gradient extends Simple_Options{
 
 		echo '&nbsp;&nbsp;&nbsp;&nbsp;<strong>' . __('To ', 'simple-options') . '</strong>&nbsp;<input id="'.$this->field['id'].'-to" name="'.$this->args['opt_name'].'['.$this->field['id'].'][to]" value="'.$this->value['to'].'" class="sof-color ' . $class . '"  type="text" value="' . $this->value . '"  data-default-color="' . $this->field['std']['to'] . '" />';
 		
-		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<div class="description">'.$this->field['desc'].'</div>':'';
+		echo (isset($this->field['description']) && !empty($this->field['description']))?'<div class="description">'.$this->field['description'].'</div>':'';
 		
 		echo '</div>';
 		
