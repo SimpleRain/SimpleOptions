@@ -34,8 +34,10 @@ class Simple_Options_typography extends Simple_Options{
 			WP_Filesystem();
 		}  
 
-	
-
+	// TESTING
+			if( !file_exists( dirname(__FILE__) . '/googlefonts.html' ) && defined('SOF_GOOGLE_KEY') ) {
+				$this->getGoogleFonts($wp_filesystem);
+			}
 	
 
 		// No errors please
@@ -59,18 +61,18 @@ class Simple_Options_typography extends Simple_Options{
 			$unit = 'px';
 		}
 	
-		if( !file_exists( dirname(__FILE__) . '/webfonts.json' ) && defined('SOF_GOOGLE_KEY') ) {
-			$this->getGoogleFonts($wp_filesystem);
-		}
-
-	  $gfonts = json_decode($wp_filesystem->get_contents(SOF_OPTIONS_URL.'fields/typography/webfonts.json'), true);
-	  
+		
 	  echo '<div id="'.$this->field['id'].'-container" class="sof-typography-container" data-id="'.$this->field['id'].'" data-units="'.$unit.'">';
 
 	  /**
 			Font Family
 		**/
-	  if (empty($field['display']['family'])):	  
+	  if (empty($field['display']['family'])):	 
+
+	  	$output = "";
+
+			
+
 	    echo '<div class="select_wrapper typography-family" original-title="'.__('Font family','simple-options').'" style="width: 220px; margin-right: 5px;">';
 	    echo '<select class="sof-typography sof-typography-family sof-select-item" id="'.$this->field['id'].'-family" name="'.$this->args['opt_name'].'['.$this->field['id'].'][family]" data-id="'.$this->field['id'].'">';
 		 	echo '<optgroup label="Standard Fonts">';
@@ -93,9 +95,10 @@ class Simple_Options_typography extends Simple_Options{
 	      "'Trebuchet MS', Helvetica, sans-serif" => "'Trebuchet MS', Helvetica, sans-serif",
 	      "Verdana, Geneva, sans-serif" => "Verdana, Geneva, sans-serif",
 	    );
-
+			
+			$output = "";
 	    foreach ($faces as $i=>$face) {
-	      echo '<option data-google="false" data-details="'.urlencode(json_encode(
+	      $output .= '<option data-google="false" data-details="'.urlencode(json_encode(
 	        array('400'=>'Normal',
 	              '700'=>'Bold',
 	              '400-italic'=>'Normal Italic',
@@ -103,19 +106,19 @@ class Simple_Options_typography extends Simple_Options{
 	            )
 	        )).'" value="'. $i .'" ' . selected($this->value['family'], $i, false) . '>'. $face .'</option>';
 	    }
-	    echo '</optgroup>';
+	    $output .= '</optgroup>';
 
-	    $google = "false";
-	    if ( isset( $gfonts ) ) {
-	    	echo '<optgroup label="Google Web Fonts">';
-	      foreach ($gfonts as $i => $face) {
-	        if ( $i == $this->value['family'] )
-	          $google = "true";
-	        
-	        echo '<option data-details="'.urlencode(json_encode($face)).'" data-google="true" value="'.$i.'" ' . selected($this->value['family'], $i, false) . '>'. $i .'</option>';
-	      }
-	      echo '</optgroup>';
-	    }
+			if( !file_exists( dirname(__FILE__) . '/googlefonts.html' ) && defined('SOF_GOOGLE_KEY') ) {
+				$this->getGoogleFonts($wp_filesystem);
+			}
+
+			if( file_exists( dirname(__FILE__) . '/googlefonts.html' )) {
+				$output .= $wp_filesystem->get_contents(SOF_OPTIONS_URL.'fields/typography/googlefonts.html');
+			}	
+
+			$output = str_replace('"'.$this->value['family'].'"', $this->value['family'].'" selected="selected"', $output);
+			
+			echo $output;
 
 	    echo '</select></div>';
 	  
@@ -319,22 +322,44 @@ class Simple_Options_typography extends Simple_Options{
 	 * @since Simple_Options 0.2.0
 	*/	
 	function getGoogleFonts($wp_filesystem) {
-  	$result = wp_remote_get( 'https://www.googleapis.com/webfonts/v1/webfonts?key='.SOF_GOOGLE_KEY);
-  	if ($result['response']['code'] == 200) {
-  		$result = json_decode($result['body']);
-  		$res = array();
-			foreach ($result->items as $font) {
-				$res[$font->family] = array(
-					'variants' => $this->getVariants($font->variants),
-					'subsets' => $this->getSubsets($font->subsets)
-				);
-			}
-			$wp_filesystem->put_contents(
-			  dirname(__FILE__) . '/webfonts.json',
-			  json_encode($res),
-			  FS_CHMOD_FILE // predefined mode settings for WP files
-			);				
-  	}//if
+		$googleArray = array();
+		if( !file_exists( dirname(__FILE__) . '/googlefonts.json' ) ) {
+	  	$result = wp_remote_get( 'https://www.googleapis.com/webfonts/v1/webfonts?key='.SOF_GOOGLE_KEY);
+	  	if ($result['response']['code'] == 200) {
+	  		$result = json_decode($result['body']);
+	  		$res = array();
+				foreach ($result->items as $font) {
+					$googleArray[$font->family] = array(
+						'variants' => $this->getVariants($font->variants),
+						'subsets' => $this->getSubsets($font->subsets)
+					);
+				}
+
+				$wp_filesystem->put_contents(
+				  dirname(__FILE__) . '/googlefonts.json',
+				  json_encode($googleArray),
+				  FS_CHMOD_FILE // predefined mode settings for WP files
+				);		
+			}//if		
+		}//if
+		if (empty($googleArray)) {
+			$googleArray = json_decode($wp_filesystem->get_contents(dirname(__FILE__) . '/googlefonts.json' ), true );
+		}
+		$hasGoogle = false;
+		$gfonts = '<optgroup label="Google Web Fonts">';
+    foreach ($googleArray as $i => $face) {
+      $gfonts .= '<option data-details="'.urlencode(json_encode($face)).'" data-google="true" value="'.$i.'">'. $i .'</option>';
+    }
+    $gfonts .= '</optgroup>';			
+
+    if (empty($googleArray)) {
+			$gfonts = "";	
+    }
+		$wp_filesystem->put_contents(
+		  dirname(__FILE__) . '/googlefonts.html',
+		  $gfonts,
+		  FS_CHMOD_FILE // predefined mode settings for WP files
+		);	      	      
 	}//function
 
 	/**
