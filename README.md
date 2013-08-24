@@ -41,8 +41,14 @@ You can also run SOF outside of a plugin, embedded in a theme. By so doing users
 * Include and implement the framework by adding the following code to your ```functions.php``` file:
 
 ```php
-include_once('options/options.php');
-get_template_part('options', 'init');
+<?
+$plugins = get_option('active_plugins');
+foreach (get_option('active_plugins') as $plugin) {
+	if (strpos(strtolower($plugin),'simpleoptions') !== false) {
+		$folder = plugin_dir_path($plugin);
+		include_once(WP_PLUGIN_DIR.'/'.$folder."options-init.php");
+	}
+}
 ```
 
 

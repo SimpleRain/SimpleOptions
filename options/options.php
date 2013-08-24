@@ -17,7 +17,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.2.1';
+		protected $framework_version = '0.2.2';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -194,8 +194,10 @@ if ( ! class_exists('Simple_Options') ){
 					foreach($section['fields'] as $fieldk => $field){
 						
 						if(!isset($field['std'])){$field['std'] = '';}
+
+						if (!isset($field['id'])) { $field['id'] = $fieldk; }
 							
-							$defaults[$field['id']] = $field['std'];
+						$defaults[$field['id']] = $field['std'];
 						
 					}//foreach
 				
