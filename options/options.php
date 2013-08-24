@@ -1,4 +1,5 @@
 <?php
+
 if ( ! class_exists('Simple_Options') ){
 	
 	// windows-proof constants: replace backward by forward slashes - thanks to: https://github.com/peterbouwmeester
@@ -721,12 +722,13 @@ if ( ! class_exists('Simple_Options') ){
 				$imported_options = json_decode(htmlspecialchars_decode($import), true);
 
 				if(is_array($imported_options) && isset($imported_options['simple-options-backup']) && $imported_options['simple-options-backup'] == '1'){
-					$imported_options = wp_parse_args( $imported_options, $plugin_options );
-					$imported_options['imported'] = 1;
+					$plugin_options = wp_parse_args( $imported_options, $plugin_options );
+					$plugin_options['imported'] = 1;
 					if ($_COOKIE["sof_current_tab"] == "import_export_default") {
 						setcookie('sof_current_tab', '', 1, '/');
-					}					
-					return $imported_options;
+					}			
+					do_action('simple-options-after-import-'.$this->args['opt_name'], $plugin_options);
+					return $plugin_options;
 				}
 				
 			}
@@ -734,6 +736,7 @@ if ( ! class_exists('Simple_Options') ){
 			
 			if(!empty($plugin_options['defaults'])){
 				$plugin_options = $this->_default_values();
+				do_action('simple-options-after-default-set-'.$this->args['opt_name'], $imported_options);
 				return $plugin_options;
 			}//if set defaults
 			
@@ -755,6 +758,8 @@ if ( ! class_exists('Simple_Options') ){
 			unset($plugin_options['import']);
 			unset($plugin_options['import_code']);
 			unset($plugin_options['import_link']);
+
+			do_action('simple-options-after-save-'.$this->args['opt_name'], $plugin_options);
 
 			return $plugin_options;	
 		
