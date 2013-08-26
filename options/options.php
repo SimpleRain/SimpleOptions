@@ -736,15 +736,14 @@ if ( ! class_exists('Simple_Options') ){
 					}			
 					do_action('simple-options-after-import-'.$this->args['opt_name'], $plugin_options);
 					return $plugin_options;
-				}
-				
+				}	
 			}
 			
-			
+			// If this is a new setup, init and return the defaults
 			if(!empty($plugin_options['defaults'])){
-				$plugin_options = $this->_default_values();
-				do_action('simple-options-after-default-set-'.$this->args['opt_name'], $plugin_options);
-				return $plugin_options;
+				$defaults = $this->_default_values();
+				do_action('simple-options-after-defaults-'.$this->args['opt_name'], $plugin_options, $defaults);
+				return $defaults;
 			}//if set defaults
 			
 			//validate fields (if needed)
@@ -758,15 +757,13 @@ if ( ! class_exists('Simple_Options') ){
 				set_transient('simple-options-warnings-'.$this->args['opt_name'], $this->warnings, 1000 );		
 			}//if errors
 			
-			do_action('simple-options-options-validate-'.$this->args['opt_name'], $plugin_options, $this->options);
+			do_action('simple-options-validate-'.$this->args['opt_name'], $plugin_options, $this->options);
 			
 			
 			unset($plugin_options['defaults']);
 			unset($plugin_options['import']);
 			unset($plugin_options['import_code']);
 			unset($plugin_options['import_link']);
-
-			do_action('simple-options-after-save-'.$this->args['opt_name'], $plugin_options);
 
 			return $plugin_options;	
 		

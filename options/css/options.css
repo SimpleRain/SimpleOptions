@@ -669,7 +669,16 @@ color: #777;
 }
 
 
-
+#simple-options-main input.button-primary {
+	border-color: #21759B;
+	border-bottom-color: #1E6A8D;
+	-webkit-box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5);
+	box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5);
+	background: inherit !important;
+}
+#simple-options-main .button, #simple-options-main .button-secondary, #simple-options-main .button-primary {
+	padding: 0 10px 1px;
+}
 
 #simple-options-main textarea, #simple-options-main input, #simple-options-main select, #simple-options-main button {
 	-webkit-border-radius: 3px;
@@ -808,15 +817,7 @@ label.radio, label.multicheck {
 	display: none;
 }
 
-#simple-options-main input.button-primary {
-	border-color: #21759B;
-	border-bottom-color: #1E6A8D;
-	-webkit-box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5);
-	box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5);
-}
-#simple-options-main .button, #simple-options-main .button-secondary, #simple-options-main .button-primary {
-	padding: 0 10px 1px;
-}
+
 
 #simple-options-main input.large-text {
 	width: 100%;

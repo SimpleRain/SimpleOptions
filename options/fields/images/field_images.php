@@ -37,6 +37,11 @@ class Simple_Options_images extends Simple_Options{
 			echo '<ul class="sof-images">';
 			
 			foreach($this->field['options'] as $k => $v){
+
+				if (!is_array($v)) {
+					$v = array('img'=>$v);
+				}
+
 				if (!isset($v['title'])) {
 					$v['title'] = "";
 				}
