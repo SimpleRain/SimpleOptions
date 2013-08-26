@@ -77,10 +77,10 @@ if ( ! class_exists('Simple_Options') ){
 			}
 
 			//get sections
-			$this->sections = apply_filters('simple-options-sections-'.$this->args['opt_name'], $sections);
+			$this->sections = apply_filters('simple-options-filter-sections-'.$this->args['opt_name'], $this->sections);
 			
 			//get extra tabs
-			$this->extra_tabs = apply_filters('simple-options-extra-tabs-'.$this->args['opt_name'], $extra_tabs);
+			$this->extra_tabs = apply_filters('simple-options-filter-tabs-'.$this->args['opt_name'], $this->extra_tabs);
 			
 			//set option with defaults
 			add_action('init', array(&$this, '_set_default_options'));
@@ -226,6 +226,12 @@ if ( ! class_exists('Simple_Options') ){
 				add_option($this->args['opt_name'], $this->_default_values());
 			}
 			$this->options = get_option($this->args['opt_name']);
+
+			if (count($this->options) != count($this->_default_values())) {
+				$this->options = wp_parse_args( $this->options, $this->_default_values() );
+				update_option($this->args['opt_name'], $this->options);
+			}
+
 		}//function
 		
 		
