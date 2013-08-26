@@ -280,12 +280,14 @@ color: #777;
 	background: #eeeeee;
 	border-width: 1px 0px 1px 0px;
 	border-style: solid;
-    border-bottom-color: #E7E7E7;
-    border-top-color: #F9F9F9;
-    opacity: 0.7;
-    color: #555;
-    font-weight:bold;
-    text-decoration:none;
+  border-bottom-color: #E7E7E7;
+  border-top-color: #F9F9F9;
+  opacity: 0.7;
+  color: #555;
+  font-weight:bold;
+  text-decoration:none;
+  -webkit-transition: none;
+	transition: none;
 }
 #simple-options-sidebar #simple-options-group-menu li a.custom-tab{
 	background: #f6f6f6;

@@ -165,7 +165,6 @@ var confirmOnPageExit = function (e) {
 		$.removeCookie('sof_current_tab_get');
 	}
 
-	console.log($.cookie("sof_current_tab"));
 	var sTab = jQuery('#'+$.cookie("sof_current_tab")+'_section_group_li_a');
 	// Tab the first item or the saved one
 	if($.cookie("sof_current_tab") === null || typeof($.cookie("sof_current_tab")) == "undefined" || sTab.length == 0){
