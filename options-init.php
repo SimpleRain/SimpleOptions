@@ -278,7 +278,7 @@ $sections[] = array(
 
 					"patterns"=>array( //must be unique
 						'type' => 'images', 
-						'pattern' => true,
+						'tiles' => true,
 						'fold' => array('switch-fold'=>array(0)),
 						'title' => __('Images Option (with pattern=>true)', 'simple-options'),
 						'subtitle'=> __('Select a background pattern.', 'simple-options'),

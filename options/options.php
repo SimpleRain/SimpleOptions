@@ -436,9 +436,16 @@ if ( ! class_exists('Simple_Options') ){
 					
 					foreach($section['fields'] as $fieldk => $field){
 
+						$field = $this->_item_cleanup($field, $fieldk);
+
 						if(isset($field['type'])){
 						
 							$field_class = 'Simple_Options_'.$field['type'];
+
+							if ($field['type'] == "heading") {
+								print_r($field['type']);
+								continue;
+							}
 							
 							do_action('simple-options-get-field-'.$field['type'].'-'.$this->args['opt_name']);
 
@@ -736,7 +743,7 @@ if ( ! class_exists('Simple_Options') ){
 			
 			if(!empty($plugin_options['defaults'])){
 				$plugin_options = $this->_default_values();
-				do_action('simple-options-after-default-set-'.$this->args['opt_name'], $imported_options);
+				do_action('simple-options-after-default-set-'.$this->args['opt_name'], $plugin_options);
 				return $plugin_options;
 			}//if set defaults
 			
@@ -1260,10 +1267,8 @@ if ( ! class_exists('Simple_Options') ){
 		*
 		*/
 		function _item_cleanup($item, $k) {
-			
-			if (!empty($item['type'])) {
-				$item['type'] = $this->_item_type_cleanup($item['type']);
-			}
+			// Cleanup the types. SMOF compatability
+
 
 			if (!empty($item['name']) && empty($item['title'])) {
 				$item['title'] = $item['name'];
@@ -1274,6 +1279,11 @@ if ( ! class_exists('Simple_Options') ){
 				$item['description'] = $item['desc'];
 				unset($item['desc']);
 			}
+
+			if (!empty($item['std']) && empty($item['description']) && !empty($item['type']) && $item['type'] == "info") {
+				$item['description'] = $item['std'];
+				unset($item['std']);
+			}			
 
 			if (!empty($item['sub_desc']) && empty($item['subtitle'])) {
 				$item['subtitle'] = $item['sub_desc'];
@@ -1299,19 +1309,27 @@ if ( ! class_exists('Simple_Options') ){
 		function _item_type_cleanup($item) {
 
 			// SMOF Compatability
-			if ($item['type'] == "multicheck") {
-				$item['type'] == "multi_checkbox";
-			} else if ($item['type'] == "slider" && !empty($item['name'])) {
+			if ($item['type'] == "sliderui") {
+  			$item['type'] = "slider";
+  		} else if ($item['type'] == "slider" && !empty($item['name'])) {
 				$item['type'] == "slides";
-			} else if ($item['type'] == "sliderui") {
-				$item['type'] == "slider";
-			} else if ($item['type'] == "upload") {
-				$item['type'] == "media";
-			} else if ($item['type'] == "select_google_font") {
-				$item['type'] == "typography";
-			} else if ($item['type'] == "images") {
-				$item['type'] == "radio_images";
+			}
+  		if ($item['type'] == "tiles") {
+  			$item['type'] = "images";
+  			$item['pattern'] = true;
+  		}	
+  		if ($item['type'] == "multicheck") {
+				$item['type'] == "multi_checkbox";
 			} 
+			if ($item['type'] == "upload") {
+				$item['type'] == "media";
+			} 
+			if ($item['type'] == "select_google_font" || $item['type'] == "select_google_font_hybrid") {
+				$item['type'] == "typography";
+			} 
+			if ($item['type'] == "images") {
+				$item['type'] == "radio_images";
+			} 			
 
 			return $item;
 
