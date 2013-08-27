@@ -6,7 +6,6 @@ function verify_fold(variable) {
 	jQuery(document).ready(function($){		
 		// Hide errors if the user changed the field
 		
-		
 		if (variable.hasClass('fold')) {
 			var varVisible = jQuery('#'+variable.attr('id')).closest('td').is(":visible");
 			var data = variable.data();
@@ -133,6 +132,12 @@ var confirmOnPageExit = function (e) {
 	**/
 	jQuery('.simple-options-group-tab-link-a').click(function(){
 		relid = jQuery(this).data('rel'); // The group ID of interest
+
+		$('#'+relid).children('.fold').each(function() {
+			verify_fold(jQuery(this));
+		});
+
+
 		// Set the proper page cookie
 		$.cookie('sof_current_tab', relid, { expires: 7, path: '/' });	
 		// Remove the old active tab
@@ -142,7 +147,10 @@ var confirmOnPageExit = function (e) {
 
 		// Show the group
 		jQuery('#'+oldid+'_section_group').hide();
-		jQuery('#'+relid+'_section_group').fadeIn(300);
+		jQuery('#'+relid+'_section_group').fadeIn(300, function() {
+			stickyInfo();// race condition fix
+		});
+
 		jQuery('#'+relid+'_section_group_li').addClass('active');
 	});
 

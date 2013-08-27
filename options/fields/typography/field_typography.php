@@ -27,6 +27,7 @@ class Simple_Options_typography extends Simple_Options{
 	 * @since Simple_Options 1.0.0
 	*/
 	function render(){
+
 		global $wp_filesystem;
 		// Initialize the Wordpress filesystem, no more using file_put_contents function
 		if (empty($wp_filesystem)) {
@@ -322,36 +323,45 @@ class Simple_Options_typography extends Simple_Options{
 	 * @since Simple_Options 0.2.0
 	*/	
 	function getGoogleFonts($wp_filesystem) {
-		$googleArray = array();
-		if( !file_exists( dirname(__FILE__) . '/googlefonts.json' ) ) {
-	  	$result = wp_remote_get( 'https://www.googleapis.com/webfonts/v1/webfonts?key='.SOF_GOOGLE_KEY);
-	  	if ($result['response']['code'] == 200) {
-	  		$result = json_decode($result['body']);
-	  		$res = array();
-				foreach ($result->items as $font) {
-					$googleArray[$font->family] = array(
-						'variants' => $this->getVariants($font->variants),
-						'subsets' => $this->getSubsets($font->subsets)
-					);
-				}
+		$sid = session_id();
+		if($sid) {
+		    $googleArray = $_SESSION['googleArray'];
+		} else {
+		    session_start();
+		    $googleArray = array();
+		}		
 
-				$wp_filesystem->put_contents(
-				  dirname(__FILE__) . '/googlefonts.json',
-				  json_encode($googleArray),
-				  FS_CHMOD_FILE // predefined mode settings for WP files
-				);		
-			}//if		
-		}//if
-		if (empty($googleArray)) {
-			$googleArray = json_decode($wp_filesystem->get_contents(dirname(__FILE__) . '/googlefonts.json' ), true );
-		}
-		$hasGoogle = false;
-		$gfonts = '<optgroup label="Google Web Fonts">';
-    foreach ($googleArray as $i => $face) {
-      $gfonts .= '<option data-details="'.urlencode(json_encode($face)).'" data-google="true" value="'.$i.'">'. $i .'</option>';
-    }
-    $gfonts .= '</optgroup>';			
+		if (empty($_SESSION['googleArray'])) :
+			
+			if( !file_exists( dirname(__FILE__) . '/googlefonts.json' ) ) {
+		  	$result = wp_remote_get( 'https://www.googleapis.com/webfonts/v1/webfonts?key='.SOF_GOOGLE_KEY);
+		  	if ($result['response']['code'] == 200) {
+		  		$result = json_decode($result['body']);
+		  		$res = array();
+					foreach ($result->items as $font) {
+						$googleArray[$font->family] = array(
+							'variants' => $this->getVariants($font->variants),
+							'subsets' => $this->getSubsets($font->subsets)
+						);
+					}
 
+					$wp_filesystem->put_contents(
+					  dirname(__FILE__) . '/googlefonts.json',
+					  json_encode($googleArray),
+					  FS_CHMOD_FILE // predefined mode settings for WP files
+					);		
+				}//if		
+			}//if
+			if (empty($googleArray)) {
+				$googleArray = json_decode($wp_filesystem->get_contents(dirname(__FILE__) . '/googlefonts.json' ), true );
+			}
+			$hasGoogle = false;
+			$gfonts = '<optgroup label="Google Web Fonts">';
+	    foreach ($googleArray as $i => $face) {
+	      $gfonts .= '<option data-details="'.urlencode(json_encode($face)).'" data-google="true" value="'.$i.'">'. $i .'</option>';
+	    }
+	    $gfonts .= '</optgroup>';			
+	  endif;
     if (empty($googleArray)) {
 			$gfonts = "";	
     }

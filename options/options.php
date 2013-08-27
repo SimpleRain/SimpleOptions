@@ -18,7 +18,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
 		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.2.5';
+		protected $framework_version = '0.2.6';
 			
 		public $dir = SOF_OPTIONS_DIR;
 		public $url = SOF_OPTIONS_URL;
@@ -69,19 +69,11 @@ if ( ! class_exists('Simple_Options') ){
 
 			//get args
 			$this->args = wp_parse_args($args, $defaults);
-			//$this->args filter hook
-			$this->args = apply_filters('simple-options-args-'.$this->args['opt_name'], $this->args);
 			
 			if(!defined('SOF_GOOGLE_KEY')){
 				define('SOF_GOOGLE_KEY', $this->args['google_api_key']);
 			}
 
-			//get sections
-			$this->sections = apply_filters('simple-options-filter-sections-'.$this->args['opt_name'], $this->sections);
-			
-			//get extra tabs
-			$this->extra_tabs = apply_filters('simple-options-filter-tabs-'.$this->args['opt_name'], $this->extra_tabs);
-			
 			//set option with defaults
 			add_action('init', array(&$this, '_set_default_options'));
 			
@@ -222,12 +214,22 @@ if ( ! class_exists('Simple_Options') ){
 		 *
 		*/
 		function _set_default_options(){
+
+			//$this->args filter hook
+			$this->args = apply_filters('simple-options-args-'.$this->args['opt_name'], $this->args);			
+
+			//get sections
+			$this->sections = apply_filters('simple-options-filter-sections-'.$this->args['opt_name'], $this->sections);
+			
+			//get extra tabs
+			$this->extra_tabs = apply_filters('simple-options-filter-tabs-'.$this->args['opt_name'], $this->extra_tabs);
+
 			if(!get_option($this->args['opt_name'])){
 				add_option($this->args['opt_name'], $this->_default_values());
 			}
 			$this->options = get_option($this->args['opt_name']);
 
-			if (count($this->options) != count($this->_default_values())) {
+			if (count($this->options) != count($this->_default_values()) && count($this->_default_values()) > count($this->options)) {
 				$this->options = wp_parse_args( $this->options, $this->_default_values() );
 				update_option($this->args['opt_name'], $this->options);
 			}
@@ -751,9 +753,9 @@ if ( ! class_exists('Simple_Options') ){
 				do_action('simple-options-after-defaults-'.$this->args['opt_name'], $plugin_options, $defaults);
 				return $defaults;
 			}//if set defaults
-			
+
 			//validate fields (if needed)
-			$plugin_options = $this->_validate_values($plugin_options, $this->options);
+			$plugin_options = $this->_validate_values($plugin_options, $this->options);			
 			
 			if($this->errors){
 				set_transient('simple-options-errors-'.$this->args['opt_name'], $this->errors, 1000 );		
@@ -1213,11 +1215,12 @@ if ( ! class_exists('Simple_Options') ){
 			if (!empty($field['fold'])) {
 
 				if ( !is_array( $field['fold'] ) ) {
-					$field['fold'] = array($field['fold']=>'0');
+					$field['fold'] = array($field['fold']);
 				}
 
 				$data = $val = "";
 				foreach( $field['fold'] as $foldk => $foldv ) {
+
 					if ($foldv === true || $foldv === "1" || (is_int($foldv) && $foldv === 1)) {
 						$foldv = array(1);
 					} else if ($foldv === false || $foldv === null) {
@@ -1230,6 +1233,7 @@ if ( ! class_exists('Simple_Options') ){
 					$data .= ' data-'.$foldk.'="'.implode(",", $foldv).'"';
 					$val .= $foldk.",";
 				}
+
 				$val = rtrim($val, ',');
 				echo '<input type="hidden" '.$data.' id="foldChild-'.$field['id'].'" class="fold-data" value="'.$val.'" />';
 			}			
