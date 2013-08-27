@@ -1117,7 +1117,7 @@ if ( ! class_exists('Simple_Options') ){
 			echo '</div><!--wrap-->';
 			if (true === $this->args['dev_mode']) {
 				echo '<br /><div class="sof-timer">'.get_num_queries().' queries in '.timer_stop(0).' seconds</div>';
-				if (true === $this->args['dev_mode_advanced']) {
+				if (true === $this->args['dev_mode_advanced'] && !empty($GLOBALS['SOF_DEBUG'])) {
 					echo "<pre>".$GLOBALS['SOF_DEBUG']."</pre>";
 				}
 			}
