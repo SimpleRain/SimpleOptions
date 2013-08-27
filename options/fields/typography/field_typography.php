@@ -54,6 +54,7 @@ class Simple_Options_typography extends Simple_Options{
 			'style' => '',
 			'color' => '',
 			'height' => '',
+			'google' => false,
 			);
 		$this->value = wp_parse_args( $this->value, $defaults );
 
@@ -102,6 +103,7 @@ class Simple_Options_typography extends Simple_Options{
 	    );
 			
 			$output = "";
+			$google = false;
 	    foreach ($faces as $i=>$face) {
 	      $output .= '<option data-google="false" data-details="'.urlencode(json_encode(
 	        array('400'=>'Normal',
@@ -112,14 +114,13 @@ class Simple_Options_typography extends Simple_Options{
 	        )).'" value="'. $i .'" ' . selected($this->value['family'], $i, false) . '>'. $face .'</option>';
 	    }
 	    $output .= '</optgroup>';
-
 			if( !file_exists( dirname(__FILE__) . '/googlefonts.html' ) && defined('SOF_GOOGLE_KEY') ) {
-				echo "GET THE FONTS";
 				$this->getGoogleFonts($wp_filesystem);
 			}
 
 			if( file_exists( dirname(__FILE__) . '/googlefonts.html' )) {
 				$output .= $wp_filesystem->get_contents(SOF_OPTIONS_URL.'fields/typography/googlefonts.html');
+				$google = true;
 			}	
 
 			//$output = str_replace('"'.$this->value['family'].'"', $this->value['family'].'" selected="selected"', $output);
@@ -127,6 +128,10 @@ class Simple_Options_typography extends Simple_Options{
 			echo $output;
 
 	    echo '</select></div>';
+
+	    if ($google) { // Set a flag so we know to set a header style or not
+				echo '<input type="hidden" class="sof-typography-google'.$class.'" id="'.$this->field['id'].'-google" name="'.$this->args['opt_name'].'['.$this->field['id'].'][google]" type="text" value="'. $this->value['google'] .'" data-id="'.$this->field['id'].'" />';	    	
+	    }
 	  
 	  endif;
 

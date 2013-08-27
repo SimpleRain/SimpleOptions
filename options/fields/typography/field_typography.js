@@ -109,6 +109,7 @@ jQuery.noConflict();
 					//replace spaces with "+" sign
 					var the_font = family.replace(/\s+/g, '+');
 					if ($('#'+mainID+' .sof-typography-family option:selected').data('google')) {
+
 						//add reference to google font family
 						var link = 'http://fonts.googleapis.com/css?family='+ the_font;
 						if (style)
@@ -117,9 +118,9 @@ jQuery.noConflict();
 							link += '&subset='+script;
 
 						$('head').append('<link href="'+link+'" rel="stylesheet" type="text/css" class="'+ _linkclass +'">');
-						$('#'+mainID+' .typography-google').val('true');
+						$('#'+mainID+' .sof-typography-google').val(true);
 					} else {
-						$('#'+mainID+' .typography-google').val('false');
+						$('#'+mainID+' .sof-typography-google').val(false);
 					}
 
 					var previewer = $('#'+mainID+' .typography-preview');
