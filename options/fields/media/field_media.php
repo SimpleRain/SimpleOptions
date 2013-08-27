@@ -28,6 +28,13 @@ class Simple_Options_media extends Simple_Options{
 	*/
 	function render(){
 
+		// No errors please
+		$defaults = array(
+			'id' => '',
+			'url' => '',
+			);
+		$this->value = wp_parse_args( $this->value, $defaults );
+
 		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
 		if (!empty($this->field['compiler']) && $this->field['compiler']) {
 			$class .= " compiler";
@@ -57,7 +64,7 @@ class Simple_Options_media extends Simple_Options{
 			}
 		}
 
-		echo '<input class="'.$hide.'upload'.$class.'" name="'.$this->args['opt_name'].'['.$this->field['id'].'][url]" id="'.$this->args['opt_name'].'['.$this->field['id'].'][url]" value="'. $this->value['url'] .'" disabled="disabled" />';
+		echo '<input class="'.$hide.'upload'.$class.'" name="'.$this->args['opt_name'].'['.$this->field['id'].'][url]" id="'.$this->args['opt_name'].'['.$this->field['id'].'][url]" value="'. $this->value['url'] .'" readonly="readonly" />';
 		echo '<input type="hidden" class="upload-id" name="'.$this->args['opt_name'].'['.$this->field['id'].'][id]" "'.$this->args['opt_name'].'['.$this->field['id'].'][id]" value="'. $this->value['id'] .'" />';
 
 		//Upload controls DIV

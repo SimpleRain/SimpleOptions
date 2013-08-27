@@ -60,6 +60,7 @@ if ( ! class_exists('Simple_Options') ){
 			
 			$defaults['show_import_export'] = true;
 			$defaults['dev_mode'] = true;
+			$defaults['dev_mode_advanced'] = true;
 			$defaults['stylesheet_override'] = false;
 			
 			$defaults['footer_credit'] = __('<span id="footer-thankyou">Options Panel created using the <a href="'.$this->framework_url.'" target="_blank">'.$this->framework_name.'</a> Version '.$this->framework_version.'</span>', 'simple-options');
@@ -73,6 +74,10 @@ if ( ! class_exists('Simple_Options') ){
 			
 			if(!defined('SOF_GOOGLE_KEY')){
 				define('SOF_GOOGLE_KEY', $this->args['google_api_key']);
+			}
+
+			if ($this->args['dev_mode_advanced'] === true) {
+				add_filter('posts_request',array(&$this, '_advanced_debug')); // debugging sql query of a post
 			}
 
 			//get sections
@@ -120,6 +125,13 @@ if ( ! class_exists('Simple_Options') ){
 			
 		}//function
 		
+
+
+
+		function _advanced_debug($sql_text) {
+		   $GLOBALS['SOF_DEBUG'] = $sql_text; //intercept and store the sql<br/>
+		   return $sql_text; 
+		}		
 		
 		/**
 		 * ->get(); This is used to return an option value from the options array
@@ -1105,6 +1117,9 @@ if ( ! class_exists('Simple_Options') ){
 			echo '</div><!--wrap-->';
 			if (true === $this->args['dev_mode']) {
 				echo '<br /><div class="sof-timer">'.get_num_queries().' queries in '.timer_stop(0).' seconds</div>';
+				if (true === $this->args['dev_mode_advanced']) {
+					echo "<pre>".$GLOBALS['SOF_DEBUG']."</pre>";
+				}
 			}
 
 		}//function
