@@ -28,13 +28,16 @@ class Simple_Options_button_set extends Simple_Options{
 	*/
 	function render(){
 		
-		$class = (isset($this->field['class']))?'class="'.$this->field['class'].'" ':'';
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}	
 		
 		echo '<fieldset class="buttonset">';
 			
 			foreach($this->field['options'] as $k => $v){
 				
-				echo '<input type="radio" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" '.$class.' value="'.$k.'" '.checked($this->value, $k, false).'/>';
+				echo '<input type="radio" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" class="'.$class.'" value="'.$k.'" '.checked($this->value, $k, false).'/>';
 				echo '<label for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">'.$v.'</label>';
 				
 			}//foreach

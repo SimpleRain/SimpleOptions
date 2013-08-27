@@ -28,7 +28,10 @@ class Simple_Options_textarea extends Simple_Options{
 	*/
 	function render(){
 		
-		$class = (isset($this->field['class']))?$this->field['class']:'large-text';
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}
 		
 		$placeholder = (isset($this->field['placeholder']))?' placeholder="'.esc_attr($this->field['placeholder']).'" ':'';
 		

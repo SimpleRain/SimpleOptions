@@ -27,46 +27,47 @@ class Simple_Options_switch extends Simple_Options{
 	 * @since Simple_Options 0.0.4
 	*/
 	function render(){
-		//print_r($this);
-		//return;
+
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}
+
+		$fold = '';
+		//if (array_key_exists("folds",$this->value)) $fold="s_fld ";
 		
-		$class = (isset($this->field['class']))?' '.$this->field['class']:'';
+		$cb_enabled = $cb_disabled = '';//no errors, please
+					
+		$val = intval($this->value);
 
-					$fold = '';
-					//if (array_key_exists("folds",$this->value)) $fold="s_fld ";
-					
-					$cb_enabled = $cb_disabled = '';//no errors, please
-								
-					$val = intval($this->value);
-
-					//Get selected
-					if ( (int) $this->value == 1 ){
-						$cb_enabled = ' selected';
-						$cb_disabled = '';
-					}else {
-						$cb_enabled = '';
-						$cb_disabled = ' selected';
-					}
-					
-					//Label ON
-					if(!isset($this->field['on'])){
-						$on = "On";
-					}else{
-						$on = $this->field['on'];
-					}
-					
-					//Label OFF
-					if(!isset($this->field['off'])){
-						$off = "Off";
-					}else{
-						$off = $this->field['off'];
-					}
-					
-					echo '<div class="switch-options">';
-						echo '<label class="'.$fold.'cb-enable'. $cb_enabled .'" data-id="'.$this->field['id'].'"><span>'. $on .'</span></label>';
-						echo '<label class="'.$fold.'cb-disable'. $cb_disabled .'" data-id="'.$this->field['id'].'"><span>'. $off .'</span></label>';
-						echo '<input type="hidden" class="'.$fold.'checkbox checkbox-input" id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$this->value.'" />';
-					echo '</div>';
+		//Get selected
+		if ( (int) $this->value == 1 ){
+			$cb_enabled = ' selected';
+			$cb_disabled = '';
+		}else {
+			$cb_enabled = '';
+			$cb_disabled = ' selected';
+		}
+		
+		//Label ON
+		if(!isset($this->field['on'])){
+			$on = "On";
+		}else{
+			$on = $this->field['on'];
+		}
+		
+		//Label OFF
+		if(!isset($this->field['off'])){
+			$off = "Off";
+		}else{
+			$off = $this->field['off'];
+		}
+		
+		echo '<div class="switch-options">';
+			echo '<label class="'.$fold.'cb-enable'. $cb_enabled .'" data-id="'.$this->field['id'].'"><span>'. $on .'</span></label>';
+			echo '<label class="'.$fold.'cb-disable'. $cb_disabled .'" data-id="'.$this->field['id'].'"><span>'. $off .'</span></label>';
+			echo '<input type="hidden" class="'.$fold.'checkbox checkbox-input'.$class.'" id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$this->value.'" />';
+		echo '</div>';
 
 		echo (isset($this->field['description']) && !empty($this->field['description']))?'<div class="description">'.$this->field['description'].'</div>':'';
 		

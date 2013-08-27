@@ -30,7 +30,10 @@ class Simple_Options_color extends Simple_Options{
 		
 		echo '<div class="sof-color-container">';
 
-		$class = (isset($this->field['class']))?$this->field['class']:'';
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}
 
 		echo '<input name="'.$this->args['opt_name'].'['.$this->field['id'].']" id="' . $this->field['id'] . '" class="sof-color ' . $class . '"  type="text" value="' . $this->value . '"  data-default-color="' . $this->field['std'] . '" />';
 		

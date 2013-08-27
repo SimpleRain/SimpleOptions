@@ -27,6 +27,11 @@ class Simple_Options_media extends Simple_Options{
 	 * @since Simple_Options 1.0.0
 	*/
 	function render(){
+
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}
 		
 		$hide = '';
 
@@ -52,7 +57,7 @@ class Simple_Options_media extends Simple_Options{
 			}
 		}
 
-		echo '<input class="'.$hide.'upload" name="'.$this->args['opt_name'].'['.$this->field['id'].'][url]" id="'.$this->args['opt_name'].'['.$this->field['id'].'][url]" value="'. $this->value['url'] .'" disabled="disabled" />';
+		echo '<input class="'.$hide.'upload'.$class.'" name="'.$this->args['opt_name'].'['.$this->field['id'].'][url]" id="'.$this->args['opt_name'].'['.$this->field['id'].'][url]" value="'. $this->value['url'] .'" disabled="disabled" />';
 		echo '<input type="hidden" class="upload-id" name="'.$this->args['opt_name'].'['.$this->field['id'].'][id]" "'.$this->args['opt_name'].'['.$this->field['id'].'][id]" value="'. $this->value['id'] .'" />';
 
 		//Upload controls DIV
@@ -93,6 +98,15 @@ class Simple_Options_media extends Simple_Options{
 	 * @since Simple_Options 1.0.0
 	*/
 	function enqueue(){
+
+		if(function_exists('wp_enqueue_media')) {
+			wp_enqueue_media();
+		}
+		else {
+			wp_enqueue_script('media-upload');
+			wp_enqueue_script('thickbox');
+			wp_enqueue_style('thickbox');
+		}
 
 		wp_enqueue_script(
 			'simple-options-media-js',

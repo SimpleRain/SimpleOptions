@@ -1,7 +1,11 @@
 
 
 jQuery(document).ready(function(){
-	jQuery('.sof-color').wpColorPicker();
+	jQuery('.sof-color').wpColorPicker({
+    change: function(event, ui){
+    	sof_change(jQuery(this));
+    }
+});
 
 	function colourNameToHex(colour) {
 		tcolour = colour.replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace("#","");
@@ -48,13 +52,11 @@ jQuery(document).ready(function(){
 
 	jQuery('.sof-color').live('blur', function() {
 		var value = jQuery(this).val();
-		
 		if (sof_color_validate(this) == value) {
 			if (value.indexOf("#") >= 0) {
 				jQuery(this).val(jQuery(this).data('oldcolor'));
 			}
 		} 
-		
 	});	
 
 	jQuery('.sof-color').live('keydown', function() {
@@ -63,11 +65,9 @@ jQuery(document).ready(function(){
 
 	function sof_color_validate(field) {
 		var value = jQuery(field).val();
-
 		if (colourNameToHex(value) != value.replace('#','')) {
 				return colourNameToHex(value);
 		}
-
 		return value;
 	}
 

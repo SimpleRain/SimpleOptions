@@ -28,9 +28,7 @@ class Simple_Options_info extends Simple_Options{
 	*/
 	function render(){
 		
-		$class = (isset($this->field['class']))?' '.$this->field['class']:'';
-
-		
+		$class = (isset($this->field['class']))?' '.$this->field['class']:'';		
 
 		if (empty($this->field['description']) && !empty($this->field['std'])) {
 			$this->field['description'] = $this->field['std'];

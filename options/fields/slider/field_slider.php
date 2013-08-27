@@ -28,7 +28,10 @@ class Simple_Options_slider extends Simple_Options{
 	*/
 	function render(){
 		
-		$class = (isset($this->field['class']))?' '.$this->field['class']:'';
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}
 
 		if( empty($this->field['min']) ) { 
 			$this->field['min'] = 0; 
@@ -81,7 +84,7 @@ class Simple_Options_slider extends Simple_Options{
 		wp_localize_script( 'sof-slider-js', $this->field['id'].'Param', $params );
 	
 		//html output
-		echo '<input type="text" name="'.$this->args['opt_name'].'['.$this->field['id'].']" id="' . $this->field['id'] . '" value="'. $this->value .'" class="mini slider-input"'.$readonly.'/>';
+		echo '<input type="text" name="'.$this->args['opt_name'].'['.$this->field['id'].']" id="' . $this->field['id'] . '" value="'. $this->value .'" class="mini slider-input'.$class.'"'.$readonly.'/>';
 		echo '<div id="'.$this->field['id'].'-slider" class="sof_slider"></div>';
 		
 		echo (isset($this->field['description']) && !empty($this->field['description']))?'<div class="description">'.$this->field['description'].'</div>':'';

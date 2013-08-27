@@ -83,7 +83,10 @@ class Simple_Options_select extends Simple_Options{
 			}//if
 		}//if
 
-		$class = (isset($this->field['class']))?' '.$this->field['class']:'';
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}
 		if (!empty($this->field['options'])) {
 			if (isset($this->field['multi']) && $this->field['multi']) {
 				$multi = ' multiple="multiple"';

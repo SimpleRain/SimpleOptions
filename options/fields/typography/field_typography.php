@@ -35,6 +35,12 @@ class Simple_Options_typography extends Simple_Options{
 			WP_Filesystem();
 		}  
 
+
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}		
+
 	// TESTING
 			if( !file_exists( dirname(__FILE__) . '/googlefonts.html' ) && defined('SOF_GOOGLE_KEY') ) {
 				$this->getGoogleFonts($wp_filesystem);
@@ -72,10 +78,8 @@ class Simple_Options_typography extends Simple_Options{
 
 	  	$output = "";
 
-			
-
 	    echo '<div class="select_wrapper typography-family" original-title="'.__('Font family','simple-options').'" style="width: 220px; margin-right: 5px;">';
-	    echo '<select class="sof-typography sof-typography-family sof-select-item" id="'.$this->field['id'].'-family" name="'.$this->args['opt_name'].'['.$this->field['id'].'][family]" data-id="'.$this->field['id'].'">';
+	    echo '<select class="sof-typography sof-typography-family '.$class.'" id="'.$this->field['id'].'-family" name="'.$this->args['opt_name'].'['.$this->field['id'].'][family]" data-id="'.$this->field['id'].'" data-value="'.$this->value['family'].'">';
 		 	echo '<optgroup label="Standard Fonts">';
 	    $faces = array(
 	      "Arial, Helvetica, sans-serif" => "Arial, Helvetica, sans-serif",
@@ -110,6 +114,7 @@ class Simple_Options_typography extends Simple_Options{
 	    $output .= '</optgroup>';
 
 			if( !file_exists( dirname(__FILE__) . '/googlefonts.html' ) && defined('SOF_GOOGLE_KEY') ) {
+				echo "GET THE FONTS";
 				$this->getGoogleFonts($wp_filesystem);
 			}
 
@@ -117,7 +122,7 @@ class Simple_Options_typography extends Simple_Options{
 				$output .= $wp_filesystem->get_contents(SOF_OPTIONS_URL.'fields/typography/googlefonts.html');
 			}	
 
-			$output = str_replace('"'.$this->value['family'].'"', $this->value['family'].'" selected="selected"', $output);
+			//$output = str_replace('"'.$this->value['family'].'"', $this->value['family'].'" selected="selected"', $output);
 			
 			echo $output;
 
@@ -132,7 +137,7 @@ class Simple_Options_typography extends Simple_Options{
     **/
     if(empty($this->value['display']['style'])):
       echo '<div class="select_wrapper typography-style" original-title="'.__('Font style','simple-options').'">';
-      echo '<select class="sof-typography sof-typography-style select" original-title="'.__('Font style','simple-options').'" name="'.$this->field['id'].'[style]" id="'. $this->field['id'].'_style" data-id="'.$this->field['id'].'">';
+      echo '<select class="sof-typography sof-typography-style select'.$class.'" original-title="'.__('Font style','simple-options').'" name="'.$this->field['id'].'[style]" id="'. $this->field['id'].'_style" data-id="'.$this->field['id'].'">';
 		 	if (empty($this->value['style'])) {
 		 		echo '<option value="">Inherit</option>';
 		 	}
@@ -179,7 +184,7 @@ class Simple_Options_typography extends Simple_Options{
     **/
     if(empty($this->value['display']['script'])):
       echo '<div class="select_wrapper typography-script tooltip" original-title="'.__('Font script','simple-options').'">';
-      echo '<select class="sof-typography sof-typography-script" original-title="'.__('Font script','simple-options').'"  id="'.$this->field['id'].'-script" name="'.$this->args['opt_name'].'['.$this->field['id'].'][script]">';
+      echo '<select class="sof-typography sof-typography-script'.$class.'" original-title="'.__('Font script','simple-options').'"  id="'.$this->field['id'].'-script" name="'.$this->args['opt_name'].'['.$this->field['id'].'][script]">';
       if (isset($gfonts[$this->value['family']])) {
         $styles = array();
         foreach ($gfonts[$this->value['family']]['subsets'] as $k=>$v) {
@@ -195,7 +200,7 @@ class Simple_Options_typography extends Simple_Options{
 		Font Size
 		**/
   	if(empty($this->value['display']['size'])):
-    	echo '<div class="input-append"><input type="text" class="span2 sof-typography-size mini" original-title="'.__('Font size','simple-options').'" id="'.$this->field['id'].'-size" name="'.$this->args['opt_name'].'['.$this->field['id'].'][size]" value="'.$this->value['size'].'"><span class="add-on">'.$unit.'</span></div>';
+    	echo '<div class="input-append"><input type="text" class="span2 sof-typography-size mini'.$class.'" original-title="'.__('Font size','simple-options').'" id="'.$this->field['id'].'-size" name="'.$this->args['opt_name'].'['.$this->field['id'].'][size]" value="'.$this->value['size'].'"><span class="add-on">'.$unit.'</span></div>';
   	endif;
 
 
@@ -203,7 +208,7 @@ class Simple_Options_typography extends Simple_Options{
 		Line Height 
 		**/
 		if(empty($this->value['display']['height'])):
-		 	echo '<div class="input-append"><input type="text" class="span2 sof-typography sof-typography-height mini" original-title="'.__('Font height','simple-options').'" id="'.$this->field['id'].'-height" name="'.$this->args['opt_name'].'['.$this->field['id'].'][height]" value="'.$this->value['height'].'"><span class="add-on">'.$unit.'</span></div>';
+		 	echo '<div class="input-append"><input type="text" class="span2 sof-typography sof-typography-height mini'.$class.'" original-title="'.__('Font height','simple-options').'" id="'.$this->field['id'].'-height" name="'.$this->args['opt_name'].'['.$this->field['id'].'][height]" value="'.$this->value['height'].'"><span class="add-on">'.$unit.'</span></div>';
 		endif;
 
 
@@ -220,7 +225,7 @@ class Simple_Options_typography extends Simple_Options{
 				$default = $this->field['std']['color'];
 			}
       echo '<div id="' . $this->field['id'] . '_color_picker" class="colorSelector typography-color"><div style="background-color: '.$this->value['color'].'"></div></div>';
-      echo '<input data-default-color="'.$default.'" class="sof-color sof-typography-color" original-title="'.__('Font color','simple-options').'" id="'.$this->field['id'].'-color" name="'.$this->args['opt_name'].'['.$this->field['id'].'][color]" type="text" value="'. $this->value['color'] .'" data-id="'.$this->field['id'].'" />';
+      echo '<input data-default-color="'.$default.'" class="sof-color sof-typography-color'.$class.'" original-title="'.__('Font color','simple-options').'" id="'.$this->field['id'].'-color" name="'.$this->args['opt_name'].'['.$this->field['id'].'][color]" type="text" value="'. $this->value['color'] .'" data-id="'.$this->field['id'].'" />';
     endif;
 
 

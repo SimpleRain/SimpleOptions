@@ -414,13 +414,12 @@ if ($http_accept === 'text/html') {
 			echo ' - <a href="temp/',$filename,'.css">Download</a>';
 		}
 		echo ' - <a href="javascript:ClipBoard()">',$lang[$l][58],'</a>'
-		, '</legend>'
-		, '<code id="copytext">'
-		, $css->print->formatted();
-		, '</code></fieldset><div><br /></div>'
-
-		, '<fieldset class="code_output"><legend>',$lang[$l][64],'</legend>'
-		, '<textarea rows="10" cols="80">';
+		. '</legend>'
+		. '<code id="copytext">'
+		. $css->print->formatted()
+		. '</code></fieldset><div><br /></div>'
+		. '<fieldset class="code_output"><legend>',$lang[$l][64],'</legend>'
+		. '<textarea rows="10" cols="80">';
 
 		if (isset($_REQUEST['whole_file'])) {
 			echo htmlspecialchars($css->print->formatted_page('xhtml1.1', false, '', 'en'), ENT_QUOTES, 'utf-8');

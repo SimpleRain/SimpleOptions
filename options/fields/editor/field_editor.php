@@ -28,7 +28,10 @@ class Simple_Options_editor extends Simple_Options{
 	*/
 	function render(){
 		
-		$class = (isset($this->field['class']))?$this->field['class']:'';
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}
 		
 		//echo '<textarea id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" class="'.$class.'" rows="6" >'.$this->value.'</textarea>';
 		$settings = array(

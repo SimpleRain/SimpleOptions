@@ -83,6 +83,11 @@ class Simple_Options_checkbox extends Simple_Options{
 				}//if
 			}//if
 		}//if
+
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}
 		
 		echo '<fieldset>';
 
@@ -93,9 +98,9 @@ class Simple_Options_checkbox extends Simple_Options{
 			foreach($this->field['options'] as $k => $v){
 				
 				$this->value[$k] = (isset($this->value[$k]))?$this->value[$k]:'';
-				echo '<li class="' . $class . '">';
+				echo '<li>';
 				echo '<label for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
-				echo '<input type="checkbox" class="checkbox" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']['.$k.']" value="1" '.checked($this->value[$k], '1', false).'/>';
+				echo '<input type="checkbox" class="checkbox' . $class . '" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']['.$k.']" value="1" '.checked($this->value[$k], '1', false).'/>';
 				echo ' '.$v.'</label>';
 				echo '</li>';
 				

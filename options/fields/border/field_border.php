@@ -48,7 +48,10 @@ class Simple_Options_border extends Simple_Options{
 
 		$options = array(''=>'None', 'solid'=>'Solid', 'dashed'=>'Dashed', 'dotted'=>'Dotted');
 
-		$class = (isset($this->field['class']))?$this->field['class']:'';
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}
 		echo '<div class="sof-border">';
 		
 			echo '<select original-title="'.__('Border size','simple-options').'" id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].'][size]" class="tips sof-border-size mini'.$class.'" rows="6">';

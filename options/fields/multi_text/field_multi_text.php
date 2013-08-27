@@ -27,8 +27,11 @@ class Simple_Options_multi_text extends Simple_Options{
 	 * @since Simple_Options 1.0.0
 	*/
 	function render(){
-		
-		$class = (isset($this->field['class']))?$this->field['class']:'regular-text';
+
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'regular-text';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}		
 		
 		echo '<ul id="'.$this->field['id'].'-ul">';
 		
@@ -47,7 +50,7 @@ class Simple_Options_multi_text extends Simple_Options{
 		
 		}//if
 		
-		echo '<li style="display:none;"><input type="text" id="'.$this->field['id'].'" name="" value="" class="'.$class.'" /> <a href="javascript:void(0);" class="simple-options-multi-text-remove">'.__('Remove', 'simple-options').'</a></li>';
+		echo '<li style="display:none;"><input type="text" id="'.$this->field['id'].'" name="" value="" class="" /> <a href="javascript:void(0);" class="simple-options-multi-text-remove">'.__('Remove', 'simple-options').'</a></li>';
 		
 		echo '</ul>';
 		

@@ -407,7 +407,9 @@ if ( ! class_exists( 'Simple_Updater' ) ):
 		 * @return object $response the plugin info
 		 */
 		public function get_plugin_info( $false, $action, $response ) {
-
+			if (!isset($response->slug)) {
+				return false;
+			}
 			// Check if this call API is for the right plugin
 			if ( $response->slug != $this->config['slug'] ) {
 				return false;

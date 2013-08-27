@@ -74,6 +74,15 @@ if ( ! class_exists('Simple_Options') ){
 				define('SOF_GOOGLE_KEY', $this->args['google_api_key']);
 			}
 
+			//$this->args filter hook
+			$this->args = apply_filters('simple-options-args-'.$this->args['opt_name'], $this->args);			
+
+			//get sections
+			$this->sections = apply_filters('simple-options-filter-sections-'.$this->args['opt_name'], $this->sections);
+			
+			//get extra tabs
+			$this->extra_tabs = apply_filters('simple-options-filter-tabs-'.$this->args['opt_name'], $this->extra_tabs);			
+
 			//set option with defaults
 			add_action('init', array(&$this, '_set_default_options'));
 			
@@ -115,7 +124,7 @@ if ( ! class_exists('Simple_Options') ){
 		
 		
 		/**
-		 * ->get(); This is used to return and option value from the options array
+		 * ->get(); This is used to return an option value from the options array
 		 *
 		 * @since Simple_Options 1.0.0
 		 *
@@ -214,15 +223,6 @@ if ( ! class_exists('Simple_Options') ){
 		 *
 		*/
 		function _set_default_options(){
-
-			//$this->args filter hook
-			$this->args = apply_filters('simple-options-args-'.$this->args['opt_name'], $this->args);			
-
-			//get sections
-			$this->sections = apply_filters('simple-options-filter-sections-'.$this->args['opt_name'], $this->sections);
-			
-			//get extra tabs
-			$this->extra_tabs = apply_filters('simple-options-filter-tabs-'.$this->args['opt_name'], $this->extra_tabs);
 
 			if(!get_option($this->args['opt_name'])){
 				add_option($this->args['opt_name'], $this->_default_values());
@@ -754,6 +754,10 @@ if ( ! class_exists('Simple_Options') ){
 				return $defaults;
 			}//if set defaults
 
+			if ($plugin_options['compiler'] != "") {
+				do_action('simple-options-run-compiler-'.$this->args['opt_name'], $plugin_options);
+			}
+
 			//validate fields (if needed)
 			$plugin_options = $this->_validate_values($plugin_options, $this->options);			
 			
@@ -772,6 +776,7 @@ if ( ! class_exists('Simple_Options') ){
 			unset($plugin_options['import']);
 			unset($plugin_options['import_code']);
 			unset($plugin_options['import_link']);
+			unset($plugin_options['compiler']);
 
 			return $plugin_options;	
 		
@@ -881,6 +886,7 @@ if ( ! class_exists('Simple_Options') ){
 				do_action('simple-options-page-before-form-'.$this->args['opt_name']);
 				echo '<div id="sof-container">';
 				echo '<form method="post" action="options.php" enctype="multipart/form-data" id="simple-options-form-wrapper">';
+				echo '<input type="hidden" id="sof-compiler-hook" name="'.$this->args['opt_name'].'[compiler]" value="" />';
 					settings_fields($this->args['opt_name'].'_group');
 					
 					if (empty($this->options['last_tab'])) {

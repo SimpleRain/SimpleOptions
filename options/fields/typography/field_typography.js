@@ -2,10 +2,9 @@
 
 jQuery.noConflict();
 
-    /** Fire up jQuery - let's dance!
-     */
-    jQuery(document).ready(function($){
-
+  /** Fire up jQuery - let's dance!
+   */
+  jQuery(document).ready(function($){
 
 		Object.size = function(obj) {
 		  var size = 0, key;
@@ -172,20 +171,13 @@ jQuery.noConflict();
 
 		//init when value is changed
 		jQuery( '.sof-typography-size, .sof-typography-height' ).keyup(function(){
-			sof_change();
 			typographySelect( jQuery(this).closest('.sof-typography-container').attr('id'), $(this) );
 		});		
-
-		// Because wordpress's color picker callback function doesn't run on pallet color clicks. Odd.
-		$('.iris-palette').live('click', function() {console.log(jQuery(this));
-			if (jQuery(this).parents('.sof-typography-container').length) {
-				typographySelect( jQuery(this).closest('.sof-typography-container').attr('id'), $(this) );
-			}
-		});
 
 		// Have to redeclare the wpColorPicker to get a callback function
 		$('.sof-typography-color').wpColorPicker({
 		    change: function(event, ui){
+		    	sof_change(jQuery(this))
 		    	jQuery(this).val(ui.color.toString());
 		  		typographySelect( jQuery(this).closest('.sof-typography-container').attr('id'), $(this) );
 		    },
@@ -202,4 +194,6 @@ jQuery.noConflict();
 
 		jQuery(".sof-typography-size, .sof-typography-height").numeric({negative:false});	
 
-    });
+		jQuery(".sof-typography-family").select2({width: 'resolve', triggerChange: true});
+
+	});

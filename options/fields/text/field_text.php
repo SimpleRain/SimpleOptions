@@ -27,8 +27,11 @@ class Simple_Options_text extends Simple_Options{
 	 * @since Simple_Options 1.0.0
 	*/
 	function render(){
-		
-		$class = (isset($this->field['class']))?$this->field['class']:'regular-text';
+
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'regular-text';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}		
 		
 		$placeholder = (isset($this->field['placeholder']))?' placeholder="'.esc_attr($this->field['placeholder']).'" ':'';
 		

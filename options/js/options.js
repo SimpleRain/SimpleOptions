@@ -48,6 +48,11 @@ function verify_fold(variable) {
 }
 
 function sof_change(variable) {
+console.log('value changed!');
+	if (variable.hasClass('compiler')) {
+		jQuery('#sof-compiler-hook').val(1);
+		console.log('Compiler init');
+	}
 	
 	window.onbeforeunload = confirmOnPageExit;
 	jQuery(document).ready(function($){		

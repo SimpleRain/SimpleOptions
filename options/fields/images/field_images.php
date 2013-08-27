@@ -28,7 +28,10 @@ class Simple_Options_images extends Simple_Options{
 	*/
 	function render(){
 		
-		$class = (isset($this->field['class']))?' '.$this->field['class']:'';
+		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
+		if (!empty($this->field['compiler']) && $this->field['compiler']) {
+			$class .= " compiler";
+		}
 		
 		echo '<fieldset>';
 			
@@ -81,9 +84,9 @@ class Simple_Options_images extends Simple_Options{
 				}				
 
 				
-				echo '<li class="sof-images' . $class . '">';
+				echo '<li class="sof-images">';
 				echo '<label class="'.$selected.' sof-images-'.$this->field['id'].'" for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
-				echo '<input type="radio" class="noUpdate" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$k.'" '.checked($this->value, $k, false).$presets.'/>';
+				echo '<input type="radio" class="noUpdate' . $class . '" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$k.'" '.checked($this->value, $k, false).$presets.'/>';
 				if (!empty($this->field['tiles']) && $this->field['tiles'] == true) {
 					echo '<span class="tiles" style="background-image: url('.$v['img'].');">&nbsp;</span>';
 				} else {
