@@ -67,21 +67,19 @@ if ( ! class_exists('Simple_Options') ){
 			$defaults['help_tabs'] = array();
 			$defaults['help_sidebar'] = __('', 'simple-options');
 
-			//get args
+			// Get args
 			$this->args = wp_parse_args($args, $defaults);
+			$this->args = apply_filters('simple-options-args-'.$this->args['opt_name'], $this->args);			
 			
 			if(!defined('SOF_GOOGLE_KEY')){
 				define('SOF_GOOGLE_KEY', $this->args['google_api_key']);
 			}
 
-			//$this->args filter hook
-			$this->args = apply_filters('simple-options-args-'.$this->args['opt_name'], $this->args);			
-
 			//get sections
-			$this->sections = apply_filters('simple-options-filter-sections-'.$this->args['opt_name'], $this->sections);
-			
+			$this->sections = apply_filters('simple-options-filter-sections-'.$this->args['opt_name'], $sections);
+
 			//get extra tabs
-			$this->extra_tabs = apply_filters('simple-options-filter-tabs-'.$this->args['opt_name'], $this->extra_tabs);			
+			$this->extra_tabs = apply_filters('simple-options-filter-tabs-'.$this->args['opt_name'], $extra_tabs);		
 
 			//set option with defaults
 			add_action('init', array(&$this, '_set_default_options'));
@@ -188,6 +186,7 @@ if ( ! class_exists('Simple_Options') ){
 		function _default_values(){
 			
 			$defaults = array();
+			//print_r($this->sections);
 			
 			foreach($this->sections as $k => $section){
 				
