@@ -662,7 +662,7 @@ color: #777;
 .sticky-footer-fixed {
 	background: #f3f3f3;
 	border-top: 1px solid #d8d8d8;
-	z-index: 99999999999999;
+	z2-index: 99999999999999;
 	-moz-box-shadow: inset 0 1px 0 #fcfcfc;
 	-webkit-box-shadow: inset 0 1px 0 #fcfcfc;
 	box-shadow: inset 0 1px 0 #fcfcfc;
