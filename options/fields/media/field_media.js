@@ -52,8 +52,11 @@ jQuery(document).ready(function($){
 				return;
 			}
 			//console.log(attachment.attributes);
+			console.log(attachment.attributes);
 			selector.find('.upload').val(attachment.attributes.url);
 			selector.find('.upload-id').val(attachment.attributes.id);
+			selector.find('.upload-height').val(attachment.attributes.height);
+			selector.find('.upload-width').val(attachment.attributes.width);
 			if ( attachment.attributes.type == 'image' ) {
 				selector.find('.screenshot').empty().hide().append('<img class="sof-option-image" src="' + attachment.attributes.url + '">').slideDown('fast');
 			}

@@ -33,8 +33,14 @@ class Simple_Options_info extends Simple_Options{
 		if (empty($this->field['description']) && !empty($this->field['std'])) {
 			$this->field['description'] = $this->field['std'];
 		}
-		
-		echo '</td></tr></table><div class="simple-options-info-field'.$class.'">'.$this->field['description'].'</div><table class="form-table no-border"><tbody><tr><th></th><td>';
+
+		if (!isset($this->field['fold-ids'])) { $this->field['fold-ids'] = ""; }
+		if (!isset($this->field['fold-vals'])) { $this->field['fold-vals'] = ""; }
+
+		echo '</td></tr></table><div class="simple-options-info-field'.$class.'">';
+			echo '<input type="hidden" '.$this->field['fold-ids'].' id="info-field foldChild-'.$this->field['id'].'" class="fold-data" value="'.$this->field['fold-vals'].'" />';
+			echo $this->field['description'];
+		echo '</div><table class="form-table no-border"><tbody><tr><th></th><td>';
 		
 	}//function
 	

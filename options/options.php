@@ -1255,7 +1255,13 @@ if ( ! class_exists('Simple_Options') ){
 				}
 
 				$val = rtrim($val, ',');
-				echo '<input type="hidden" '.$data.' id="foldChild-'.$field['id'].'" class="fold-data" value="'.$val.'" />';
+				if ($field['type'] != "info") {
+					echo '<input type="hidden" '.$data.' id="foldChild-'.$field['id'].'" class="fold-data" value="'.$val.'" />';	
+				} else {
+					$field['fold-ids'] = $data;
+					$field['fold-vals'] = $val;
+				}
+				
 			}			
 
 			if(isset($field['callback']) && function_exists($field['callback'])){
@@ -1450,7 +1456,7 @@ if ( ! class_exists('Simple_Options') ){
 				
 				$clickedID = $_POST['data']; // Acts as the name
 				$filename = $_FILES[$clickedID];
-		       	$filename['name'] = preg_replace('/[^a-zA-Z0-9._\-]/', '', $filename['name']); 
+		    $filename['name'] = preg_replace('/[^a-zA-Z0-9._\-]/', '', $filename['name']); 
 				
 				$override['test_form'] = false;
 				$override['action'] = 'wp_handle_upload';    

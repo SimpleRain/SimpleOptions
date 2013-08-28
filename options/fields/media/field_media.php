@@ -28,12 +28,6 @@ class Simple_Options_media extends Simple_Options{
 	*/
 	function render(){
 
-		// No errors please
-		$defaults = array(
-			'id' => '',
-			'url' => '',
-			);
-		$this->value = wp_parse_args( $this->value, $defaults );
 
 		$class = (isset($this->field['class']))?' '.$this->field['class'].'" ':'';
 		if (!empty($this->field['compiler']) && $this->field['compiler']) {
@@ -46,26 +40,44 @@ class Simple_Options_media extends Simple_Options{
 			$hide ='hide ';
 		}
 
-	  if ( empty($this->value['id']) && isset($this->field['std']['id']) ) {
-			$this->value['id'] = $this->field['std']['id'];
-	  } else if ( empty($this->value['id']) ) {
-		$this->value['id'] = "";
+		// No errors please
+		$defaults = array(
+			'id' => '',
+			'url' => '',
+			'width'=>'',
+			'height'=>'',
+			);
+
+		$this->value = wp_parse_args( $this->value, $defaults );
+
+	  if ( empty($this->value) && !empty($this->field['std']) ) { // If there are standard values and value is empty
+	  	if (is_array($this->field['std'])) { // If array
+	  		if (!empty($this->field['std']['id'])) { // Set the ID
+	  			$this->value['id'] = $this->field['std']['id'];
+	  		}
+	  		if (!empty($this->field['std']['url'])) { // Set the URL
+	  			$this->value['url'] = $this->field['std']['url'];
+	  		}	  		
+	  	} else {
+		  	if (is_numeric($this->field['std'])) { // Check if it's an attachment ID
+		  		$this->value['id'] = $this->field['std'];
+		  	} else { // Must be a URL
+		  		$this->value['url'] = $this->field['std']; 
+		  	}	  		
+	  	}
 	  }
 
-	  if ( empty($this->value['url']) && isset($this->field['std']['url']) ) {
-			$this->value['url'] = $this->field['std']['url'];
-	  } else if ( empty($this->value['url']) ) {
-		$this->value['url'] = "";
+	  if (empty($this->value['url']) && !empty($this->value['id'])) {
+	  	$img = wp_get_attachment_image_src( $this->value['id'], 'full' );
+	  	$this->value['url'] = $img[0];
+	  	$this->value['width'] = $img[1];
+	  	$this->value['height'] = $img[2];
 	  }
-
-		if (!empty($this->value['id']) && $this->value['id'] != "" ) {
-			if (empty($this->value['url'])) {
-				$this->value['url'] = wp_get_attachment_url( $this->value['id'] );
-			}
-		}
 
 		echo '<input class="'.$hide.'upload'.$class.'" name="'.$this->args['opt_name'].'['.$this->field['id'].'][url]" id="'.$this->args['opt_name'].'['.$this->field['id'].'][url]" value="'. $this->value['url'] .'" readonly="readonly" />';
 		echo '<input type="hidden" class="upload-id" name="'.$this->args['opt_name'].'['.$this->field['id'].'][id]" "'.$this->args['opt_name'].'['.$this->field['id'].'][id]" value="'. $this->value['id'] .'" />';
+		echo '<input type="hidden" class="upload-height" name="'.$this->args['opt_name'].'['.$this->field['id'].'][height]" "'.$this->args['opt_name'].'['.$this->field['id'].'][height]" value="'. $this->value['height'] .'" />';
+		echo '<input type="hidden" class="upload-width" name="'.$this->args['opt_name'].'['.$this->field['id'].'][width]" "'.$this->args['opt_name'].'['.$this->field['id'].'][width]" value="'. $this->value['width'] .'" />';
 
 		//Upload controls DIV
 		echo '<div class="upload_button_div">';
