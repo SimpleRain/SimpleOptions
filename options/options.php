@@ -125,6 +125,7 @@ if ( ! class_exists('Simple_Options') ){
 			//get the options for use later on
 			$this->options = get_option($this->args['opt_name']);
 			
+			
 		}//function
 		
 
@@ -257,6 +258,13 @@ if ( ! class_exists('Simple_Options') ){
 		 * @since Simple_Options 1.0
 		*/
 		function _options_page(){
+
+			if (!empty($this->options['__sof_compiler'])) {
+				unset($this->options['__sof_compiler']);
+				update_option($this->args['opt_name'], $this->options);
+				do_action('simple-options-run-compiler-'.$this->args['opt_name'], $this->options);
+			}		
+
 			if($this->args['page_type'] == 'submenu'){
 				if(!isset($this->args['page_parent']) || empty($this->args['page_parent'])){
 					$this->args['page_parent'] = 'themes.php';
@@ -584,17 +592,6 @@ if ( ! class_exists('Simple_Options') ){
 		*/
 		function _register_setting(){
 
-			if (!empty($this->options['__sof_defaults'])) {
-				unset($this->options['__sof_defaults']);
-				do_action('simple-options-after-defaults-'.$this->args['opt_name'], $this->options);
-			}		
-
-			if (!empty($this->options['__sof_compiler'])) {
-				unset($this->options['__sof_compiler']);
-				update_option($this->args['opt_name'], $this->options);
-				do_action('simple-options-run-compiler-'.$this->args['opt_name'], $this->options);
-			}		
-
 
 			register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array(&$this,'_validate_options'));
 			foreach($this->sections as $k => $section){
@@ -648,6 +645,8 @@ if ( ! class_exists('Simple_Options') ){
 			}//foreach
 			
 			do_action('simple-options-register-settings-'.$this->args['opt_name']);
+
+
 			
 		}//function
 		
@@ -776,7 +775,8 @@ if ( ! class_exists('Simple_Options') ){
 			// If this is a new setup, init and return the defaults
 			if(!empty($plugin_options['defaults'])){
 				$plugin_options = $this->_default_values();
-				$plugin_options['__sof_defaults'] = true;
+				update_option($this->args['opt_name'], $this->options);
+				do_action('simple-options-after-defaults-'.$this->args['opt_name'], $this->options);
 				return $plugin_options;
 			}//if set defaults
 
