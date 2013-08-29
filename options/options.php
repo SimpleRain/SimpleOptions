@@ -29,6 +29,8 @@ if ( ! class_exists('Simple_Options') ){
 		public $errors = array();
 		public $warnings = array();
 		public $options = array();
+		public $defaults = false;
+		public $compiler = false;
 		
 		
 
@@ -140,7 +142,7 @@ if ( ! class_exists('Simple_Options') ){
 		 *
 		 * @param $array $args Arguments. Class constructor arguments.
 		*/
-		function get($opt_name, $default = null){
+		function get($opt_name, $default = ""){
 			return (!empty($this->options[$opt_name])) ? $this->options[$opt_name] : $default;
 		}//function
 
@@ -233,11 +235,12 @@ if ( ! class_exists('Simple_Options') ){
 		 * @since Simple_Options 1.0
 		 *
 		*/
-		function _set_default_options(){
+		function _set_default_options(){			
 
 			if(!get_option($this->args['opt_name'])){
 				add_option($this->args['opt_name'], $this->_default_values());
 			}
+			
 			$this->options = get_option($this->args['opt_name']);
 
 			if (count($this->options) != count($this->_default_values()) && count($this->_default_values()) > count($this->options)) {
@@ -447,7 +450,6 @@ if ( ! class_exists('Simple_Options') ){
 			wp_localize_script('simple-options-js', 'sof_opts', array('save_pending' => __('You have changes that are not saved. Would you like to save them now?', 'simple-options'), 'reset_confirm' => __('Are you sure? Resetting will loose all custom values.', 'simple-options'), 'preset_confirm' => __('Your current options will be replaced with the values of this preset. Would you like to proceed?', 'simple-options'), 'opt_name' => $this->args['opt_name']));
 			
 			do_action('simple-options-enqueue-'.$this->args['opt_name']);
-
 			
 			foreach($this->sections as $k => $section){
 				
@@ -581,6 +583,19 @@ if ( ! class_exists('Simple_Options') ){
 		 * @since Simple_Options 1.0
 		*/
 		function _register_setting(){
+
+			if (!empty($this->options['__sof_defaults'])) {
+				unset($this->options['__sof_defaults']);
+				do_action('simple-options-after-defaults-'.$this->args['opt_name'], $this->options);
+			}		
+
+			if (!empty($this->options['__sof_compiler'])) {
+				unset($this->options['__sof_compiler']);
+				update_option($this->args['opt_name'], $this->options);
+				do_action('simple-options-run-compiler-'.$this->args['opt_name'], $this->options);
+			}		
+
+
 			register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array(&$this,'_validate_options'));
 			foreach($this->sections as $k => $section){
 
@@ -760,18 +775,14 @@ if ( ! class_exists('Simple_Options') ){
 			
 			// If this is a new setup, init and return the defaults
 			if(!empty($plugin_options['defaults'])){
-				$defaults = $this->_default_values();
-				do_action('simple-options-after-defaults-'.$this->args['opt_name'], $plugin_options, $defaults);
-				return $defaults;
+				$plugin_options = $this->_default_values();
+				$plugin_options['__sof_defaults'] = true;
+				return $plugin_options;
 			}//if set defaults
 
-			if ($plugin_options['compiler'] != "") {
-				do_action('simple-options-run-compiler-'.$this->args['opt_name'], $plugin_options);
-			}
-
 			//validate fields (if needed)
-			$plugin_options = $this->_validate_values($plugin_options, $this->options);			
-			
+			$plugin_options = $this->_validate_values($plugin_options, $this->options);
+
 			if($this->errors){
 				set_transient('simple-options-errors-'.$this->args['opt_name'], $this->errors, 1000 );		
 			}//if errors
@@ -779,9 +790,13 @@ if ( ! class_exists('Simple_Options') ){
 			if($this->warnings){
 				set_transient('simple-options-warnings-'.$this->args['opt_name'], $this->warnings, 1000 );		
 			}//if errors
-			
-			do_action('simple-options-validate-'.$this->args['opt_name'], $plugin_options, $this->options);
-			
+
+			// If a compiler field was hit, run to init the hook
+			if(!empty($plugin_options['compiler'])){
+				$plugin_options['__sof_compiler'] = true;
+			}//if set compiler
+
+			do_action('simple-options-validate-'.$this->args['opt_name'], $plugin_options, $this->options);		
 			
 			unset($plugin_options['defaults']);
 			unset($plugin_options['import']);
