@@ -123,7 +123,7 @@ class Simple_Options_typography extends Simple_Options{
 				$google = true;
 			}	
 
-			//$output = str_replace('"'.$this->value['family'].'"', $this->value['family'].'" selected="selected"', $output);
+			$output = str_replace('"'.$this->value['family'].'"', $this->value['family'].'" selected="selected"', $output);
 			
 			echo $output;
 
