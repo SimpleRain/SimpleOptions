@@ -90,7 +90,7 @@ if ( ! class_exists('Simple_Options') ){
 			add_action('init', array(&$this, '_set_default_options'));
 
 			//set option with defaults
-			//add_action('admin_init', array(&$this, '_compiler_and_defaults'));			
+			add_action('admin_init', array(&$this, '_compiler_and_defaults'));			
 			
 			//options page
 			add_action('admin_menu', array(&$this, '_options_page'));
@@ -130,6 +130,21 @@ if ( ! class_exists('Simple_Options') ){
 		}//function
 		
 
+		function _compiler_and_defaults() {
+			if (!empty($this->options['__sof_defaults'])) {
+				unset($this->options['__sof_defaults']);
+				update_option( $this->args['opt_name'], $this->options );
+				do_action('simple-options-defaults-'.$this->args['opt_name'], $this->options);	
+			} else if (!empty($this->options['__sof_compiler'])) {
+				unset($this->options['__sof_compiler']);
+				update_option( $this->args['opt_name'], $this->options );				
+				do_action('simple-options-compiler-'.$this->args['opt_name'], $this->options);	
+			} else if (!empty($this->options['__sof_import'])) {
+				unset($this->options['__sof_import']);
+				update_option( $this->args['opt_name'], $this->options );			
+				do_action('simple-options-import-'.$this->args['opt_name'], $this->options);
+			}			
+		}
 
 
 		function _advanced_debug($sql_text) {
@@ -202,7 +217,6 @@ if ( ! class_exists('Simple_Options') ){
 		function _default_values(){
 			
 			$defaults = array();
-			//print_r($this->sections);
 			
 			foreach($this->sections as $k => $section){
 				
@@ -758,11 +772,12 @@ if ( ! class_exists('Simple_Options') ){
 
 				if(is_array($imported_options) && isset($imported_options['simple-options-backup']) && $imported_options['simple-options-backup'] == '1'){
 					$plugin_options = wp_parse_args( $imported_options, $plugin_options );
-					$plugin_options['imported'] = 1;
+
 					if ($_COOKIE["sof_current_tab"] == "import_export_default") {
 						setcookie('sof_current_tab', '', 1, '/');
 					}			
-					do_action('simple-options-after-import-'.$this->args['opt_name'], $plugin_options);
+					$plugin_options['__sof_import'] = true;
+					unset($plugin_options['defaults'], $plugin_options['compiler'], $plugin_options['import'], $plugin_options['import_code']);
 					return $plugin_options;
 				}	
 			}
@@ -781,14 +796,14 @@ if ( ! class_exists('Simple_Options') ){
 			// If this is a new setup, init and return the defaults
 			if(!empty($plugin_options['defaults'])){
 				$plugin_options = $this->_default_values();
-				$plugin_options['sof_defaults'] = true;
+				$plugin_options['__sof_defaults'] = true;
 				return $plugin_options;
 			}//if set defaults
 
 			do_action('simple-options-validate-'.$this->args['opt_name'], $plugin_options, $this->options);		
 			
 			if (!empty($plugin_options['compiler'])) {
-				$plugin_options['sof_compiler'] = true;
+				$plugin_options['__sof_compiler'] = true;
 			}
 
 			unset($plugin_options['import']);
@@ -892,7 +907,7 @@ if ( ! class_exists('Simple_Options') ){
 		 * @since Simple_Options 1.0
 		*/
 		function _options_page_html(){
-			print_r($this->options);
+
 			echo '<div class="clear"></div><div class="wrap">
 			<input type="hidden" id="security" name="security" value="'.wp_create_nonce('of_ajax_nonce').'" />
 				<noscript><div class="no-js">Warning- This options panel will not work properly without javascript!</div></noscript>';
