@@ -195,6 +195,6 @@ jQuery.noConflict();
 
 		jQuery(".sof-typography-size, .sof-typography-height").numeric({negative:false});	
 
-		jQuery(".sof-typography-family").select2({width: 'resolve', triggerChange: true});
+		//jQuery(".sof-typography-family").select2({width: 'resolve', triggerChange: true});
 
 	});

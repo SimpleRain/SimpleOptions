@@ -29,8 +29,6 @@ if ( ! class_exists('Simple_Options') ){
 		public $errors = array();
 		public $warnings = array();
 		public $options = array();
-		public $defaults = false;
-		public $compiler = false;
 		
 		
 
@@ -90,6 +88,9 @@ if ( ! class_exists('Simple_Options') ){
 
 			//set option with defaults
 			add_action('init', array(&$this, '_set_default_options'));
+
+			//set option with defaults
+			//add_action('admin_init', array(&$this, '_compiler_and_defaults'));			
 			
 			//options page
 			add_action('admin_menu', array(&$this, '_options_page'));
@@ -245,8 +246,8 @@ if ( ! class_exists('Simple_Options') ){
 			$this->options = get_option($this->args['opt_name']);
 
 			if (count($this->options) != count($this->_default_values()) && count($this->_default_values()) > count($this->options)) {
-				$this->options = wp_parse_args( $this->options, $this->_default_values() );
-				update_option($this->args['opt_name'], $this->options);
+				//$this->options = wp_parse_args( $this->options, $this->_default_values() );
+				//update_option($this->args['opt_name'], $this->options);
 			}
 
 		}//function
@@ -258,12 +259,6 @@ if ( ! class_exists('Simple_Options') ){
 		 * @since Simple_Options 1.0
 		*/
 		function _options_page(){
-
-			if (!empty($this->options['__sof_compiler'])) {
-				unset($this->options['__sof_compiler']);
-				update_option($this->args['opt_name'], $this->options);
-				do_action('simple-options-run-compiler-'.$this->args['opt_name'], $this->options);
-			}		
 
 			if($this->args['page_type'] == 'submenu'){
 				if(!isset($this->args['page_parent']) || empty($this->args['page_parent'])){
@@ -771,14 +766,6 @@ if ( ! class_exists('Simple_Options') ){
 					return $plugin_options;
 				}	
 			}
-			
-			// If this is a new setup, init and return the defaults
-			if(!empty($plugin_options['defaults'])){
-				$plugin_options = $this->_default_values();
-				update_option($this->args['opt_name'], $this->options);
-				do_action('simple-options-after-defaults-'.$this->args['opt_name'], $this->options);
-				return $plugin_options;
-			}//if set defaults
 
 			//validate fields (if needed)
 			$plugin_options = $this->_validate_values($plugin_options, $this->options);
@@ -791,17 +778,23 @@ if ( ! class_exists('Simple_Options') ){
 				set_transient('simple-options-warnings-'.$this->args['opt_name'], $this->warnings, 1000 );		
 			}//if errors
 
-			// If a compiler field was hit, run to init the hook
-			if(!empty($plugin_options['compiler'])){
-				$plugin_options['__sof_compiler'] = true;
-			}//if set compiler
+			// If this is a new setup, init and return the defaults
+			if(!empty($plugin_options['defaults'])){
+				$plugin_options = $this->_default_values();
+				$plugin_options['sof_defaults'] = true;
+				return $plugin_options;
+			}//if set defaults
 
 			do_action('simple-options-validate-'.$this->args['opt_name'], $plugin_options, $this->options);		
 			
-			unset($plugin_options['defaults']);
+			if (!empty($plugin_options['compiler'])) {
+				$plugin_options['sof_compiler'] = true;
+			}
+
 			unset($plugin_options['import']);
 			unset($plugin_options['import_code']);
 			unset($plugin_options['import_link']);
+			unset($plugin_options['defaults']);
 			unset($plugin_options['compiler']);
 
 			return $plugin_options;	
@@ -899,7 +892,7 @@ if ( ! class_exists('Simple_Options') ){
 		 * @since Simple_Options 1.0
 		*/
 		function _options_page_html(){
-			
+			print_r($this->options);
 			echo '<div class="clear"></div><div class="wrap">
 			<input type="hidden" id="security" name="security" value="'.wp_create_nonce('of_ajax_nonce').'" />
 				<noscript><div class="no-js">Warning- This options panel will not work properly without javascript!</div></noscript>';

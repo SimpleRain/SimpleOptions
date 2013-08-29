@@ -27,7 +27,7 @@ class Simple_Options_typography extends Simple_Options{
 	 * @since Simple_Options 1.0.0
 	*/
 	function render(){
-
+print_r($this->value);
 		global $wp_filesystem;
 		// Initialize the Wordpress filesystem, no more using file_put_contents function
 		if (empty($wp_filesystem)) {
@@ -104,14 +104,15 @@ class Simple_Options_typography extends Simple_Options{
 			
 			$output = "";
 			$google = false;
-	    foreach ($faces as $i=>$face) {
-	      $output .= '<option data-google="false" data-details="'.urlencode(json_encode(
+			$json = urlencode(json_encode(
 	        array('400'=>'Normal',
 	              '700'=>'Bold',
 	              '400-italic'=>'Normal Italic',
 	              '700-italic'=>'Bold Italic',
 	            )
-	        )).'" value="'. $i .'" ' . selected($this->value['family'], $i, false) . '>'. $face .'</option>';
+	        ));
+	    foreach ($faces as $i=>$face) {
+	      $output .= '<option data-google="false" data-details="'.$json.'" value="'. trim($i) .'"' . selected($this->value['family'], $i, false) . '>'. $face .'</option>';
 	    }
 	    $output .= '</optgroup>';
 			if( !file_exists( dirname(__FILE__) . '/googlefonts.html' ) && defined('SOF_GOOGLE_KEY') ) {
