@@ -27,7 +27,7 @@ class Simple_Options_typography extends Simple_Options{
 	 * @since Simple_Options 1.0.0
 	*/
 	function render(){
-print_r($this->value);
+
 		global $wp_filesystem;
 		// Initialize the Wordpress filesystem, no more using file_put_contents function
 		if (empty($wp_filesystem)) {
