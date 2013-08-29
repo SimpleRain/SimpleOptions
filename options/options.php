@@ -87,10 +87,7 @@ if ( ! class_exists('Simple_Options') ){
 			$this->extra_tabs = apply_filters('simple-options-filter-tabs-'.$this->args['opt_name'], $extra_tabs);		
 
 			//set option with defaults
-			add_action('init', array(&$this, '_set_default_options'));
-
-			//set option with defaults
-			add_action('admin_init', array(&$this, '_compiler_and_defaults'));			
+			add_action('init', array(&$this, '_set_default_options'));	
 			
 			//options page
 			add_action('admin_menu', array(&$this, '_options_page'));
@@ -128,24 +125,6 @@ if ( ! class_exists('Simple_Options') ){
 			
 			
 		}//function
-		
-
-		function _compiler_and_defaults() {
-			if (!empty($this->options['__sof_defaults'])) {
-				unset($this->options['__sof_defaults']);
-				update_option( $this->args['opt_name'], $this->options );
-				do_action('simple-options-defaults-'.$this->args['opt_name'], $this->options);	
-			} else if (!empty($this->options['__sof_compiler'])) {
-				unset($this->options['__sof_compiler']);
-				update_option( $this->args['opt_name'], $this->options );				
-				do_action('simple-options-compiler-'.$this->args['opt_name'], $this->options);	
-			} else if (!empty($this->options['__sof_import'])) {
-				unset($this->options['__sof_import']);
-				update_option( $this->args['opt_name'], $this->options );			
-				do_action('simple-options-import-'.$this->args['opt_name'], $this->options);
-			}			
-		}
-
 
 		function _advanced_debug($sql_text) {
 		   $GLOBALS['SOF_DEBUG'] = $sql_text; //intercept and store the sql<br/>
@@ -601,7 +580,6 @@ if ( ! class_exists('Simple_Options') ){
 		*/
 		function _register_setting(){
 
-
 			register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array(&$this,'_validate_options'));
 			foreach($this->sections as $k => $section){
 
@@ -655,7 +633,10 @@ if ( ! class_exists('Simple_Options') ){
 			
 			do_action('simple-options-register-settings-'.$this->args['opt_name']);
 
-
+			if (!empty($_COOKIE['sof_compiler'])) {
+				setcookie('sof_compiler', '', 1, '/');
+				do_action('simple-options-compiler-'.$this->args['opt_name'], $this->options);	
+			}
 			
 		}//function
 		
@@ -772,11 +753,10 @@ if ( ! class_exists('Simple_Options') ){
 
 				if(is_array($imported_options) && isset($imported_options['simple-options-backup']) && $imported_options['simple-options-backup'] == '1'){
 					$plugin_options = wp_parse_args( $imported_options, $plugin_options );
-
 					if ($_COOKIE["sof_current_tab"] == "import_export_default") {
 						setcookie('sof_current_tab', '', 1, '/');
 					}			
-					$plugin_options['__sof_import'] = true;
+					setcookie("sof_compiler", true, time()+3600, '/');
 					unset($plugin_options['defaults'], $plugin_options['compiler'], $plugin_options['import'], $plugin_options['import_code']);
 					return $plugin_options;
 				}	
@@ -796,14 +776,15 @@ if ( ! class_exists('Simple_Options') ){
 			// If this is a new setup, init and return the defaults
 			if(!empty($plugin_options['defaults'])){
 				$plugin_options = $this->_default_values();
-				$plugin_options['__sof_defaults'] = true;
+				setcookie("sof_compiler", true, time()+3600, '/');
+				unset($plugin_options['defaults'], $plugin_options['compiler'], $plugin_options['import'], $plugin_options['import_code']);
 				return $plugin_options;
 			}//if set defaults
 
 			do_action('simple-options-validate-'.$this->args['opt_name'], $plugin_options, $this->options);		
 			
 			if (!empty($plugin_options['compiler'])) {
-				$plugin_options['__sof_compiler'] = true;
+				setcookie("sof_compiler", true, time()+3600, '/');
 			}
 
 			unset($plugin_options['import']);
