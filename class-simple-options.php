@@ -26,7 +26,7 @@ class Simple_Options {
 	 *
 	 * @const   string
 	 */
-	const VERSION = '0.4.0';
+	const VERSION = '0.4.1';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -774,6 +774,7 @@ class Simple_Options {
 
 
 			register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array(&$this,'_validate_options'));
+			$runUpdate = false;
 			foreach($this->sections as $k => $section){
 
 				if (isset($section['type']) && $section['type'] == "divide") {
@@ -789,8 +790,6 @@ class Simple_Options {
 				$this->sections[$k] = $section;
 
 				add_settings_section($section['id'].'_section', $section['title'], array(&$this, '_section_desc'), $section['id'].'_section_group');
-
-				$runUpdate = false;
 
 				if(isset($section['fields'])){
 
@@ -1349,9 +1348,6 @@ class Simple_Options {
 			echo '</div><!--wrap-->';
 			if (true === $this->args['dev_mode']) {
 				echo '<br /><div class="sof-timer">'.get_num_queries().' queries in '.timer_stop(0).' seconds</div>';
-				if (true === $this->args['dev_mode_advanced'] && !empty($GLOBALS['SOF_DEBUG'])) {
-					echo "<pre>".$GLOBALS['SOF_DEBUG']."</pre>";
-				}
 			}
 
 		}//function
@@ -1678,6 +1674,19 @@ class Simple_Options {
 			if (! wp_verify_nonce($nonce, 'of_ajax_nonce') ) die('-1'); 
 			
 			$save_type = $_POST['type'];
+			
+			print_r($_POST);
+			die('1');
+			
+			//Uploads
+			if($save_type == 'upload')
+			{
+				
+			}
+		  	die();
+		}		
+
+} // class$_POST['type'];
 			
 			print_r($_POST);
 			die('1');
