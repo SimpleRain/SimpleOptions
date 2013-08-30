@@ -29,31 +29,8 @@ class SOF_Validation_html extends Simple_Options{
 	*/
 	function validate(){
 		
-		include_once './htmlpurifier/library/HTMLPurifier.auto.php';
-		include_once './csstidy/class.csstidy.php';
-
-		// Create a new configuration object
-		$config = HTMLPurifier_Config::createDefault();
-		$config->set('Filter.ExtractStyleBlocks', TRUE);
-
-		// Create a new purifier instance
-		$purifier = new HTMLPurifier($config);
-
-		// Turn off strict warnings (CSSTidy throws some warnings on PHP 5.2+)
-		$level = error_reporting(E_ALL & ~E_STRICT);
-
-		// Wrap our CSS in style tags and pass to purifier. 
-		// we're not actually interested in the html response though
-		$html = $purifier->purify('<style>'.$this->value.'</style>');
-
-		// Revert error reporting
-		error_reporting($level);
-
-		// The "style" blocks are stored seperately
-		$output_css = $purifier->context->get('StyleBlocks');
-
-		// Get the first style block
-		$this->value = $output_css[0];		
+		// Strip all html
+		$this->value = wp_filter_nohtml_kses($this->value);
 				
 	}//function
 	

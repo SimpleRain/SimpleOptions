@@ -103,7 +103,7 @@ class Simple_Options_media extends Simple_Options{
 		echo '<img class="sof-option-image" id="image_'.$this->field['id'].'" src="'.$this->value['url'].'" alt="" />';
 		echo '</a>';
 		echo '</div>';
-		echo '<div class="clear"></div>' . "\n";
+		
 		echo (isset($this->field['description']) && !empty($this->field['description']))?'<div class="description">'.$this->field['description'].'</div>':'';
 		
 	}//function

@@ -183,7 +183,7 @@ var confirmOnPageExit = function (e) {
 	if($.cookie("sof_current_tab") === null || typeof($.cookie("sof_current_tab")) == "undefined" || sTab.length == 0){
 		jQuery('.simple-options-group-tab-link-a:first').click();
 	}else{
-		sTab.delay(300).click();
+		sTab.click();
 	}
 
 
@@ -309,10 +309,10 @@ jQuery.fn.isOnScreen = function(){
 	Show the sticky header bar and notes!
 **/
   var stickyHeight = jQuery('#simple-options-footer').height();
-  var stickyWidth = jQuery('#simple-options-footer').width();
   jQuery('#simple-options-sticky-padder').css({height: stickyHeight});
 
   function stickyInfo() {
+  	var stickyWidth = jQuery('#info_bar').width()-2;
     if( !jQuery('#info_bar').isOnScreen() && !jQuery('#simple-options-footer-sticky').isOnScreen()) {
         jQuery('#simple-options-footer').css({position: 'fixed', bottom: '0', width: stickyWidth});
         jQuery('#simple-options-footer').addClass('sticky-footer-fixed');
@@ -380,7 +380,7 @@ jQuery.fn.isOnScreen = function(){
 	});  
 	
 
-
+/*
 	// Markdown Viewer for Theme Documentation
 	if ($('#theme_docs_section_group').length != 0) {
 		var converter = new Showdown.converter();
@@ -388,5 +388,6 @@ jQuery.fn.isOnScreen = function(){
 		text = converter.makeHtml(text);
 		jQuery('#theme_docs_section_group').html(text);
 	}
+*/
 
 });

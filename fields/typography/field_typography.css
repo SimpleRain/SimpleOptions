@@ -21,7 +21,7 @@
 
 .typography-preview {
 	display:block;
-	clear:both;
+	width: 100%;
 	border:1px dotted lightgray;
 	max-width:850px;
 	padding:10px;
@@ -58,8 +58,8 @@
 	width:340px!important;
 }
 
-.sof-typography,.typography-color {
-	margin-bottom:9px;
+.sof-typography, .typography-color {
+	margin-bottom:5px;
 }
 
 #simple-options-main .sof-typography-container .typography-style select,#simple-options-main .sof-typography-container .typography-style {

@@ -131,7 +131,7 @@ color: #777;
 #simple-options-header,
 #simple-options-footer{
 	text-align:right;
-	padding: 9px 20px 6px 20px
+	padding: 9px 10px 6px 10px
 }
 #simple-options-header{
 	border-bottom:1px solid #E7E7E7;
@@ -575,7 +575,7 @@ color: #777;
 	border:solid #d8d8d8;
 	border-bottom:1px solid #D8D8D8;
 	border-width:0px 1px 1px 1px;
-	padding: 6px 20px 0px 6px;
+	padding: 6px 10px 0px 6px;
 	height: 31px;
 	z-index: 99999999999999;
 	text-align: right;
@@ -592,7 +592,7 @@ color: #777;
 	float: left;
 	font-size:0px;
 	text-indent: -9999px;
-	margin: 0 0 0 10px;
+	margin: 0 0 0 5px;
 	border: 1px solid #bbb;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;

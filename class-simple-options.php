@@ -26,7 +26,7 @@ class Simple_Options {
 	 *
 	 * @const   string
 	 */
-	const VERSION = '0.4.4';
+	const VERSION = '0.4.5';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -98,8 +98,8 @@ class Simple_Options {
 			'dev_queries' => false,
 			'stylesheet_override' => false,
 			'help_tabs' => array(),
-			'help_sidebar' => __('', $this->plugin_slug),				
-			'footer_credit' => __('<span id="footer-thankyou">Options Panel created using the <a href="'.$this->plugin_url.'" target="_blank">'.$this->plugin_name.'</a> Version '.self::VERSION.'</span>', 'simple-options'),
+			'help_sidebar' => '',				
+			'footer_credit' => '<span id="footer-thankyou">'.__('Options Panel created using the <a href="'.$this->plugin_url.'" target="_blank">'.$this->plugin_name.'</a> Version '.self::VERSION, $this->plugin_slug).'</span>',
 		);
 
 		//
@@ -1142,7 +1142,7 @@ class Simple_Options {
 					echo '</div>';
 					if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && $saved == '1'){
 						if(isset($this->options['imported']) && $this->options['imported'] == 1){
-							echo '<div id="simple-options-imported">'.apply_filters('simple-options-imported-text-'.$this->args['opt_name'], __('<strong>Settings Imported!</strong>', 'simple-options')).'</div>';
+							echo '<div id="simple-options-imported">'.apply_filters('simple-options-imported-text-'.$this->args['opt_name'], ''.__('<strong>Settings Imported!</strong>', 'simple-options')).'</div>';
 						}else{
 							echo '<div id="simple-options-save">'.apply_filters('simple-options-saved-text-'.$this->args['opt_name'], __('<strong>Settings Saved!</strong>', 'simple-options')).'</div>';
 						}
