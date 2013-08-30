@@ -26,7 +26,7 @@ class Simple_Options {
 	 *
 	 * @const   string
 	 */
-	const VERSION = '0.4.3';
+	const VERSION = '0.4.4';
 
 	/**
 	 * Unique identifier for your plugin.

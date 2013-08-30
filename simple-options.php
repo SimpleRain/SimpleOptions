@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * The WordPress Plugin Boilerplate.
  *
  * A foundation off of which to build well-documented WordPress plugins that also follow
@@ -15,7 +15,7 @@
  * Plugin Name: Simple Options Framework
  * Plugin URI:  https://github.com/SimpleRain/SimpleOptions
  * Description: A simple wordpress options framework for developers.
- * Version:     0.4.3
+ * Version:     0.4.4
  * Author:      Dovy Paukstys
  * Author URI:  http://simplerain.com
  * Text Domain: simple-options
