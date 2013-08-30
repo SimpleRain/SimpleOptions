@@ -42,15 +42,15 @@ jQuery(document).ready(function(){
 	    return colour;
 	}
 
-	jQuery('.sof-color').live('focus', function() {
+	jQuery('.sof-color').on('focus', function() {
 		jQuery(this).data('oldcolor', jQuery(this).val());
 	});
 
-	jQuery('.sof-color').live('keyup', function() {
+	jQuery('.sof-color').on('keyup', function() {
 			jQuery(this).val(sof_color_validate(this));
 	});
 
-	jQuery('.sof-color').live('blur', function() {
+	jQuery('.sof-color').on('blur', function() {
 		var value = jQuery(this).val();
 		if (sof_color_validate(this) == value) {
 			if (value.indexOf("#") >= 0) {
@@ -59,7 +59,7 @@ jQuery(document).ready(function(){
 		} 
 	});	
 
-	jQuery('.sof-color').live('keydown', function() {
+	jQuery('.sof-color').on('keydown', function() {
 		jQuery(this).data('oldkeypress', jQuery(this).val());
 	});	
 

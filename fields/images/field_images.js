@@ -22,7 +22,7 @@ jQuery(document).ready(function(){
 		
 	});
 
-	jQuery('.sof-save-preset').live("click",function(e) {
+	jQuery('.sof-save-preset').on("click",function(e) {
 		e.preventDefault();
 		var presets = jQuery(this).parent().parent().find('.sof-presets label.sof-images-selected input[type="radio"]');
 		var data = presets.data('presets');

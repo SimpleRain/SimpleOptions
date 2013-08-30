@@ -6,7 +6,6 @@
 	Version: 1.2.2 (03/09/2009 22:39:06)
 */
 (function($) {
-	var pasteEventName = ($.browser.msie ? 'paste' : 'input') + ".mask";
 	var iPhone = (window.orientation != undefined);
 
 	$.mask = {
@@ -241,7 +240,7 @@
 					})
 					.bind("keydown.mask", keydownEvent)
 					.bind("keypress.mask", keypressEvent)
-					.bind(pasteEventName, function() {
+					.bind("paste.mask input.mask", function() {
 						setTimeout(function() { input.caret(checkVal(true)); }, 0);
 					});
 

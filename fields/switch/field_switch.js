@@ -39,8 +39,8 @@ jQuery(document).ready(function($){
 		jQuery($fold).slideUp('normal', "swing");
 	});
 	//disable text select(for modern chrome, safari and firefox is done via CSS)
-	if (($.browser.msie && $.browser.version < 10) || $.browser.opera) { 
+	//if (($.browser.msie && $.browser.version < 10) || $.browser.opera) { 
 		$('.cb-enable span, .cb-disable span').find().attr('unselectable', 'on');
-	}
+	//}
 
 });	

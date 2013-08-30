@@ -250,7 +250,7 @@ var confirmOnPageExit = function (e) {
 		jQuery('#simple-options-imported').slideDown();
 	}	
 	
-	jQuery('input, textarea, select').live('change',function() {
+	jQuery('input, textarea, select').on('change',function() {
 		if (!jQuery(this).hasClass('noUpdate')) {
 			sof_change(jQuery(this));	
 		}

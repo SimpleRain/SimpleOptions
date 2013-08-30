@@ -1,20 +1,5 @@
 <?php
-/**
- 
-  Require the framework class before doing anything else, so we can use the defined urls and dirs
-  Also if running on windows you may have url problems, which can be fixed by defining the framework url first
- 
-**/
 
-// Try to include the framework if it is embedded in the theme.
-if (strpos(dirname(__FILE__),TEMPLATEPATH) !== false &&!class_exists('Simple_Options') && file_exists( dirname( __FILE__ ) . '/options/options.php') ) {
-	include_once( dirname( __FILE__ ) . '/options/options.php' );
-}
-
-// Return if the class can't be found. No errors please!
-if( !class_exists('Simple_Options') ){
-	return;
-}
 
 /**
 
@@ -41,7 +26,7 @@ function add_another_section($sections){
 	return $sections;
 	
 }//function
-//add_filter('simple-options-sections-twenty_eleven', 'add_another_section');
+add_filter('simple-options-filter-sections-twentyeleven', 'add_another_section');
 
 
 
@@ -808,8 +793,13 @@ $sections[] = array(
 						);
 	}//if
 
-	global $Simple_Options;
-	$Simple_Options = new Simple_Options($sections, $args, $tabs);
+	$Simple_Options = Simple_Options::get_instance();
+	$Simple_Options->setSections($sections);
+	$Simple_Options->setArgs($args);
+	$Simple_Options->setTabs($tabs);
+
+
+
 	//echo $Simple_Options->value('footer-text');
 }//function
 add_action('init', 'setup_framework_options', 0);

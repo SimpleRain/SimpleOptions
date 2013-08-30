@@ -1,135 +1,309 @@
 <?php
+/**
+ * Plugin Name.
+ *
+ * @package   Simple_Options
+ * @author    Dovy Paukstys <info@simplerain.com>
+ * @license   GPL-2.0+
+ * @link      http://simplerain.com
+ * @copyright 2013 SimpleRain, Inc.
+ */
 
-if ( ! class_exists('Simple_Options') ){
-	
-	// windows-proof constants: replace backward by forward slashes - thanks to: https://github.com/peterbouwmeester
-	$fslashed_dir = trailingslashit(str_replace('\\','/',dirname(__FILE__)));
-	$fslashed_abs = trailingslashit(str_replace('\\','/',ABSPATH));
-	
-	if(!defined('SOF_OPTIONS_DIR')){
-		define('SOF_OPTIONS_DIR', $fslashed_dir);
-	}
-	
-	if(!defined('SOF_OPTIONS_URL')){
-		define('SOF_OPTIONS_URL', site_url(str_replace( $fslashed_abs, '', $fslashed_dir )));
-	}
+/**
+ * Plugin class.
+ *
+ * TODO: Rename this class to a proper name for your plugin.
+ *
+ * @package Simple_Options
+ * @author  Dovy Paukstys <info@simplerain.com>
+ */
+class Simple_Options {
 
-	class Simple_Options{
+	/**
+	 * Plugin version, used for cache-busting of style and script file references.
+	 *
+	 * @since   1.0.0
+	 *
+	 * @const   string
+	 */
+	const VERSION = '0.4.0';
+
+	/**
+	 * Unique identifier for your plugin.
+	 *
+	 * Use this value (not the variable name) as the text domain when internationalizing strings of text. It should
+	 * match the Text Domain file header in the main plugin file.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @var      string
+	 */
+	protected $plugin_slug = 'simple-options';
+
+	protected $plugin_url = 'https://github.com/SimpleRain/SimpleOptions';
+	protected $plugin_name = 'Simple Options Framework';
+
+
+	/**
+	 * Instance of this class.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @var      object
+	 */
+	protected static $instance = null;
+
+	/**
+	 * Slug of the plugin screen.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @var      string
+	 */
+	protected $plugin_screen_hook_suffix = null;
+
+	public $dir = SOF_OPTIONS_DIR;
+	public $url = SOF_OPTIONS_URL;
+	public $page = '';
+	public $args = array();
+	public $sections = array();
+	public $extra_tabs = array();
+	public $errors = array();
+	public $warnings = array();
+	public $options = array();
+
+
+	/**
+	 * Initialize the plugin by setting localization, filters, and administration functions.
+	 *
+	 * @since     1.0.0
+	 */
+	public function __construct($sections = array(), $args = array(), $extra_tabs = array()) {
+
+		$defaults = array(
+			'opt_name' => strtolower(str_replace(" ", "", wp_get_theme())),//must be defined by theme/plugin
+			'google_api_key' => '',//must be defined for use with google webfonts field type
+			'menu_icon' => SOF_OPTIONS_URL.'/img/menu_icon.png',
+			'menu_title' => __('Options', $this->plugin_slug),
+			'page_icon' => 'icon-themes',
+			'page_title' => "",
+			'page_slug' => 'simple-options',
+			'page_cap' => 'manage_options',
+			'page_type' => 'menu',
+			'page_parent' => '',
+			'page_position' => 100,
+			'allow_sub_menu' => true,
+			'show_import_export' => true,
+			'dev_mode' => false,
+			'dev_queries' => false,
+			'stylesheet_override' => false,
+			'help_tabs' => array(),
+			'help_sidebar' => __('', $this->plugin_slug),				
+			'footer_credit' => __('<span id="footer-thankyou">Options Panel created using the <a href="'.$this->plugin_url.'" target="_blank">'.$this->plugin_name.'</a> Version '.self::VERSION.'</span>', 'simple-options'),
+		);
+
+		//
+		// Filter and set args
+		$this->args = wp_parse_args($args, $defaults);
+		$this->args = apply_filters('simple-options-args-'.$this->args['opt_name'], $this->args);			
 		
-		protected $framework_url = 'https://github.com/SimpleRain/SimpleOptions';
-		protected $framework_name = 'Simple Options Framework';
-		protected $framework_version = '0.3.3';
-			
-		public $dir = SOF_OPTIONS_DIR;
-		public $url = SOF_OPTIONS_URL;
-		public $page = '';
-		public $args = array();
-		public $sections = array();
-		public $extra_tabs = array();
-		public $errors = array();
-		public $warnings = array();
-		public $options = array();
-		
-		
-
-		/**
-		 * Class Constructor. Defines the args for the theme options class
-		 *
-		 * @since Simple_Options 1.0
-		 *
-		 * @param $array $args Arguments. Class constructor arguments.
-		*/
-		function __construct($sections = array(), $args = array(), $extra_tabs = array()){
-			
-			$defaults = array();
-			
-			$defaults['opt_name'] = strtolower(str_replace(" ", "", wp_get_theme()));//must be defined by theme/plugin
-			
-			$defaults['google_api_key'] = '';//must be defined for use with google webfonts field type
-			
-			$defaults['menu_icon'] = SOF_OPTIONS_URL.'/img/menu_icon.png';
-			$defaults['menu_title'] = __('Options', 'simple-options');
-			$defaults['page_icon'] = 'icon-themes';
-			$defaults['page_title'] = "";
-			$defaults['page_slug'] = 'simple_options';
-			$defaults['page_cap'] = 'manage_options';
-			$defaults['page_type'] = 'menu';
-			$defaults['page_parent'] = '';
-			$defaults['page_position'] = 100;
-			$defaults['allow_sub_menu'] = true;
-			
-			$defaults['show_import_export'] = true;
-			$defaults['dev_mode'] = true;
-			$defaults['dev_mode_advanced'] = true;
-			$defaults['stylesheet_override'] = false;
-			
-			$defaults['footer_credit'] = __('<span id="footer-thankyou">Options Panel created using the <a href="'.$this->framework_url.'" target="_blank">'.$this->framework_name.'</a> Version '.$this->framework_version.'</span>', 'simple-options');
-			
-			$defaults['help_tabs'] = array();
-			$defaults['help_sidebar'] = __('', 'simple-options');
-
-			// Get args
-			$this->args = wp_parse_args($args, $defaults);
-			$this->args = apply_filters('simple-options-args-'.$this->args['opt_name'], $this->args);			
-			
-			if(!defined('SOF_GOOGLE_KEY')){
-				define('SOF_GOOGLE_KEY', $this->args['google_api_key']);
-			}
-
-			if ($this->args['dev_mode_advanced'] === true) {
-				add_filter('posts_request',array(&$this, '_advanced_debug')); // debugging sql query of a post
-			}
-
-			//get sections
-			$this->sections = apply_filters('simple-options-filter-sections-'.$this->args['opt_name'], $sections);
-
-			//get extra tabs
-			$this->extra_tabs = apply_filters('simple-options-filter-tabs-'.$this->args['opt_name'], $extra_tabs);		
-
-			//set option with defaults
-			add_action('init', array(&$this, '_set_default_options'));	
-			
-			//options page
-			add_action('admin_menu', array(&$this, '_options_page'));
-			
-			//register setting
-			add_action('admin_init', array(&$this, '_register_setting'));
-
-			//register customizer setting
-			add_action( 'customize_register', array(&$this, '_customize_register_setting'));
-			
-			//add the js for the error handling before the form
-			add_action('simple-options-page-before-form-'.$this->args['opt_name'], array(&$this, '_errors_js'), 1);
-			
-			//add the js for the warning handling before the form
-			add_action('simple-options-page-before-form-'.$this->args['opt_name'], array(&$this, '_warnings_js'), 2);
-			
-			//hook into the wp feeds for downloading the exported settings
-			add_action('do_feed_simple-options-'.$this->args['opt_name'], array(&$this, '_download_options'), 1, 1);
-		
-			// Hook to allow ajax functions, not being used
-			//add_action('wp_ajax_of_ajax_post_action', array(&$this, '_ajax_callback'));
-
-			// Shortcodes used within the framework
-			add_shortcode('site-url', array(&$this, 'shortcode_site_url'));
-			add_shortcode('theme-url', array(&$this, 'shortcode_theme_url'));
-			add_shortcode('wp-url', array(&$this, 'shortcode_wp_url'));
-			add_shortcode('login-url', array(&$this, 'shortcode_login_url'));
-			add_shortcode('logout-url', array(&$this, 'shortcode_logout_url'));
-			add_shortcode('site-title', array(&$this, 'shortcode_site_title'));
-			add_shortcode('site-tagline', array(&$this, 'shortcode_site_tagline'));
-			add_shortcode('current-year', array(&$this, 'shortcode_current_year'));
-
-			//get the options for use later on
-			$this->options = get_option($this->args['opt_name']);
-			
-			
-		}//function
-
-		function _advanced_debug($sql_text) {
-		   $GLOBALS['SOF_DEBUG'] = $sql_text; //intercept and store the sql<br/>
-		   return $sql_text; 
+		if(!defined('SOF_GOOGLE_KEY')){
+			define('SOF_GOOGLE_KEY', $this->args['google_api_key']);
 		}		
+
+		// Load plugin text domain
+		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+
+		//filter sections
+		$this->sections = apply_filters('simple-options-filter-sections-'.$this->args['opt_name'], $sections);
+
+		//filter extra tabs
+		$this->extra_tabs = apply_filters('simple-options-filter-tabs-'.$this->args['opt_name'], $extra_tabs);	
+
+		// Add an action link pointing to the options page. TODO: Rename "simple-options.php" to the name your plugin
+		//$plugin_basename = plugin_basename( plugin_dir_path( __FILE__ ) . 'simple-options.php' );
+		//add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
+
+		// Load admin style sheet and JavaScript.
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+
+		//set option with defaults
+		add_action('init', array(&$this, '_set_default_options'), 300);	
+		
+		//options page
+		add_action('admin_menu', array(&$this, '_options_page'), 300);
+		
+		//register setting
+		add_action('admin_init', array(&$this, '_register_setting'), 300);
+
+		//register customizer setting
+		add_action( 'customize_register', array(&$this, '_customize_register_setting'));
+					
+		//hook into the wp feeds for downloading the exported settings
+		add_action('do_feed_simple-options-'.$this->args['opt_name'], array(&$this, '_download_options'), 1, 1);
+	
+		// Hook to allow ajax functions, not being used
+		//add_action('wp_ajax_of_ajax_post_action', array(&$this, '_ajax_callback'));
+
+		// Shortcodes used within the framework
+		add_shortcode('site-url', array(&$this, 'shortcode_site_url'));
+		add_shortcode('theme-url', array(&$this, 'shortcode_theme_url'));
+		add_shortcode('wp-url', array(&$this, 'shortcode_wp_url'));
+		add_shortcode('login-url', array(&$this, 'shortcode_login_url'));
+		add_shortcode('logout-url', array(&$this, 'shortcode_logout_url'));
+		add_shortcode('site-title', array(&$this, 'shortcode_site_title'));
+		add_shortcode('site-tagline', array(&$this, 'shortcode_site_tagline'));
+		add_shortcode('current-year', array(&$this, 'shortcode_current_year'));
+
+		//get the options for use later on
+		$this->options = get_option($this->args['opt_name']);
+
+	}
+
+	/**
+	 * Return an instance of this class.
+	 *
+	 * @since     1.0.0
+	 *
+	 * @return    object    A single instance of this class.
+	 */
+	public static function get_instance() {
+
+		// If the single instance hasn't been set, set it now.
+		if ( null == self::$instance ) {
+			self::$instance = new self;
+		}
+
+		return self::$instance;
+	}
+
+	/**
+	 * Fired when the plugin is activated.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param    boolean    $network_wide    True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
+	 */
+	public static function activate( $network_wide ) {
+		// TODO: Define activation functionality here
+	}
+
+	/**
+	 * Fired when the plugin is deactivated.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @param    boolean    $network_wide    True if WPMU superadmin uses "Network Deactivate" action, false if WPMU is disabled or plugin is deactivated on an individual blog.
+	 */
+	public static function deactivate( $network_wide ) {
+		// TODO: Define deactivation functionality here
+	}
+
+	/**
+	 * Load the plugin text domain for translation.
+	 *
+	 * @since    1.0.0
+	 */
+	public function load_plugin_textdomain() {
+
+		$domain = $this->plugin_slug;
+		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+
+		load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
+		load_plugin_textdomain( $domain, FALSE, basename( dirname( __FILE__ ) ) . '/lang/' );
+	}
+
+	/**
+	 * Register and enqueue admin-specific style sheet.
+	 *
+	 * @since     1.0.0
+	 *
+	 * @return    null    Return early if no settings page is registered.
+	 */
+	public function enqueue_admin_styles() {
+
+		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+			return;
+		}
+
+		$screen = get_current_screen();
+		if ( $screen->id == $this->plugin_screen_hook_suffix ) {
+			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'css/admin.css', __FILE__ ), array(), self::VERSION );
+		}
+
+	}
+
+	public function setArgs($args) {
+		$this->args = wp_parse_args($args, $this->args);
+	}
+
+	public function addSections($sections) {
+		array_push($this->sections, $sections);
+		//update_option( $this->args['opt_name'], $this->options );
+	}
+
+	public function setSections($sections) {
+		$this->sections = $sections;
+		//$this->options = $this->_default_values();
+		//update_option( $this->args['opt_name'], $this->options );
+	}
+
+	public function addTabs($tabs) {
+		array_push($this->extra_tabs, $tabs);
+	}
+
+	public function setTabs($tabs) {
+		$this->extra_tabs = $tabs;
+	}
+
+
+	/**
+	 * Register and enqueue admin-specific JavaScript.
+	 *
+	 * @since     1.0.0
+	 *
+	 * @return    null    Return early if no settings page is registered.
+	 */
+	public function enqueue_admin_scripts() {
+
+		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+			return;
+		}
+
+		$screen = get_current_screen();
+		if ( $screen->id == $this->plugin_screen_hook_suffix ) {
+			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'js/admin.js', __FILE__ ), array( 'jquery' ), self::VERSION );
+		}
+
+	}
+
+	/**
+	 * Render the settings page for this plugin.
+	 *
+	 * @since    1.0.0
+	 */
+	public function display_plugin_admin_page() {
+		
+	}
+
+	/**
+	 * Add settings action link to the plugins page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_action_links( $links ) {
+
+		return array_merge(
+			array(
+				'settings' => '<a href="' . admin_url( 'plugins.php?page=simple-options' ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>'
+			),
+			$links
+		);
+
+	}
+
+
 		
 		/**
 		 * ->get(); This is used to return an option value from the options array
@@ -233,6 +407,7 @@ if ( ! class_exists('Simple_Options') ){
 		function _set_default_options(){			
 
 			if(!get_option($this->args['opt_name'])){
+				print_r($this->_default_values());
 				add_option($this->args['opt_name'], $this->_default_values());
 			}
 			
@@ -355,6 +530,19 @@ if ( ! class_exists('Simple_Options') ){
 					
 				}//if
 
+				if(true === $this->args['dev_queries']){
+							
+					add_submenu_page(
+							$this->args['page_slug'],
+							__('Dev Mode Queries', 'simple-options'), 
+							__('Dev Mode Queries', 'simple-options'), 
+							$this->args['page_cap'], 
+							$this->args['page_slug'].'&tab=dev_mode_queries', 
+							create_function( '$a', "return null;" )
+					);
+					
+				}//if				
+
 			}//if			
 							
 				
@@ -372,10 +560,10 @@ if ( ! class_exists('Simple_Options') ){
 		 * @since Simple_Options 1.0
 		*/
 		function _enqueue(){
-			
+
 			wp_register_style(
 					'simple-options-css', 
-					$this->url.'css/options.css',
+					$this->url.'css/admin.css',
 					array('farbtastic'),
 					time(),
 					'all'
@@ -383,7 +571,7 @@ if ( ! class_exists('Simple_Options') ){
 				
 			wp_register_style(
 				'simple-options-jquery-ui-css',
-				apply_filters('simple-options-ui-theme', $this->url.'css/jquery-ui-aristo/aristo.css'),
+				apply_filters('simple-options-ui-theme', $this->url.'css/vendor/jquery-ui-aristo/aristo.css'),
 				'',
 				time(),
 				'all'
@@ -397,7 +585,7 @@ if ( ! class_exists('Simple_Options') ){
 			
 			wp_enqueue_script(
 				'simple-options-js', 
-				$this->url.'js/options.js', 
+				$this->url.'js/admin.js', 
 				array('jquery'),
 				time(),
 				true
@@ -405,7 +593,7 @@ if ( ! class_exists('Simple_Options') ){
 
 			wp_enqueue_script(
 				'showdown-js', 
-				$this->url.'js/showdown.js', 
+				$this->url.'js/vendor/showdown.js', 
 				array('jquery', 'simple-options-js'),
 				time(),
 				true
@@ -413,7 +601,7 @@ if ( ! class_exists('Simple_Options') ){
 
 			wp_enqueue_script(
 				'jquery-cookie', 
-				$this->url.'js/cookie.js', 
+				$this->url.'js/vendor/cookie.js', 
 				array('jquery','simple-options-js'),
 				time(),
 				true
@@ -421,7 +609,7 @@ if ( ! class_exists('Simple_Options') ){
 
 			wp_enqueue_script(
 				'jquery-tipsy', 
-				$this->url.'js/jquery.tipsy.js', 
+				$this->url.'js/vendor/jquery.tipsy.js', 
 				array('jquery','simple-options-js'),
 				time(),
 				true
@@ -429,7 +617,7 @@ if ( ! class_exists('Simple_Options') ){
 
 			wp_enqueue_script(
 				'jquery-maskedinput', 
-				$this->url.'js/jquery.maskedinput-1.2.2.js', 
+				$this->url.'js/vendor/jquery.maskedinput-1.2.2.js', 
 				array('jquery','simple-options-js'),
 				time(),
 				true
@@ -437,7 +625,7 @@ if ( ! class_exists('Simple_Options') ){
 
 			wp_enqueue_script(
 				'jquery-numeric', 
-				$this->url.'js/jquery.numeric.js', 
+				$this->url.'js/vendor/jquery.numeric.js', 
 				array('jquery','simple-options-js'),
 				time(),
 				true
@@ -579,6 +767,11 @@ if ( ! class_exists('Simple_Options') ){
 		 * @since Simple_Options 1.0
 		*/
 		function _register_setting(){
+			
+			//print_r($this->options);
+			//get the options for use later on
+			//$this->options = get_option($this->args['opt_name']);
+
 
 			register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array(&$this,'_validate_options'));
 			foreach($this->sections as $k => $section){
@@ -586,8 +779,6 @@ if ( ! class_exists('Simple_Options') ){
 				if (isset($section['type']) && $section['type'] == "divide") {
 					continue;
 				}
-
-
 
 				$section = $this->_item_cleanup($section, $k);
 				$this->sections[$k] = $section;
@@ -598,6 +789,8 @@ if ( ! class_exists('Simple_Options') ){
 				$this->sections[$k] = $section;
 
 				add_settings_section($section['id'].'_section', $section['title'], array(&$this, '_section_desc'), $section['id'].'_section_group');
+
+				$runUpdate = false;
 
 				if(isset($section['fields'])){
 
@@ -623,6 +816,11 @@ if ( ! class_exists('Simple_Options') ){
 							$th = '';
 						}
 
+						if (!isset($this->options[$field['id']])) {
+							//$this->options[$field['id']] = $field['std'];
+							$runUpdate = true;
+						}
+
 						add_settings_field($field['id'].'_field', $th, array(&$this,'_field_input'), $section['id'].'_section_group', $section['id'].'_section', $field); // checkbox
 
 					}//foreach
@@ -633,8 +831,13 @@ if ( ! class_exists('Simple_Options') ){
 			
 			do_action('simple-options-register-settings-'.$this->args['opt_name']);
 
-			if (!empty($_COOKIE['sof_compiler'])) {
-				setcookie('sof_compiler', '', 1, '/');
+			if ($runUpdate) {
+				//echo "RUN AN UPDATE";
+				//update_option( $this->args['opt_name'], $this->options );
+			}
+
+			if (get_transient( 'simple-options-compiler' )) {
+				delete_transient( 'simple-options-compiler' );
 				do_action('simple-options-compiler-'.$this->args['opt_name'], $this->options);	
 			}
 			
@@ -756,7 +959,7 @@ if ( ! class_exists('Simple_Options') ){
 					if ($_COOKIE["sof_current_tab"] == "import_export_default") {
 						setcookie('sof_current_tab', '', 1, '/');
 					}			
-					setcookie("sof_compiler", true, time()+3600, '/');
+					set_transient('simple-options-compiler', '1', 1000 );
 					unset($plugin_options['defaults'], $plugin_options['compiler'], $plugin_options['import'], $plugin_options['import_code']);
 					return $plugin_options;
 				}	
@@ -776,7 +979,7 @@ if ( ! class_exists('Simple_Options') ){
 			// If this is a new setup, init and return the defaults
 			if(!empty($plugin_options['defaults'])){
 				$plugin_options = $this->_default_values();
-				setcookie("sof_compiler", true, time()+3600, '/');
+				set_transient('simple-options-compiler', '1', 1000 );
 				unset($plugin_options['defaults'], $plugin_options['compiler'], $plugin_options['import'], $plugin_options['import_code']);
 				return $plugin_options;
 			}//if set defaults
@@ -784,7 +987,7 @@ if ( ! class_exists('Simple_Options') ){
 			do_action('simple-options-validate-'.$this->args['opt_name'], $plugin_options, $this->options);		
 			
 			if (!empty($plugin_options['compiler'])) {
-				setcookie("sof_compiler", true, time()+3600, '/');
+				set_transient('simple-options-compiler', '1', 1000 );
 			}
 
 			unset($plugin_options['import']);
@@ -889,6 +1092,16 @@ if ( ! class_exists('Simple_Options') ){
 		*/
 		function _options_page_html(){
 
+			//add the js for the error handling before the form
+			add_action('simple-options-page-before-form-'.$this->args['opt_name'], array(&$this, '_errors_js'), 1);
+			
+			//add the js for the warning handling before the form
+			add_action('simple-options-page-before-form-'.$this->args['opt_name'], array(&$this, '_warnings_js'), 2);
+
+
+			$saved = get_transient('simple-options-saved');
+			delete_transient('simple-options-saved');
+
 			echo '<div class="clear"></div><div class="wrap">
 			<input type="hidden" id="security" name="security" value="'.wp_create_nonce('of_ajax_nonce').'" />
 				<noscript><div class="no-js">Warning- This options panel will not work properly without javascript!</div></noscript>';
@@ -907,7 +1120,7 @@ if ( ! class_exists('Simple_Options') ){
 					if (empty($this->options['last_tab'])) {
 						$this->options['last_tab'] = "";
 					}
-					$this->options['last_tab'] = (isset($_GET['tab']) && !get_transient('simple-options-saved'))?$_GET['tab']:$this->options['last_tab'];
+					$this->options['last_tab'] = (isset($_GET['tab']) && !$saved)?$_GET['tab']:$this->options['last_tab'];
 					
 					echo '<input type="hidden" id="last_tab" name="'.$this->args['opt_name'].'[last_tab]" value="'.$this->options['last_tab'].'" />';
 					$my_theme = wp_get_theme();
@@ -928,13 +1141,12 @@ if ( ! class_exists('Simple_Options') ){
 							echo '<div class="sof-ajax-loading" alt="Working...">&nbsp;</div>';
 							echo '<div class="clear"></div><!--clearfix-->';
 						echo '</div>';
-						if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && get_transient('simple-options-saved') == '1'){
+						if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && $saved == '1'){
 							if(isset($this->options['imported']) && $this->options['imported'] == 1){
 								echo '<div id="simple-options-imported">'.apply_filters('simple-options-imported-text-'.$this->args['opt_name'], __('<strong>Settings Imported!</strong>', 'simple-options')).'</div>';
 							}else{
 								echo '<div id="simple-options-save">'.apply_filters('simple-options-saved-text-'.$this->args['opt_name'], __('<strong>Settings Saved!</strong>', 'simple-options')).'</div>';
 							}
-							delete_transient('simple-options-saved');
 						}
 						echo '<div id="simple-options-save-warn">'.apply_filters('simple-options-changed-text-'.$this->args['opt_name'], __('<strong>Settings have changed, you should save them!</strong>', 'simple-options')).'</div>';
 						echo '<div id="simple-options-field-errors">'.__('<strong><span></span> error(s) were found!</strong>', 'simple-options').'</div>';
@@ -988,6 +1200,12 @@ if ( ! class_exists('Simple_Options') ){
 										echo '<a href="javascript:void(0);" id="dev_mode_default_section_group_li_a" class="simple-options-group-tab-link-a custom-tab" data-rel="dev_mode_default"><img src="'.$this->url.'img/glyphicons/glyphicons_195_circle_info.png" /> <span>'.__('Dev Mode Info', 'simple-options').'</span></a>';
 								echo '</li>';
 							}//if
+
+							if(true === $this->args['dev_queries']){
+								echo '<li id="dev_mode_queries_section_group_li" class="simple-options-group-tab-link-li">';
+										echo '<a href="javascript:void(0);" id="dev_mode_queries_section_group_li_a" class="simple-options-group-tab-link-a custom-tab" data-rel="dev_mode_queries"><img src="'.$this->url.'img/glyphicons/glyphicons_195_circle_info.png" /> <span>'.__('Dev Mode Queries', 'simple-options').'</span></a>';
+								echo '</li>';
+							}//if							
 							
 						echo '</ul>';
 					echo '</div>';
@@ -1083,6 +1301,16 @@ if ( ! class_exists('Simple_Options') ){
 								echo '<input type="hidden" id="sof-object" value="'.urlencode(json_encode($this)).'" /><a href="javascript:sof_object()" class="button">Show Object in Javascript Console Object</a>';
 							echo '</div>';
 						}
+
+						if(true === $this->args['dev_queries']){
+							echo '<div id="dev_mode_queries_section_group'.'" class="simple-options-group-tab">';
+								echo '<h3>'.__('Dev Queries', 'simple-options').'</h3>';
+								global $wpdb;
+								echo '<textarea class="large-text" rows="38">';
+					    	print_r($wpdb->queries);
+					    	echo "</textarea>";
+							echo '</div>';
+						}						
 						
 						
 						do_action('simple-options-after-section-items-'.$this->args['opt_name'], $this);
@@ -1138,31 +1366,31 @@ if ( ! class_exists('Simple_Options') ){
 		function _errors_js(){
 			
 			if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && get_transient('simple-options-errors-'.$this->args['opt_name'])){
-					$errors = get_transient('simple-options-errors-'.$this->args['opt_name']);
-					$section_errors = array();
-					foreach($errors as $error){
-						$section_errors[$error['section_id']] = (isset($section_errors[$error['section_id']]))?$section_errors[$error['section_id']]:0;
-						$section_errors[$error['section_id']]++;
-					}
-					
-					
-					echo '<script type="text/javascript">';
-						echo 'jQuery(document).ready(function(){';
-							echo 'jQuery("#simple-options-field-errors span").html("'.count($errors).'");';
-							echo 'jQuery("#simple-options-field-errors").show();';
-							
-							foreach($section_errors as $sectionkey => $section_error){
-								echo 'jQuery("#'.$sectionkey.'_section_group_li_a").append("<span class=\"simple-options-menu-error\">'.$section_error.'</span>");';
-							}
-							
-							foreach($errors as $error){
-								echo 'jQuery("#'.$error['id'].'").addClass("simple-options-field-error");';
-								echo 'jQuery("#'.$error['id'].'").closest("td").append("<span class=\"simple-options-th-error\">'.$error['msg'].'</span>");';
-							}
-						echo '});';
-					echo '</script>';
-					delete_transient('simple-options-errors-'.$this->args['opt_name']);
+				$errors = get_transient('simple-options-errors-'.$this->args['opt_name']);
+				$section_errors = array();
+				foreach($errors as $error){
+					$section_errors[$error['section_id']] = (isset($section_errors[$error['section_id']]))?$section_errors[$error['section_id']]:0;
+					$section_errors[$error['section_id']]++;
 				}
+				
+				
+				echo '<script type="text/javascript">';
+					echo 'jQuery(document).ready(function(){';
+						echo 'jQuery("#simple-options-field-errors span").html("'.count($errors).'");';
+						echo 'jQuery("#simple-options-field-errors").show();';
+						
+						foreach($section_errors as $sectionkey => $section_error){
+							echo 'jQuery("#'.$sectionkey.'_section_group_li_a").append("<span class=\"simple-options-menu-error\">'.$section_error.'</span>");';
+						}
+						
+						foreach($errors as $error){
+							echo 'jQuery("#'.$error['id'].'").addClass("simple-options-field-error");';
+							echo 'jQuery("#'.$error['id'].'").closest("td").append("<span class=\"simple-options-th-error\">'.$error['msg'].'</span>");';
+						}
+					echo '});';
+				echo '</script>';
+				delete_transient('simple-options-errors-'.$this->args['opt_name']);
+			}
 			
 		}//function
 		
@@ -1176,31 +1404,31 @@ if ( ! class_exists('Simple_Options') ){
 		function _warnings_js(){
 			
 			if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && get_transient('simple-options-warnings-'.$this->args['opt_name'])){
-					$warnings = get_transient('simple-options-warnings-'.$this->args['opt_name']);
-					$section_warnings = array();
-					foreach($warnings as $warning){
-						$section_warnings[$warning['section_id']] = (isset($section_warnings[$warning['section_id']]))?$section_warnings[$warning['section_id']]:0;
-						$section_warnings[$warning['section_id']]++;
-					}
-					
-					
-					echo '<script type="text/javascript">';
-						echo 'jQuery(document).ready(function(){';
-							echo 'jQuery("#simple-options-field-warnings span").html("'.count($warnings).'");';
-							echo 'jQuery("#simple-options-field-warnings").show();';
-							
-							foreach($section_warnings as $sectionkey => $section_warning){
-								echo 'jQuery("#'.$sectionkey.'_section_group_li_a").append("<span class=\"simple-options-menu-warning\">'.$section_warning.'</span>");';
-							}
-							
-							foreach($warnings as $warning){
-								echo 'jQuery("#'.$warning['id'].'").addClass("simple-options-field-warning");';
-								echo 'jQuery("#'.$warning['id'].'").closest("td").append("<span class=\"simple-options-th-warning\">'.$warning['msg'].'</span>");';
-							}
-						echo '});';
-					echo '</script>';
-					delete_transient('simple-options-warnings-'.$this->args['opt_name']);
+				$warnings = get_transient('simple-options-warnings-'.$this->args['opt_name']);
+				$section_warnings = array();
+				foreach($warnings as $warning){
+					$section_warnings[$warning['section_id']] = (isset($section_warnings[$warning['section_id']]))?$section_warnings[$warning['section_id']]:0;
+					$section_warnings[$warning['section_id']]++;
 				}
+				
+				
+				echo '<script type="text/javascript">';
+					echo 'jQuery(document).ready(function(){';
+						echo 'jQuery("#simple-options-field-warnings span").html("'.count($warnings).'");';
+						echo 'jQuery("#simple-options-field-warnings").show();';
+						
+						foreach($section_warnings as $sectionkey => $section_warning){
+							echo 'jQuery("#'.$sectionkey.'_section_group_li_a").append("<span class=\"simple-options-menu-warning\">'.$section_warning.'</span>");';
+						}
+						
+						foreach($warnings as $warning){
+							echo 'jQuery("#'.$warning['id'].'").addClass("simple-options-field-warning");';
+							echo 'jQuery("#'.$warning['id'].'").closest("td").append("<span class=\"simple-options-th-warning\">'.$warning['msg'].'</span>");';
+						}
+					echo '});';
+				echo '</script>';
+				delete_transient('simple-options-warnings-'.$this->args['opt_name']);
+			}
 			
 		}//function
 		
@@ -1458,92 +1686,8 @@ if ( ! class_exists('Simple_Options') ){
 			if($save_type == 'upload')
 			{
 				
-				$clickedID = $_POST['data']; // Acts as the name
-				$filename = $_FILES[$clickedID];
-		    $filename['name'] = preg_replace('/[^a-zA-Z0-9._\-]/', '', $filename['name']); 
-				
-				$override['test_form'] = false;
-				$override['action'] = 'wp_handle_upload';    
-				$uploaded_file = wp_handle_upload($filename,$override);
-				 
-					$upload_tracking[] = $clickedID;
-						
-					//update $options array w/ image URL			  
-					$upload_image = $all; //preserve current data
-					
-					$upload_image[$clickedID] = $uploaded_file['url'];
-					
-					sof_save_options($upload_image);
-				
-						
-				 if(!empty($uploaded_file['error'])) {echo 'Upload Error: ' . $uploaded_file['error']; }	
-				 else { echo $uploaded_file['url']; } // Is the Response
-				 
 			}
-			elseif($save_type == 'image_reset')
-			{
-					
-					$id = $_POST['data']; // Acts as the name
-					
-					$delete_image = $all; //preserve rest of data
-					$delete_image[$id] = ''; //update array key with empty value	 
-					sof_save_options($delete_image ) ;
-			
-			}
-			elseif($save_type == 'backup_options')
-			{
-					
-				$backup = $all;
-				$backup['backup_log'] = date('r');
-				
-				sof_save_options($backup, BACKUPS) ;
-					
-				die('1'); 
-			}
-			elseif($save_type == 'restore_options')
-			{
-					
-				$smof_data = of_get_options(BACKUPS);
-
-				sof_save_options($smof_data);
-				
-				die('1'); 
-			}
-			elseif($save_type == 'import_options'){
-
-
-				$smof_data = unserialize(base64_decode($_POST['data'])); //100% safe - ignore theme check nag
-				sof_save_options($smof_data);
-
-				
-				die('1'); 
-			}
-			elseif ($save_type == 'save')
-			{
-
-				wp_parse_str(stripslashes($_POST['data']), $smof_data);
-				unset($smof_data['security']);
-				unset($smof_data['sof_save']);
-				sof_save_options($smof_data);
-				
-				
-				die('1');
-			}
-			elseif ($save_type == 'reset')
-			{
-				sof_save_options($options_machine->Defaults);
-				
-		        die('1'); //options reset
-			}
-
 		  	die();
 		}		
 
-	}//class
-}//if
-
-
-
-
-
-
+} // class
