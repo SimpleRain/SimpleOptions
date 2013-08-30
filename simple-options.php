@@ -1,5 +1,5 @@
 <?php
-/**
+/** 
  * The WordPress Plugin Boilerplate.
  *
  * A foundation off of which to build well-documented WordPress plugins that also follow
