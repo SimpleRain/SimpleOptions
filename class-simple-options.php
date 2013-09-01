@@ -155,13 +155,13 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 
 				//set option with defaults
-				add_action('init', array(&$this, '_set_default_options'), 300);	
+				add_action('init', array(&$this, '_set_default_options'));	
 				
 				//options page
-				add_action('admin_menu', array(&$this, '_options_page'), 300);
+				add_action('admin_menu', array(&$this, '_options_page'));
 				
 				//register setting
-				add_action('admin_init', array(&$this, '_register_setting'), 300);
+				add_action('admin_init', array(&$this, '_register_setting'));
 
 				//register customizer setting
 				add_action( 'customize_register', array(&$this, '_customize_register_setting'));
@@ -184,6 +184,8 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 
 				//get the options for use later on
 				$this->options = get_option($this->args['opt_name']);	
+				global $sof;
+				$sof = $this->options;
 			}	// if
 		}	// function	
 
@@ -1763,7 +1765,8 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 	} // class
 
 	/** Create a new instance of the class */
-	new Simple_Options;
+	global $Simple_Options;
+	$Simple_Options = new Simple_Options;
 	/**
 	 * Helper function to register the sections, arguments, and extra_tabs.
 	 *
