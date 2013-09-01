@@ -380,7 +380,7 @@ jQuery.fn.isOnScreen = function(){
 	});  
 	
 
-/*
+
 	// Markdown Viewer for Theme Documentation
 	if ($('#theme_docs_section_group').length != 0) {
 		var converter = new Showdown.converter();
@@ -388,6 +388,5 @@ jQuery.fn.isOnScreen = function(){
 		text = converter.makeHtml(text);
 		jQuery('#theme_docs_section_group').html(text);
 	}
-*/
 
 });

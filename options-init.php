@@ -14,21 +14,55 @@ function add_another_section($sections){
 	
 	//$sections = array();
 	$sections[] = array(
-				'title' => __('A Section added by hook', 'simple-options'),
+				'title' => __('Filters & Hooks', 'simple-options'),
 				'description' => __('<p class="description">This is a section created by adding a filter to the sections array, great to allow child themes, to add/remove sections from the options.</p>', 'simple-options'),
 				//all the glyphicons are included in the options folder, so you can hook into them, or link to your own custom ones.
 				//You dont have to though, leave it blank for default.
-				'icon' => trailingslashit(get_template_directory_uri()).'options/img/glyphicons/glyphicons_062_attach.png',
+				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_062_attach.png',
 				//Lets leave this as a blank section, no options just some intro text set above.
-				'fields' => array()
+				'fields' => array(
+						"hook-section-info"=>array( //must be unique
+							'type' => 'info',
+							'description' => __('This section was added by a filter hook action, namely the filter: <code>simple_options_filter_sections</code>.', 'simple-options'),
+							),
+					)
 				);
 	
 	return $sections;
 	
 }//function
-add_filter('simple-options-filter-sections-twentyeleven', 'add_another_section');
+add_filter('simple_options_filter_sections', 'add_another_section');
 
+/**
 
+  Custom function for filtering the sections array given by theme, good for child themes to override or add to the sections.
+  Simply include this function in the child themes functions.php file.
+ 
+  NOTE: the defined constansts for urls, and dir will NOT be available at this point in a child theme, so you must use
+  get_template_directory_uri() if you want to use any of the built in icons
+ 
+**/
+function add_another_section_two(){
+	
+	$section = array();
+	$section += array(
+				'title' => __('Instance Hook', 'simple-options'),
+				'description' => __('<p class="description">This is a section created by adding a filter to the sections array, great to allow child themes, to add/remove sections from the options.</p>', 'simple-options'),
+				//all the glyphicons are included in the options folder, so you can hook into them, or link to your own custom ones.
+				//You dont have to though, leave it blank for default.
+				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_062_attach.png',
+				//Lets leave this as a blank section, no options just some intro text set above.
+				'fields' => array(
+						"hook-section-info"=>array( //must be unique
+							'type' => 'info',
+							'description' => __('This section was added an instance function of the class. Example: <code>Simple_Options::$instance->sections($section);</code>', 'simple-options'),
+							),
+					)
+				);
+	Simple_Options::$instance->sections($section);
+
+}//function
+add_filter('simple_options_register', 'add_another_section_two', 20);
 
 
 
@@ -40,11 +74,11 @@ add_filter('simple-options-filter-sections-twentyeleven', 'add_another_section')
 
 **/
 function change_framework_args($args){
-	//$args['dev_mode'] = false;
+	$args['dev_mode'] = false;
 	return $args;
 	
 }//function
-//add_filter('simple-options-args-twenty_eleven', 'change_framework_args');
+//add_filter('simple_options_filter_args', 'change_framework_args');
 
 
 
@@ -99,7 +133,7 @@ function setup_framework_options(){
 	//$args['show_import_export'] = false;
 
 	//Choose a custom option name for your theme options, the default is the theme name in lowercase with spaces replaced by underscores
-	//$args['opt_name'] = 'SimpleOptions';
+	$args['opt_name'] = 'SimpleOptionsTest';
 
 	//Custom menu icon
 	//$args['menu_icon'] = '';
@@ -421,7 +455,7 @@ $sections[] = array(
 						'validate' => 'email',
 						'msg' => 'custom error message',
 						'std' => 'test@test.com'
-						),
+						),				
 					"multi_text"=>array( //must be unique
 						'type' => 'multi_text',
 						'title' => __('Multi Text Option', 'simple-options'),
@@ -713,7 +747,47 @@ $sections[] = array(
 						),
 					)
 				);
-$sections[] = array(
+
+				
+	$tabs = array();
+			
+	if (function_exists('wp_get_theme')){
+		$theme_data = wp_get_theme();
+		$theme_uri = $theme_data->get('ThemeURI');
+		$description = $theme_data->get('Description');
+		$author = $theme_data->get('Author');
+		$version = $theme_data->get('Version');
+		$tags = $theme_data->get('Tags');
+	}else{
+		$theme_data = get_theme_data(trailingslashit(get_stylesheet_directory()).'style.css');
+		$theme_uri = $theme_data['URI'];
+		$description = $theme_data['Description'];
+		$author = $theme_data['Author'];
+		$version = $theme_data['Version'];
+		$tags = $theme_data['Tags'];
+	}	
+
+	$theme_info = '<div class="simple-options-section-desc">';
+	$theme_info .= '<p class="simple-options-theme-data description theme-uri">'.__('<strong>Theme URL:</strong> ', 'simple-options').'<a href="'.$theme_uri.'" target="_blank">'.$theme_uri.'</a></p>';
+	$theme_info .= '<p class="simple-options-theme-data description theme-author">'.__('<strong>Author:</strong> ', 'simple-options').$author.'</p>';
+	$theme_info .= '<p class="simple-options-theme-data description theme-version">'.__('<strong>Version:</strong> ', 'simple-options').$version.'</p>';
+	$theme_info .= '<p class="simple-options-theme-data description theme-description">'.$description.'</p>';
+	$theme_info .= '<p class="simple-options-theme-data description theme-tags">'.__('<strong>Tags:</strong> ', 'simple-options').implode(', ', $tags).'</p>';
+	$theme_info .= '</div>';
+	
+	if(file_exists(dirname(__FILE__).'/README.md')){
+		$tabs['theme_docs'] = array(
+						'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_071_book.png',
+						'title' => __('Documentation', 'simple-options'),
+						'content' => file_get_contents(dirname(__FILE__).'/README.md')
+						);
+	}//if
+
+	Simple_Options($sections, $args, $tabs);
+
+
+	// You can append a new section at any time.
+	$section = array(
 				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_023_cogwheels.png',
 				'title' => __('Additional Fields', 'simple-options'),
 				'description' => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'simple-options'),
@@ -749,60 +823,13 @@ $sections[] = array(
 						),
 					)
 				);
-
-				
-	$tabs = array();
-			
-	if (function_exists('wp_get_theme')){
-		$theme_data = wp_get_theme();
-		$theme_uri = $theme_data->get('ThemeURI');
-		$description = $theme_data->get('Description');
-		$author = $theme_data->get('Author');
-		$version = $theme_data->get('Version');
-		$tags = $theme_data->get('Tags');
-	}else{
-		$theme_data = get_theme_data(trailingslashit(get_stylesheet_directory()).'style.css');
-		$theme_uri = $theme_data['URI'];
-		$description = $theme_data['Description'];
-		$author = $theme_data['Author'];
-		$version = $theme_data['Version'];
-		$tags = $theme_data['Tags'];
-	}	
-
-	$theme_info = '<div class="simple-options-section-desc">';
-	$theme_info .= '<p class="simple-options-theme-data description theme-uri">'.__('<strong>Theme URL:</strong> ', 'simple-options').'<a href="'.$theme_uri.'" target="_blank">'.$theme_uri.'</a></p>';
-	$theme_info .= '<p class="simple-options-theme-data description theme-author">'.__('<strong>Author:</strong> ', 'simple-options').$author.'</p>';
-	$theme_info .= '<p class="simple-options-theme-data description theme-version">'.__('<strong>Version:</strong> ', 'simple-options').$version.'</p>';
-	$theme_info .= '<p class="simple-options-theme-data description theme-description">'.$description.'</p>';
-	$theme_info .= '<p class="simple-options-theme-data description theme-tags">'.__('<strong>Tags:</strong> ', 'simple-options').implode(', ', $tags).'</p>';
-	$theme_info .= '</div>';
-
-
-
-	$tabs['theme_info'] = array(
-					'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_195_circle_info.png',
-					'title' => __('Theme Information', 'simple-options'),
-					'content' => $theme_info
-					);
+	Simple_Options($section);
 	
-	if(file_exists(trailingslashit(get_stylesheet_directory()).'README.md')){
-		$tabs['theme_docs'] = array(
-						'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_071_book.png',
-						'title' => __('Documentation', 'simple-options'),
-						'content' => file_get_contents(dirname(__FILE__).'/README.md')
-						);
-	}//if
-
-	$Simple_Options = Simple_Options::get_instance();
-	$Simple_Options->setSections($sections);
-	$Simple_Options->setArgs($args);
-	$Simple_Options->setTabs($tabs);
 
 
 
-	//echo $Simple_Options->value('footer-text');
 }//function
-add_action('init', 'setup_framework_options', 0);
+add_action('simple_options_register', 'setup_framework_options');
 
 /*
  * 

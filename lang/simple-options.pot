@@ -4,24 +4,765 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TODO 1.0.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/plugin-name\n"
-"POT-Creation-Date: 2013-05-10 11:23:19+00:00\n"
+"POT-Creation-Date: 2013-08-30 13:21-0700\n"
+"PO-Revision-Date: 2013-08-30 15:20-0700\n"
+"Last-Translator: FULL NAME <email@example.com>\n"
+"Language-Team: LANGUAGE <translations@example.com >\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2013-05-10 10:37-0500\n"
-"Last-Translator: FULL NAME <email@example.com>\n"
-"Language-Team: LANGUAGE <translations@example.com >\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e;esc_html__;esc_attr_e;"
 "esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2\n"
 "X-Poedit-Basepath: ../\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: class-plugin-name.php:214
-msgid "Page Title"
+#: class-simple-options.php:87
+msgid "Options"
 msgstr ""
 
-#: class-plugin-name.php:215
-msgid "Menu Text"
+#: class-simple-options.php:102
+msgid "Options Panel created using the <a href=\""
+msgstr ""
+
+#: class-simple-options.php:299
+msgid "Settings"
+msgstr ""
+
+#: class-simple-options.php:491 class-simple-options.php:492
+#: class-simple-options.php:1180
+msgid "Import / Export"
+msgstr ""
+
+#: class-simple-options.php:524 class-simple-options.php:525
+#: class-simple-options.php:1199 class-simple-options.php:1288
+msgid "Dev Mode Info"
+msgstr ""
+
+#: class-simple-options.php:537 class-simple-options.php:538
+#: class-simple-options.php:1205
+msgid "Dev Mode Queries"
+msgstr ""
+
+#: class-simple-options.php:634
+msgid "You have changes that are not saved. Would you like to save them now?"
+msgstr ""
+
+#: class-simple-options.php:634
+msgid "Are you sure? Resetting will loose all custom values."
+msgstr ""
+
+#: class-simple-options.php:634
+msgid ""
+"Your current options will be replaced with the values of this preset. Would "
+"you like to proceed?"
+msgstr ""
+
+#: class-simple-options.php:1138 class-simple-options.php:1334
+msgid "Reset to Defaults"
+msgstr ""
+
+#: class-simple-options.php:1145
+msgid "<strong>Settings Imported!</strong>"
+msgstr ""
+
+#: class-simple-options.php:1147
+msgid "<strong>Settings Saved!</strong>"
+msgstr ""
+
+#: class-simple-options.php:1150
+msgid "<strong>Settings have changed, you should save them!</strong>"
+msgstr ""
+
+#: class-simple-options.php:1151
+msgid "<strong><span></span> error(s) were found!</strong>"
+msgstr ""
+
+#: class-simple-options.php:1153
+msgid "<strong><span></span> warning(s) were found!</strong>"
+msgstr ""
+
+#: class-simple-options.php:1224
+msgid "Import / Export Options"
+msgstr ""
+
+#: class-simple-options.php:1226
+msgid "Import Options"
+msgstr ""
+
+#: class-simple-options.php:1234
+msgid ""
+"Input your backup file below and hit Import to restore your sites options "
+"from a backup."
+msgstr ""
+
+#: class-simple-options.php:1247
+msgid ""
+"Input the URL to another sites options set and hit Import to load the "
+"options from that site."
+msgstr ""
+
+#: class-simple-options.php:1257
+msgid "Import"
+msgstr ""
+
+#: class-simple-options.php:1257
+msgid ""
+"WARNING! This will overwrite any existing options, please proceed with "
+"caution!"
+msgstr ""
+
+#: class-simple-options.php:1260
+msgid "Export Options"
+msgstr ""
+
+#: class-simple-options.php:1262
+msgid ""
+"Here you can copy/download your themes current option settings. Keep this "
+"safe as you can use it as a backup should anything go wrong. Or you can use "
+"it to restore your settings on this site (or any other site). You also have "
+"the handy option to copy the link to yours sites settings. Which you can "
+"then use to duplicate on another site"
+msgstr ""
+
+#: class-simple-options.php:1306
+msgid "Dev Queries"
+msgstr ""
+
+#: options-init.php:17
+msgid "A Section added by hook"
+msgstr ""
+
+#: options-init.php:18
+msgid ""
+"<p class=\"description\">This is a section created by adding a filter to the "
+"sections array, great to allow child themes, to add/remove sections from the "
+"options.</p>"
+msgstr ""
+
+#: options-init.php:139
+msgid "Theme Information 1"
+msgstr ""
+
+#: options-init.php:140
+msgid "<p>This is the tab content, HTML is allowed.</p>"
+msgstr ""
+
+#: options-init.php:144
+msgid "Theme Information 2"
+msgstr ""
+
+#: options-init.php:145
+msgid "<p>This is the tab content, HTML is allowed. Tab2</p>"
+msgstr ""
+
+#: options-init.php:149
+msgid "<p>This is the sidebar content, HTML is allowed.</p>"
+msgstr ""
+
+#: options-init.php:174
+msgid "Home Settings"
+msgstr ""
+
+#: options-init.php:175
+msgid "Welcome to the Simple Options Framework Demo"
+msgstr ""
+
+#: options-init.php:176
+msgid ""
+"Simple Options Framework was created with the developer in mind. It allows "
+"for any theme developer to have an advanced theme panel with most of the "
+"features a developer would need. For more information check out the Github "
+"repo at: <a href=\"http://github.com/SimpleRain/SimpleOptions/\">http://"
+"github.com/SimpleRain/SimpleOptions/</a>"
+msgstr ""
+
+#: options-init.php:182
+msgid "Media"
+msgstr ""
+
+#: options-init.php:183 options-init.php:191
+msgid "Upload any media using the Wordpress native uploader"
+msgstr ""
+
+#: options-init.php:189
+msgid "Media Minimalistic (min)"
+msgstr ""
+
+#: options-init.php:190
+msgid ""
+"This represents the minimalistic view. It does not have the preview box or "
+"the display URL in an input box. "
+msgstr ""
+
+#: options-init.php:196
+msgid "Gallery"
+msgstr ""
+
+#: options-init.php:197
+msgid ""
+"Add a gallery using the integrated media gallery of wordpress. No preview, "
+"but fully supports order, etc."
+msgstr ""
+
+#: options-init.php:202
+msgid "JQuery UI Slider Example 1"
+msgstr ""
+
+#: options-init.php:203
+msgid ""
+"JQuery UI slider description. Min: 1, max: 500, step: 3, default value: 45"
+msgstr ""
+
+#: options-init.php:212
+msgid "JQuery UI Slider Example 2 w/ Steps (5)"
+msgstr ""
+
+#: options-init.php:213
+msgid ""
+"JQuery UI slider description. Min: 0, max: 300, step: 5, default value: 75"
+msgstr ""
+
+#: options-init.php:222
+msgid "Switch On"
+msgstr ""
+
+#: options-init.php:223 options-init.php:230 options-init.php:237
+msgid "Look, it's on!"
+msgstr ""
+
+#: options-init.php:229
+msgid "Switch Off"
+msgstr ""
+
+#: options-init.php:236
+msgid "Switch - Custom Titles"
+msgstr ""
+
+#: options-init.php:246
+msgid "Switch - With Hidden Items"
+msgstr ""
+
+#: options-init.php:247
+msgid "Also called a \"fold\" parent."
+msgstr ""
+
+#: options-init.php:248
+msgid ""
+"Items set with a fold to this ID will hide unless this is set to the "
+"appropriate value."
+msgstr ""
+
+#: options-init.php:254
+msgid "Homepage Layout Manager"
+msgstr ""
+
+#: options-init.php:255
+msgid "Organize how you want the layout to appear on the homepage."
+msgstr ""
+
+#: options-init.php:260
+msgid "Slides Options"
+msgstr ""
+
+#: options-init.php:261
+msgid "Unlimited slider with drag and drop sortings."
+msgstr ""
+
+#: options-init.php:268
+msgid "Images Option (with pattern=>true)"
+msgstr ""
+
+#: options-init.php:269
+msgid "Select a background pattern."
+msgstr ""
+
+#: options-init.php:283
+msgid "Preset"
+msgstr ""
+
+#: options-init.php:284 options-init.php:286
+msgid ""
+"This allows you to set a json string or array to override multiple "
+"preferences in your theme."
+msgstr ""
+
+#: options-init.php:295
+msgid "Typography"
+msgstr ""
+
+#: options-init.php:296
+msgid "Typography option with each property can be called individually."
+msgstr ""
+
+#: options-init.php:312
+msgid "General Settings"
+msgstr ""
+
+#: options-init.php:316
+msgid "Main Layout"
+msgstr ""
+
+#: options-init.php:317
+msgid ""
+"Select main content and sidebar alignment. Choose between 1, 2 or 3 column "
+"layout."
+msgstr ""
+
+#: options-init.php:331
+msgid "Tracking Code"
+msgstr ""
+
+#: options-init.php:332
+msgid ""
+"Paste your Google Analytics (or other) tracking code here. This will be "
+"added into the footer template of your theme."
+msgstr ""
+
+#: options-init.php:339
+msgid "Footer Text"
+msgstr ""
+
+#: options-init.php:340
+msgid ""
+"You can use the following shortcodes in your footer text: [wp-url] [site-"
+"url] [theme-url] [login-url] [logout-url] [site-title] [site-tagline] "
+"[current-year]"
+msgstr ""
+
+#: options-init.php:352
+msgid "Styling Options"
+msgstr ""
+
+#: options-init.php:357
+msgid "Theme Stylesheet"
+msgstr ""
+
+#: options-init.php:358
+msgid "Select your themes alternative color scheme."
+msgstr ""
+
+#: options-init.php:364
+msgid "Body Background Color"
+msgstr ""
+
+#: options-init.php:365
+msgid "Pick a background color for the theme (default: #fff)."
+msgstr ""
+
+#: options-init.php:371
+msgid "Footer Background Color"
+msgstr ""
+
+#: options-init.php:372
+msgid "Pick a background color for the footer (default: #dd9933)."
+msgstr ""
+
+#: options-init.php:378
+msgid "Header Gradient Color Option"
+msgstr ""
+
+#: options-init.php:379 options-init.php:386
+msgid "Only color validation can be done on this field type"
+msgstr ""
+
+#: options-init.php:380 options-init.php:387 options-init.php:420
+#: options-init.php:429 options-init.php:435 options-init.php:443
+#: options-init.php:452 options-init.php:461 options-init.php:469
+#: options-init.php:478 options-init.php:487 options-init.php:495
+#: options-init.php:503 options-init.php:511 options-init.php:520
+#: options-init.php:535 options-init.php:542 options-init.php:550
+#: options-init.php:557 options-init.php:565 options-init.php:572
+#: options-init.php:607 options-init.php:616 options-init.php:629
+#: options-init.php:637 options-init.php:644 options-init.php:652
+#: options-init.php:659 options-init.php:667 options-init.php:674
+#: options-init.php:682 options-init.php:689 options-init.php:697
+#: options-init.php:704 options-init.php:712 options-init.php:726
+#: options-init.php:735
+msgid "This is the description field, again good for additional info."
+msgstr ""
+
+#: options-init.php:385
+msgid "Header Border Option"
+msgstr ""
+
+#: options-init.php:392
+msgid "Body Font"
+msgstr ""
+
+#: options-init.php:393
+msgid "Specify the body font properties."
+msgstr ""
+
+#: options-init.php:403
+msgid "Custom CSS"
+msgstr ""
+
+#: options-init.php:404
+msgid "Quickly add some CSS to your theme by adding it to this block."
+msgstr ""
+
+#: options-init.php:405
+msgid "This field is even CSS validated!"
+msgstr ""
+
+#: options-init.php:413
+msgid "Field Validation"
+msgstr ""
+
+#: options-init.php:414
+msgid ""
+"<p class=\"description\">This is the Description. Again HTML is allowed2</p>"
+msgstr ""
+
+#: options-init.php:418
+msgid "Text Option - Email Validated"
+msgstr ""
+
+#: options-init.php:419 options-init.php:428
+msgid ""
+"This is a little space under the Field Title in the Options table, additonal "
+"info is good in here."
+msgstr ""
+
+#: options-init.php:427
+msgid "Multi Text Option"
+msgstr ""
+
+#: options-init.php:433
+msgid "Text Option - URL Validated"
+msgstr ""
+
+#: options-init.php:434
+msgid "This must be a URL."
+msgstr ""
+
+#: options-init.php:441
+msgid "Text Option - Numeric Validated"
+msgstr ""
+
+#: options-init.php:442
+msgid "This must be numeric."
+msgstr ""
+
+#: options-init.php:450
+msgid "Text Option - Comma Numeric Validated"
+msgstr ""
+
+#: options-init.php:451
+msgid "This must be a comma seperated string of numerical values."
+msgstr ""
+
+#: options-init.php:459
+msgid "Text Option - No Special Chars Validated"
+msgstr ""
+
+#: options-init.php:460
+msgid "This must be a alpha numeric only."
+msgstr ""
+
+#: options-init.php:467
+msgid "Text Option - Str Replace Validated"
+msgstr ""
+
+#: options-init.php:468 options-init.php:477 options-init.php:486
+msgid "You decide."
+msgstr ""
+
+#: options-init.php:476
+msgid "Text Option - Preg Replace Validated"
+msgstr ""
+
+#: options-init.php:485
+msgid "Text Option - Custom Callback Validated"
+msgstr ""
+
+#: options-init.php:493
+msgid "Textarea Option - No HTML Validated"
+msgstr ""
+
+#: options-init.php:494
+msgid "All HTML will be stripped"
+msgstr ""
+
+#: options-init.php:501
+msgid "Textarea Option - HTML Validated"
+msgstr ""
+
+#: options-init.php:502
+msgid "HTML Allowed (wp_kses)"
+msgstr ""
+
+#: options-init.php:509
+msgid "Textarea Option - HTML Validated Custom"
+msgstr ""
+
+#: options-init.php:510
+msgid "Custom HTML Allowed (wp_kses)"
+msgstr ""
+
+#: options-init.php:518
+msgid "Textarea Option - JS Validated"
+msgstr ""
+
+#: options-init.php:519
+msgid "JS will be escaped"
+msgstr ""
+
+#: options-init.php:528
+msgid "Radio/Checkbox Fields"
+msgstr ""
+
+#: options-init.php:529 options-init.php:601 options-init.php:719
+msgid ""
+"<p class=\"description\">This is the Description. Again HTML is allowed</p>"
+msgstr ""
+
+#: options-init.php:533
+msgid "Checkbox Option"
+msgstr ""
+
+#: options-init.php:534 options-init.php:541 options-init.php:549
+#: options-init.php:556 options-init.php:564 options-init.php:571
+#: options-init.php:584 options-init.php:606 options-init.php:615
+#: options-init.php:628 options-init.php:636 options-init.php:643
+#: options-init.php:651 options-init.php:658 options-init.php:666
+#: options-init.php:673 options-init.php:681 options-init.php:688
+#: options-init.php:696 options-init.php:703 options-init.php:711
+#: options-init.php:725 options-init.php:734
+msgid "No validation can be done on this field type"
+msgstr ""
+
+#: options-init.php:540
+msgid "Multi Checkbox Option"
+msgstr ""
+
+#: options-init.php:548 options-init.php:563
+msgid "Multi Checkbox Option (with menu data)"
+msgstr ""
+
+#: options-init.php:555
+msgid "Radio Option"
+msgstr ""
+
+#: options-init.php:570
+msgid "Images Option"
+msgstr ""
+
+#: options-init.php:583
+msgid "Images Option for Layout"
+msgstr ""
+
+#: options-init.php:585
+msgid ""
+"This uses some of the built in images, you can use them for layout options."
+msgstr ""
+
+#: options-init.php:600
+msgid "Select Fields"
+msgstr ""
+
+#: options-init.php:605
+msgid "Select Option"
+msgstr ""
+
+#: options-init.php:614
+msgid "Multi Select Option"
+msgstr ""
+
+#: options-init.php:622
+msgid "You can easily add a variety of data from wordpress."
+msgstr ""
+
+#: options-init.php:627
+msgid "Categories Select Option"
+msgstr ""
+
+#: options-init.php:635
+msgid "Categories Multi Select Option"
+msgstr ""
+
+#: options-init.php:642
+msgid "Pages Select Option"
+msgstr ""
+
+#: options-init.php:650
+msgid "Pages Multi Select Option"
+msgstr ""
+
+#: options-init.php:657
+msgid "Tags Select Option"
+msgstr ""
+
+#: options-init.php:665
+msgid "Tags Multi Select Option"
+msgstr ""
+
+#: options-init.php:672
+msgid "Menus Select Option"
+msgstr ""
+
+#: options-init.php:680
+msgid "Menus Multi Select Option"
+msgstr ""
+
+#: options-init.php:687
+msgid "Post Type Select Option"
+msgstr ""
+
+#: options-init.php:695
+msgid "Post Type Multi Select Option"
+msgstr ""
+
+#: options-init.php:702
+msgid "Posts Select Option2"
+msgstr ""
+
+#: options-init.php:710
+msgid "Posts Multi Select Option"
+msgstr ""
+
+#: options-init.php:718
+msgid "Additional Fields"
+msgstr ""
+
+#: options-init.php:724
+msgid "Date Option"
+msgstr ""
+
+#: options-init.php:733
+msgid "Button Set Option"
+msgstr ""
+
+#: options-init.php:741
+msgid ""
+"<p class=\"description\">This is the info field, if you want to break "
+"sections up.</p>"
+msgstr ""
+
+#: options-init.php:745
+msgid "Custom Field Callback"
+msgstr ""
+
+#: options-init.php:746
+msgid "This is a completely unique field type"
+msgstr ""
+
+#: options-init.php:747
+msgid ""
+"This is created with a callback function, so anything goes in this field. "
+"Make sure to define the function though."
+msgstr ""
+
+#: options-init.php:773
+msgid "<strong>Theme URL:</strong> "
+msgstr ""
+
+#: options-init.php:774
+msgid "<strong>Author:</strong> "
+msgstr ""
+
+#: options-init.php:775
+msgid "<strong>Version:</strong> "
+msgstr ""
+
+#: options-init.php:777
+msgid "<strong>Tags:</strong> "
+msgstr ""
+
+#: options-init.php:784
+msgid "Theme Information"
+msgstr ""
+
+#: options-init.php:791
+msgid "Documentation"
+msgstr ""
+
+#: fields/border/field_border.php:57
+msgid "Border size"
+msgstr ""
+
+#: fields/border/field_border.php:62
+msgid "Border style"
+msgstr ""
+
+#: fields/color_gradient/field_color_gradient.php:45
+msgid "From "
+msgstr ""
+
+#: fields/color_gradient/field_color_gradient.php:47
+msgid "To "
+msgstr ""
+
+#: fields/multi_text/field_multi_text.php:42
+#: fields/multi_text/field_multi_text.php:49
+#: fields/multi_text/field_multi_text.php:53
+msgid "Remove"
+msgstr ""
+
+#: fields/multi_text/field_multi_text.php:57
+msgid "Add More"
+msgstr ""
+
+#: fields/typography/field_typography.php:82
+msgid "Font family"
+msgstr ""
+
+#: fields/typography/field_typography.php:143
+#: fields/typography/field_typography.php:144
+msgid "Font style"
+msgstr ""
+
+#: fields/typography/field_typography.php:190
+#: fields/typography/field_typography.php:191
+msgid "Font script"
+msgstr ""
+
+#: fields/typography/field_typography.php:207
+msgid "Font size"
+msgstr ""
+
+#: fields/typography/field_typography.php:215
+msgid "Font height"
+msgstr ""
+
+#: fields/typography/field_typography.php:232
+msgid "Font color"
+msgstr ""
+
+#: validation/color/validation_color.php:15
+msgid "This field must be a valid color value."
+msgstr ""
+
+#: validation/comma_numeric/validation_comma_numeric.php:15
+msgid ""
+"You must provide a comma separated list of numerical values for this option."
+msgstr ""
+
+#: validation/date/validation_date.php:15
+msgid "This field must be a valid date."
+msgstr ""
+
+#: validation/email/validation_email.php:15
+msgid "You must provide a valid email for this option."
+msgstr ""
+
+#: validation/no_html/validation_no_html.php:15
+msgid ""
+"You must not enter any HTML in this field, all HTML tags have been removed."
+msgstr ""
+
+#: validation/no_special_chars/validation_no_special_chars.php:15
+msgid ""
+"You must not enter any special characters in this field, all special "
+"characters have been removed."
+msgstr ""
+
+#: validation/numeric/validation_numeric.php:15
+msgid "You must provide a numerical value for this option."
+msgstr ""
+
+#: validation/url/validation_url.php:15
+msgid "You must provide a valid URL for this option."
 msgstr ""

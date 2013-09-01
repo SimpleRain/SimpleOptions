@@ -15,7 +15,7 @@
  * Plugin Name: Simple Options Framework
  * Plugin URI:  https://github.com/SimpleRain/SimpleOptions
  * Description: A simple wordpress options framework for developers.
- * Version:     0.4.5
+ * Version:     0.3.0
  * Author:      Dovy Paukstys
  * Author URI:  http://simplerain.com
  * Text Domain: simple-options
@@ -36,24 +36,21 @@ require_once( plugin_dir_path( __FILE__ ) . 'class-simple-options.php' );
 register_activation_hook( __FILE__, array( 'Simple_Options', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'Simple_Options', 'deactivate' ) );
 
-// windows-proof constants: replace backward by forward slashes - thanks to: https://github.com/peterbouwmeester
-$fslashed_dir = trailingslashit(str_replace('\\','/',dirname(__FILE__)));
-$fslashed_abs = trailingslashit(str_replace('\\','/',ABSPATH));
-
-// Set the global directory
-if(!defined('SOF_OPTIONS_DIR')){
-	define('SOF_OPTIONS_DIR', $fslashed_dir);
-}
-
-// Set the global URL
-if(!defined('SOF_OPTIONS_URL')){
-	define('SOF_OPTIONS_URL', site_url(str_replace( $fslashed_abs, '', $fslashed_dir )));
-}
-
 //require_once( plugin_dir_path( __FILE__ ) . 'options-init.php' );
 
 // Debugging activation errors
 add_action('activated_plugin','save_error');
 function save_error() {
 	file_put_contents(dirname(__FILE__). '/error_activation.html', ob_get_contents());
+}
+
+if (file_exists( dirname( __FILE__ ) . '/class-simple-updater.php') ) {
+	include_once( dirname( __FILE__ ) . '/class-simple-updater.php' );
+}	
+
+if (class_exists('Simple_Updater')) {
+  $Simple_Updater = new Simple_Updater( array( 
+		'slug' 					=> __FILE__, 
+		'force_update'	=> false,
+	) );	
 }
