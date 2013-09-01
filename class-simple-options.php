@@ -28,7 +28,7 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 		 *
 		 * @const   string
 		 */
-		const VERSION = '0.3.0';
+		const VERSION = '0.5.0';
 
 		/**
 		 * Unique identifier for your plugin.

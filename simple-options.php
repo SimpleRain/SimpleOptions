@@ -15,7 +15,7 @@
  * Plugin Name: Simple Options Framework
  * Plugin URI:  https://github.com/SimpleRain/SimpleOptions
  * Description: A simple wordpress options framework for developers.
- * Version:     0.3.0
+ * Version:     0.5.0
  * Author:      Dovy Paukstys
  * Author URI:  http://simplerain.com
  * Text Domain: simple-options
