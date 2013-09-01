@@ -167,7 +167,7 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 				add_action( 'customize_register', array(&$this, '_customize_register_setting'));
 							
 				//hook into the wp feeds for downloading the exported settings
-				add_action('do_feed_simple-options-'.$this->args['opt_name'], array(&$this, '_download_options'), 1, 1);
+				add_action('do_feed_simple_options_'.$this->args['opt_name'], array(&$this, '_download_options'), 1, 1);
 			
 				// Hook to allow ajax functions, not being used
 				//add_action('wp_ajax_of_ajax_post_action', array(&$this, '_ajax_callback'));
@@ -705,14 +705,14 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 			//-'.$this->args['opt_name']
 			if(!isset($_GET['secret']) || $_GET['secret'] != md5(AUTH_KEY.SECURE_AUTH_KEY)){wp_die('Invalid Secret - Smart Options Framework');exit;}
 			if(!isset($_GET['feed'])){wp_die('No Feed Defined');exit;}
-			$backup_options = get_option(str_replace('simple-options-','',$_GET['feed']));
+			$backup_options = get_option(str_replace('simple_options_','',$_GET['feed']));
 			$backup_options['simple-options-backup'] = '1';
 			$content = json_encode($backup_options);
 			
 			if(isset($_GET['action']) && $_GET['action'] == 'download_options'){
 				header('Content-Description: File Transfer');
 				header('Content-type: application/txt');
-				header('Content-Disposition: attachment; filename="'.str_replace('simple-options-','',$_GET['feed']).'_options_'.date('d-m-Y').'.json"');
+				header('Content-Disposition: attachment; filename="'.str_replace('Simple_Options_','',$_GET['feed']).'_backup_'.date('d-m-Y').'.json"');
 				header('Content-Transfer-Encoding: binary');
 				header('Expires: 0');
 				header('Cache-Control: must-revalidate');
@@ -1286,12 +1286,12 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 									echo '<p class="description">'.apply_filters('simple-options-backup-description', __('Here you can copy/download your themes current option settings. Keep this safe as you can use it as a backup should anything go wrong. Or you can use it to restore your settings on this site (or any other site). You also have the handy option to copy the link to yours sites settings. Which you can then use to duplicate on another site', 'simple-options')).'</p>';
 								echo '</div>';
 								
-									echo '<p><a href="javascript:void(0);" id="simple-options-export-code-copy" class="button-secondary">Copy</a> <a href="'.add_query_arg(array('feed' => 'simple-options-'.$this->args['opt_name'], 'action' => 'download_options', 'secret' => md5(AUTH_KEY.SECURE_AUTH_KEY)), site_url()).'" id="simple-options-export-code-dl" class="button-primary">Download</a> <a href="javascript:void(0);" id="simple-options-export-link" class="button-secondary">Copy Link</a></p>';
+									echo '<p><a href="javascript:void(0);" id="simple-options-export-code-copy" class="button-secondary">Copy</a> <a href="'.add_query_arg(array('feed' => 'simple_options_'.$this->args['opt_name'], 'action' => 'download_options', 'secret' => md5(AUTH_KEY.SECURE_AUTH_KEY)), site_url()).'" id="simple-options-export-code-dl" class="button-primary">Download</a> <a href="javascript:void(0);" id="simple-options-export-link" class="button-secondary">Copy Link</a></p>';
 									$backup_options = $this->options;
 									$backup_options['simple-options-backup'] = '1';
 									$encoded_options = json_encode($backup_options);
 									echo '<textarea class="large-text noUpdate" id="simple-options-export-code" rows="8">';print_r($encoded_options);echo '</textarea>';
-									echo '<input type="text" class="large-text noUpdate" id="simple-options-export-link-value" value="'.add_query_arg(array('feed' => 'simple-options-'.$this->args['opt_name'], 'secret' => md5(AUTH_KEY.SECURE_AUTH_KEY)), site_url()).'" />';
+									echo '<input type="text" class="large-text noUpdate" id="simple-options-export-link-value" value="'.add_query_arg(array('feed' => 'simple_options_'.$this->args['opt_name'], 'secret' => md5(AUTH_KEY.SECURE_AUTH_KEY)), site_url()).'" />';
 
 							echo '</div>';
 						}
