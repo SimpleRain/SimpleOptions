@@ -74,6 +74,7 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 		public $warnings = array();
 		public $options = array();
 		public $defaults = array();
+		public $bloginfo = get_bloginfo();
 
 
 		/**
@@ -1597,14 +1598,22 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 		**/
 
 		function shortcode_site_url($atts,$content=NULL) {
-			return get_site_url();
+			return $this->$bloginfo['url'];
 		}
+
+		/**
+			Shortcode - Wordpress URL (URI/Link)
+		**/
+
+		function shortcode_wp_url($atts,$content=NULL) {
+			return $this->$bloginfo['wpurl'];
+		}		
 
 		/**
 			Shortcode - Theme URL (URI/Link)
 		**/
 		function shortcode_theme_url($atts,$content=NULL) {
-			return get_template_directory_uri();
+			return $this->$bloginfo['stylesheet_directory'];
 		}
 
 		/**
@@ -1625,21 +1634,21 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 			Shortcode - Site Title
 		**/
 		function shortcode_site_title($atts,$content=NULL) {
-			return 'THIS IS THE SITE TITLE';
+			return $this->$bloginfo['name'];
 		}
 
 		/**
 			Shortcode - Site Tagline
 		**/
 		function shortcode_site_tagline($atts,$content=NULL) {
-			return 'THIS IS THE SITE TITLE';
+			return $this->$bloginfo['description'];
 		}
 
 		/**
 			Shortcode - Current Year
 		**/
 		function shortcode_current_year($atts,$content=NULL) {
-			return 'THIS IS THE CURRENT YEAR';
+			return date("Y");
 		}
 
 		/**
