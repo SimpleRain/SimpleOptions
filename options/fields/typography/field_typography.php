@@ -260,11 +260,12 @@ class Simple_Options_typography extends Simple_Options{
 	 * @since Simple_Options 1.0.0
 	*/
 	function enqueue(){
+		global $Simple_Options;
 	
 		wp_enqueue_script(
 			'simple-options-field-typography-js', 
 			SOF_URL.'fields/typography/field_typography.js', 
-			array('jquery'),
+			array('jquery', 'wp-color-picker', 'simple-options-field-color-js'),
 			time(),
 			true
 		);

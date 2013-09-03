@@ -35,6 +35,12 @@
 	margin-top:8px;
 }
 
+#simple-options-main input.sof-typography-color {
+	float: left;
+	width: 70px;
+	margin-left: 5px;
+}
+
 .sof-typography-container .input-append {
 	font-size:0;
 	white-space:nowrap;

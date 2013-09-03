@@ -1,7 +1,7 @@
 
 
 jQuery(document).ready(function(){
-	jQuery('.sof-color').wpColorPicker({
+	jQuery('.sof-color-init').wpColorPicker({
     change: function(event, ui){
     	sof_change(jQuery(this));
     }
