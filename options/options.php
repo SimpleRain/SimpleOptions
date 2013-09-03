@@ -74,7 +74,7 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 		public $warnings = array();
 		public $options = array();
 		public $defaults = array();
-		public $bloginfo = get_bloginfo();
+		public $bloginfo = '';
 
 
 		/**
@@ -162,6 +162,7 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 				$this->options = get_option($this->args['opt_name']);	
 				global $sof;
 				$sof = $this->options;
+				$this->bloginfo = get_bloginfo();
 			}	// if			
 
 			/** Annouce that the class is ready, and pass the object (for advanced use) */
