@@ -150,7 +150,6 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 				// Shortcodes used within the framework
 				add_shortcode('site-url', array($this, 'shortcode_site_url'));
 				add_shortcode('theme-url', array($this, 'shortcode_theme_url'));
-				add_shortcode('wp-url', array($this, 'shortcode_wp_url'));
 				add_shortcode('login-url', array($this, 'shortcode_login_url'));
 				add_shortcode('logout-url', array($this, 'shortcode_logout_url'));
 				add_shortcode('site-title', array($this, 'shortcode_site_title'));
@@ -1598,36 +1597,28 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 		**/
 
 		function shortcode_site_url($atts,$content=NULL) {
-			return 'THIS IS THE SITE URL';
-		}
-
-		/**
-			Shortcode - Site URL (URI/Link)
-		**/
-
-		function shortcode_wp_url($atts,$content=NULL) {
-			return 'THIS IS THE BASE URL';
+			return get_site_url();
 		}
 
 		/**
 			Shortcode - Theme URL (URI/Link)
 		**/
 		function shortcode_theme_url($atts,$content=NULL) {
-			return 'THIS IS THE THEME URL';
+			return get_template_directory_uri();
 		}
 
 		/**
 			Shortcode - Login URL (URI/Link)
 		**/
 		function shortcode_login_url($atts,$content=NULL) {
-			return 'THIS IS THE LOGIN URL';
+			return wp_login_url();
 		}
 
 		/**
 			Shortcode - Logout URL (URI/Link)
 		**/
 		function shortcode_logout_url($atts,$content=NULL) {
-			return 'THIS IS THE LOGOUT URL';
+			return wp_logout_url();
 		}
 
 		/**

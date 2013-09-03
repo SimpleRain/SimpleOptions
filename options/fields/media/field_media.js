@@ -76,9 +76,13 @@ jQuery(document).ready(function($){
 		if (!selector.find('.remove-image').addClass('hide')) {
 			return;
 		}
+
 		sof_change(jQuery('#'+selector.attr('rel')));
 		selector.find('.remove-image').addClass('hide');//hide "Remove" button
 		selector.find('.upload').val('');
+		selector.find('.upload-id').val('');
+		selector.find('.upload-height').val('');
+		selector.find('.upload-width').val('');
 		selector.find('.of-background-properties').hide();
 		var screenshot = selector.find('.screenshot');
 		//if (!screenshot.hasClass('min')) {
