@@ -150,6 +150,7 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 
 				// Shortcodes used within the framework
 				add_shortcode('site-url', array($this, 'shortcode_site_url'));
+				add_shortcode('wp-url', array($this, 'shortcode_site_url'));
 				add_shortcode('theme-url', array($this, 'shortcode_theme_url'));
 				add_shortcode('login-url', array($this, 'shortcode_login_url'));
 				add_shortcode('logout-url', array($this, 'shortcode_logout_url'));
