@@ -29,6 +29,7 @@ jQuery(document).ready(function(){
 		if (typeof(presets) !== undefined && presets !== null) {
 			var answer = confirm(sof_opts.preset_confirm)
 			if (answer){
+				window.onbeforeunload = null;
 				jQuery('#import-code-value').val(JSON.stringify(data));
 				jQuery('#simple-options-import').click();
 			}
