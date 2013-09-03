@@ -96,3 +96,6 @@ SOF is released under GPLv3 - [http://www.gnu.org/copyleft/gpl.html](http://www.
 Twitter: [http://twitter.com/simplerain](http://twitter.com/simplerain)
 
 Website: [http://simplerain.com](http://simplerain.com)
+
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/48f6d17a19d5be95f6f825fc52ab0ddd "githalytics.com")](http://githalytics.com/SimpleRain/SimpleOptions)
