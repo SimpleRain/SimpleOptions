@@ -28,24 +28,25 @@ Download the test theme and start tinkering locally. The test theme can be found
 
 * Grab the latest release from here: [https://github.com/SimpleRain/SimpleOptions/releases](https://github.com/SimpleRain/SimpleOptions/releases)
 * Install SOF as a plugin
-* Copy options-init.php inside your theme.
+* Copy options-init.php to your theme's root directory.
 * Include the ```options-init.php``` file in your theme's ```functions.php``` file, like so:
 
 ```php
 get_template_part('options', 'init');
 ```
 
-### You can also run SOF outside of a plugin, embedded in a theme. By so doing users lose the automatic updates to the core files. To do this:
+### You can also run SOF outside of a plugin, embedded in a theme. By so doing users lose the automatic updates to the core files (and compliancy with marketplaces like ThemeForest). To do this:
 
 * Grab the latest release from here: [https://github.com/SimpleRain/SimpleOptions/releases](https://github.com/SimpleRain/SimpleOptions/releases)
-* Store in a folder of your choosing. Let's say, `simple-options`
-* Include `simple-options/class-simple-options.php` in your functions.php file.
+* Copy the `options` folder to the root directory of your theme.
+* Copy options-init.php to your theme's root directory.
 * Include the ```options-init.php``` file in your theme's ```functions.php``` file, like so:
-* Include and implement the framework by adding the following code to your ```functions.php``` file like so:
 
 ```php
-require_once('simple-options/options-init.php');
+get_template_part('options', 'init');
 ```
+
+You can place the `options` directory anywhere you want, but you will need to modify the include path within `options-init.php`.
 
 **Please note if you embed the framework into your theme (not as a plugin) your users will depend on you to update the framework to recieve core updates. It is advisable to use SOF as a plugin.**
 
