@@ -68,7 +68,12 @@ class Simple_Options_images extends Simple_Options{
 					$style .= ";";
 				}	
 
-				$selected = (checked($this->value, $k, false) != '')?' sof-images-selected':'';
+				$theValue = $k;
+				if (!empty($this->field['tiles']) && $this->field['tiles'] == true) {
+					$theValue = $v['img'];
+				}
+
+				$selected = (checked($this->value, $theValue, false) != '')?' sof-images-selected':'';
 
 				$presets = "";
 				if (!empty($this->field['presets']) && $this->field['presets'] && !empty($v['presets'])) {
@@ -86,11 +91,9 @@ class Simple_Options_images extends Simple_Options{
 				
 				echo '<li class="sof-images">';
 				echo '<label class="'.$selected.' sof-images-'.$this->field['id'].'" for="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'">';
-				$theValue = $k;
-				if (!empty($this->field['tiles']) && $this->field['tiles'] == true) {
-					$theValue = $v['img'];
-				}
-				echo '<input type="radio" class="noUpdate' . $class . '" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$theValue.'" '.checked($this->value, $k, false).$presets.'/>';
+
+
+				echo '<input type="radio" class="noUpdate' . $class . '" id="'.$this->field['id'].'_'.array_search($k,array_keys($this->field['options'])).'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$theValue.'" '.checked($this->value, $theValue, false).$presets.'/>';
 				if (!empty($this->field['tiles']) && $this->field['tiles'] == true) {
 					echo '<span class="tiles" style="background-image: url('.$v['img'].');">&nbsp;</span>';
 				} else {
