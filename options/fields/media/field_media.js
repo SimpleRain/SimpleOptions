@@ -71,10 +71,12 @@ jQuery(document).ready(function($){
 	}
 
 	function SimpleOptions_remove_file(selector) {
+		console.log('here');
+
 		if (!selector.find('.remove-image').addClass('hide')) {
 			return;
 		}
-		sof_change();
+		sof_change(jQuery('#'+selector.attr('rel')));
 		selector.find('.remove-image').addClass('hide');//hide "Remove" button
 		selector.find('.upload').val('');
 		selector.find('.of-background-properties').hide();

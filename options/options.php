@@ -130,32 +130,32 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 
 				//set option with defaults
-				add_action('init', array(&$this, '_set_default_options'));	
+				add_action('init', array($this, '_set_default_options'));	
 				
 				//options page
-				add_action('admin_menu', array(&$this, '_options_page'));
+				add_action('admin_menu', array($this, '_options_page'));
 				
 				//register setting
-				add_action('admin_init', array(&$this, '_register_setting'));
+				add_action('admin_init', array($this, '_register_setting'));
 
 				//register customizer setting
-				add_action( 'customize_register', array(&$this, '_customize_register_setting'));
+				add_action( 'customize_register', array($this, '_customize_register_setting'));
 							
 				//hook into the wp feeds for downloading the exported settings
-				add_action('do_feed_simple_options_'.$this->args['opt_name'], array(&$this, '_download_options'), 1, 1);
+				add_action('do_feed_simple_options_'.$this->args['opt_name'], array($this, '_download_options'), 1, 1);
 			
 				// Hook to allow ajax functions, not being used
-				//add_action('wp_ajax_of_ajax_post_action', array(&$this, '_ajax_callback'));
+				//add_action('wp_ajax_of_ajax_post_action', array($this, '_ajax_callback'));
 
 				// Shortcodes used within the framework
-				add_shortcode('site-url', array(&$this, 'shortcode_site_url'));
-				add_shortcode('theme-url', array(&$this, 'shortcode_theme_url'));
-				add_shortcode('wp-url', array(&$this, 'shortcode_wp_url'));
-				add_shortcode('login-url', array(&$this, 'shortcode_login_url'));
-				add_shortcode('logout-url', array(&$this, 'shortcode_logout_url'));
-				add_shortcode('site-title', array(&$this, 'shortcode_site_title'));
-				add_shortcode('site-tagline', array(&$this, 'shortcode_site_tagline'));
-				add_shortcode('current-year', array(&$this, 'shortcode_current_year'));
+				add_shortcode('site-url', array($this, 'shortcode_site_url'));
+				add_shortcode('theme-url', array($this, 'shortcode_theme_url'));
+				add_shortcode('wp-url', array($this, 'shortcode_wp_url'));
+				add_shortcode('login-url', array($this, 'shortcode_login_url'));
+				add_shortcode('logout-url', array($this, 'shortcode_logout_url'));
+				add_shortcode('site-title', array($this, 'shortcode_site_title'));
+				add_shortcode('site-tagline', array($this, 'shortcode_site_tagline'));
+				add_shortcode('current-year', array($this, 'shortcode_current_year'));
 
 				//get the options for use later on
 				$this->options = get_option($this->args['opt_name']);	
@@ -425,7 +425,7 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 								$this->args['menu_title'], 
 								$this->args['page_cap'], 
 								$this->args['page_slug'], 
-								array(&$this, '_options_page_html')
+								array($this, '_options_page_html')
 							);
 			}else{
 				$this->page = add_menu_page(
@@ -433,7 +433,7 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 								$this->args['menu_title'], 
 								$this->args['page_cap'], 
 								$this->args['page_slug'], 
-								array(&$this, '_options_page_html'),
+								array($this, '_options_page_html'),
 								$this->args['menu_icon'],
 								$this->args['page_position']
 							);
@@ -535,8 +535,8 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 				
 			}//else
 
-			add_action('admin_print_styles-'.$this->page, array(&$this, '_enqueue'));
-			add_action('load-'.$this->page, array(&$this, '_load_page'));
+			add_action('admin_print_styles-'.$this->page, array($this, '_enqueue'));
+			add_action('load-'.$this->page, array($this, '_load_page'));
 		}//function	
 		
 		
@@ -708,10 +708,10 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 		function _load_page(){
 			
 			//do admin head action for this page
-			add_action('admin_head', array(&$this, 'admin_head'));
+			add_action('admin_head', array($this, 'admin_head'));
 			
 			//do admin footer text hook
-			add_filter('admin_footer_text', array(&$this, 'admin_footer_text'));
+			add_filter('admin_footer_text', array($this, 'admin_footer_text'));
 			
 			$screen = get_current_screen();
 			
@@ -760,7 +760,7 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 			//$this->options = get_option($this->args['opt_name']);
 
 
-			register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array(&$this,'_validate_options'));
+			register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array($this,'_validate_options'));
 			$runUpdate = false;
 			foreach($this->sections as $k => $section){
 
@@ -776,7 +776,7 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 				$section = $this->_item_cleanup($section, $k);
 				$this->sections[$k] = $section;
 
-				add_settings_section($section['id'].'_section', $section['title'], array(&$this, '_section_desc'), $section['id'].'_section_group');
+				add_settings_section($section['id'].'_section', $section['title'], array($this, '_section_desc'), $section['id'].'_section_group');
 
 				if(isset($section['fields'])){
 
@@ -810,7 +810,7 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 							$runUpdate = true;
 						}
 
-						add_settings_field($field['id'].'_field', $th, array(&$this,'_field_input'), $section['id'].'_section_group', $section['id'].'_section', $field); // checkbox
+						add_settings_field($field['id'].'_field', $th, array($this,'_field_input'), $section['id'].'_section_group', $section['id'].'_section', $field); // checkbox
 
 					}//foreach
 				
@@ -840,8 +840,8 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 			$my_theme = wp_get_theme();
 
 
-			add_action( 'sanitize_option_theme_mods_'.$my_theme->{'Name'}, array(&$this,'_validate_options') );
-			//register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array(&$this,'_validate_options'));
+			add_action( 'sanitize_option_theme_mods_'.$my_theme->{'Name'}, array($this,'_validate_options') );
+			//register_setting($this->args['opt_name'].'_group', $this->args['opt_name'], array($this,'_validate_options'));
 			$sectionPriority = 10;
 			$fieldPriority = 10;
 			foreach($this->sections as $k => $section){
@@ -1081,10 +1081,10 @@ if ( ! class_exists( 'Simple_Options' ) ) {
 		function _options_page_html(){
 
 			//add the js for the error handling before the form
-			add_action('simple-options-page-before-form-'.$this->args['opt_name'], array(&$this, '_errors_js'), 1);
+			add_action('simple-options-page-before-form-'.$this->args['opt_name'], array($this, '_errors_js'), 1);
 			
 			//add the js for the warning handling before the form
-			add_action('simple-options-page-before-form-'.$this->args['opt_name'], array(&$this, '_warnings_js'), 2);
+			add_action('simple-options-page-before-form-'.$this->args['opt_name'], array($this, '_warnings_js'), 2);
 
 
 			$saved = get_transient('simple-options-saved');

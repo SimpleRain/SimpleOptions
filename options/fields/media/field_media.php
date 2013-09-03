@@ -88,7 +88,7 @@ class Simple_Options_media extends Simple_Options{
 			if ( empty( $this->value['url'] ) || $this->value['url'] == "" ) {
 				$hide =' hide';
 			}
-			echo '<span class="button remove-image'. $hide.'" id="reset_'. $this->field['id'] .'" title="' . $this->field['id'] . '">Remove</span>';
+			echo '<span class="button remove-image'. $hide.'" id="reset_'. $this->field['id'] .'" rel="'.$this->field['id'].'">Remove</span>';
 
 		echo '</div>' . "\n";
 
