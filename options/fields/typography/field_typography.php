@@ -28,7 +28,8 @@ class Simple_Options_typography extends Simple_Options{
 	*/
 	function render(){
 
-		global $wp_filesystem;
+		global $wp_filesystem, $Simple_Options;
+
 		// Initialize the Wordpress filesystem, no more using file_put_contents function
 		if (empty($wp_filesystem)) {
 			require_once(ABSPATH .'/wp-admin/includes/file.php');
@@ -40,13 +41,7 @@ class Simple_Options_typography extends Simple_Options{
 		if (!empty($this->field['compiler']) && $this->field['compiler']) {
 			$class .= " compiler";
 		}		
-
-	// TESTING
-			if( !file_exists( dirname(__FILE__) . '/googlefonts.html' ) && defined('SOF_GOOGLE_KEY') ) {
-				$this->getGoogleFonts($wp_filesystem);
-			}
 	
-
 		// No errors please
 		$defaults = array(
 			'family' => '',
@@ -113,12 +108,12 @@ class Simple_Options_typography extends Simple_Options{
 	      $output .= '<option data-google="false" data-details="'.$font_sizes.'" value="'. $i .'"' . selected($this->value['family'], $i, false) . '>'. $family .'</option>';
 	    }
 	    $output .= '</optgroup>';
-			if( !file_exists( dirname(__FILE__) . '/googlefonts.html' ) && defined('SOF_GOOGLE_KEY') ) {
+			if( !file_exists( dirname(__FILE__) . '/googlefonts.html' ) && !empty($Simple_Options->args['google_api_key']) ) {
 				$this->getGoogleFonts($wp_filesystem);
 			}
 
 			if( file_exists( dirname(__FILE__) . '/googlefonts.html' )) {
-				$output .= $wp_filesystem->get_contents(SOF_URL.'fields/typography/googlefonts.html');
+				$output .= $wp_filesystem->get_contents(SOF_DIR.'fields/typography/googlefonts.html');
 				$google = true;
 			}	
 
@@ -334,11 +329,8 @@ class Simple_Options_typography extends Simple_Options{
 	function getGoogleFonts($wp_filesystem) {
 		global $Simple_Options;
 
-		if (empty($Simple_Options->args['google_api_key'])) {
-			return;
-		} else {
-			$key = $Simple_Options->args['google_api_key'];
-		}
+		$key = $Simple_Options->args['google_api_key'];
+
 		$sid = session_id();
 		if($sid) {
 		    $googleArray = $_SESSION['googleArray'];

@@ -1,3 +1,5 @@
+jQuery.noConflict();
+
 jQuery('.sof-action_bar, .sof-presets-bar').click(function() {
 	window.onbeforeunload = null;
 });
