@@ -18,7 +18,7 @@ function add_another_section($sections){
 				'description' => __('<p class="description">This is a section created by adding a filter to the sections array, great to allow child themes, to add/remove sections from the options.</p>', 'simple-options'),
 				//all the glyphicons are included in the options folder, so you can hook into them, or link to your own custom ones.
 				//You dont have to though, leave it blank for default.
-				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_062_attach.png',
+				'icon' => SOF_URL.'img/glyphicons/glyphicons_062_attach.png',
 				//Lets leave this as a blank section, no options just some intro text set above.
 				'fields' => array(
 						"hook-section-info"=>array( //must be unique
@@ -50,7 +50,7 @@ function add_another_section_two(){
 				'description' => __('<p class="description">This is a section created by adding a filter to the sections array, great to allow child themes, to add/remove sections from the options.</p>', 'simple-options'),
 				//all the glyphicons are included in the options folder, so you can hook into them, or link to your own custom ones.
 				//You dont have to though, leave it blank for default.
-				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_062_attach.png',
+				'icon' => SOF_URL.'img/glyphicons/glyphicons_062_attach.png',
 				//Lets leave this as a blank section, no options just some intro text set above.
 				'fields' => array(
 						"hook-section-info"=>array( //must be unique
@@ -121,12 +121,12 @@ function setup_framework_options(){
 	$args['share_icons']['twitter'] = array(
 		'link' => 'http://twitter.com/simplerain',
 		'title' => 'Folow me on Twitter', 
-		'img' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_322_twitter.png'
+		'img' => SOF_URL.'img/glyphicons/glyphicons_322_twitter.png'
 		);
 	$args['share_icons']['linked_in'] = array(
 		'link' => 'http://linkedin.com/in/dovyp',
 		'title' => 'Find me on LinkedIn', 
-		'img' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_337_linked_in.png'
+		'img' => SOF_URL.'img/glyphicons/glyphicons_337_linked_in.png'
 		);
 
 	//Choose to disable the import/export feature
@@ -208,7 +208,7 @@ $sections[] = array(
 				'title' => __('Home Settings', 'simple-options'),
 				'header' => __('Welcome to the Simple Options Framework Demo', 'simple-options'),
 				'description' => __('Simple Options Framework was created with the developer in mind. It allows for any theme developer to have an advanced theme panel with most of the features a developer would need. For more information check out the Github repo at: <a href="http://github.com/SimpleRain/SimpleOptions/">http://github.com/SimpleRain/SimpleOptions/</a>', 'simple-options'),
-				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_020_home.png',
+				'icon' => SOF_URL.'img/glyphicons/glyphicons_020_home.png',
 				'fields' => array(
 					
 					"media"=>array( //must be unique
@@ -303,12 +303,12 @@ $sections[] = array(
 						'subtitle'=> __('Select a background pattern.', 'simple-options'),
 						'std' 		=> 0,
 						'options' => array(
-										'1' => array('alt' => '1 Column', 'img' => SOF_OPTIONS_URL.'img/1col.png'),
-										'2' => array('alt' => '2 Column Left', 'img' => SOF_OPTIONS_URL.'img/2cl.png'),
-										'3' => array('alt' => '2 Column Right', 'img' => SOF_OPTIONS_URL.'img/2cr.png'),
-										'4' => array('alt' => '3 Column Middle', 'img' => SOF_OPTIONS_URL.'img/3cm.png'),
-										'5' => array('alt' => '3 Column Left', 'img' => SOF_OPTIONS_URL.'img/3cl.png'),
-										'6' => array('alt' => '3 Column Right', 'img' => SOF_OPTIONS_URL.'img/3cr.png')
+										'1' => array('alt' => '1 Column', 'img' => SOF_URL.'img/1col.png'),
+										'2' => array('alt' => '2 Column Left', 'img' => SOF_URL.'img/2cl.png'),
+										'3' => array('alt' => '2 Column Right', 'img' => SOF_URL.'img/2cr.png'),
+										'4' => array('alt' => '3 Column Middle', 'img' => SOF_URL.'img/3cm.png'),
+										'5' => array('alt' => '3 Column Left', 'img' => SOF_URL.'img/3cl.png'),
+										'6' => array('alt' => '3 Column Right', 'img' => SOF_URL.'img/3cr.png')
 											),
 						),		
 					"presets"=>array( //must be unique
@@ -319,8 +319,8 @@ $sections[] = array(
 						'std' 		=> 0,
 						'description'=> __('This allows you to set a json string or array to override multiple preferences in your theme.', 'simple-options'),
 						'options' => array(
-										'1' => array('alt' => '1 Column', 'img' => SOF_OPTIONS_URL.'img/1col.png', 'presets'=>array('slider2'=>12,'patterns'=>2)),
-										'2' => array('alt' => '2 Column Left', 'img' => SOF_OPTIONS_URL.'img/2cl.png', 'presets'=>'{"slider2":"30", "patterns":"5"}'),
+										'1' => array('alt' => '1 Column', 'img' => SOF_URL.'img/1col.png', 'presets'=>array('slider2'=>12,'patterns'=>2)),
+										'2' => array('alt' => '2 Column Left', 'img' => SOF_URL.'img/2cl.png', 'presets'=>'{"slider2":"30", "patterns":"5"}'),
 											),
 						),					
 
@@ -342,7 +342,7 @@ $sections[] = array(
 
 
 $sections[] = array(
-				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_280_settings.png',
+				'icon' => SOF_URL.'img/glyphicons/glyphicons_280_settings.png',
 				'title' => __('General Settings', 'simple-options'),
 				'fields' => array(
 					"layout"=>array( //must be unique
@@ -350,12 +350,12 @@ $sections[] = array(
 						'title' => __('Main Layout', 'simple-options'), 
 						'subtitle' => __('Select main content and sidebar alignment. Choose between 1, 2 or 3 column layout.', 'simple-options'),
 						'options' => array(
-										'1' => array('alt' => '1 Column', 'img' => SOF_OPTIONS_URL.'img/1col.png'),
-										'2' => array('alt' => '2 Column Left', 'img' => SOF_OPTIONS_URL.'img/2cl.png'),
-										'3' => array('alt' => '2 Column Right', 'img' => SOF_OPTIONS_URL.'img/2cr.png'),
-										'4' => array('alt' => '3 Column Middle', 'img' => SOF_OPTIONS_URL.'img/3cm.png'),
-										'5' => array('alt' => '3 Column Left', 'img' => SOF_OPTIONS_URL.'img/3cl.png'),
-										'6' => array('alt' => '3 Column Right', 'img' => SOF_OPTIONS_URL.'img/3cr.png')
+										'1' => array('alt' => '1 Column', 'img' => SOF_URL.'img/1col.png'),
+										'2' => array('alt' => '2 Column Left', 'img' => SOF_URL.'img/2cl.png'),
+										'3' => array('alt' => '2 Column Right', 'img' => SOF_URL.'img/2cr.png'),
+										'4' => array('alt' => '3 Column Middle', 'img' => SOF_URL.'img/3cm.png'),
+										'5' => array('alt' => '3 Column Left', 'img' => SOF_URL.'img/3cl.png'),
+										'6' => array('alt' => '3 Column Right', 'img' => SOF_URL.'img/3cr.png')
 											),//Must provide key => value(array:title|img) pairs for radio options
 						'std' => '2'
 						),
@@ -382,7 +382,7 @@ $sections[] = array(
 
 
 $sections[] = array(
-				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_234_brush.png',
+				'icon' => SOF_URL.'img/glyphicons/glyphicons_234_brush.png',
 				'title' => __('Styling Options', 'simple-options'),
 				'fields' => array(
 
@@ -443,7 +443,7 @@ $sections[] = array(
 			);
 				
 $sections[] = array(
-				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_107_text_resize.png',
+				'icon' => SOF_URL.'img/glyphicons/glyphicons_107_text_resize.png',
 				'title' => __('Field Validation', 'simple-options'),
 				'description' => __('<p class="description">This is the Description. Again HTML is allowed2</p>', 'simple-options'),
 				'fields' => array(
@@ -558,7 +558,7 @@ $sections[] = array(
 					)
 				);
 $sections[] = array(
-				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_150_check.png',
+				'icon' => SOF_URL.'img/glyphicons/glyphicons_150_check.png',
 				'title' => __('Radio/Checkbox Fields', 'simple-options'),
 				'description' => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'simple-options'),
 				'fields' => array(
@@ -618,19 +618,19 @@ $sections[] = array(
 						'subtitle' => __('No validation can be done on this field type', 'simple-options'),
 						'description' => __('This uses some of the built in images, you can use them for layout options.', 'simple-options'),
 						'options' => array(
-										'1' => array('alt' => '1 Column', 'img' => SOF_OPTIONS_URL.'img/1col.png'),
-										'2' => array('alt' => '2 Column Left', 'img' => SOF_OPTIONS_URL.'img/2cl.png'),
-										'3' => array('alt' => '2 Column Right', 'img' => SOF_OPTIONS_URL.'img/2cr.png'),
-										'4' => array('alt' => '3 Column Middle', 'img' => SOF_OPTIONS_URL.'img/3cm.png'),
-										'5' => array('alt' => '3 Column Left', 'img' => SOF_OPTIONS_URL.'img/3cl.png'),
-										'6' => array('alt' => '3 Column Right', 'img' => SOF_OPTIONS_URL.'img/3cr.png')
+										'1' => array('alt' => '1 Column', 'img' => SOF_URL.'img/1col.png'),
+										'2' => array('alt' => '2 Column Left', 'img' => SOF_URL.'img/2cl.png'),
+										'3' => array('alt' => '2 Column Right', 'img' => SOF_URL.'img/2cr.png'),
+										'4' => array('alt' => '3 Column Middle', 'img' => SOF_URL.'img/3cm.png'),
+										'5' => array('alt' => '3 Column Left', 'img' => SOF_URL.'img/3cl.png'),
+										'6' => array('alt' => '3 Column Right', 'img' => SOF_URL.'img/3cr.png')
 											),//Must provide key => value(array:title|img) pairs for radio options
 						'std' => '2'
 						)																		
 					)
 				);
 $sections[] = array(
-				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_157_show_lines.png',
+				'icon' => SOF_URL.'img/glyphicons/glyphicons_157_show_lines.png',
 				'title' => __('Select Fields', 'simple-options'),
 				'description' => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'simple-options'),
 				'fields' => array(
@@ -777,18 +777,18 @@ $sections[] = array(
 	
 	if(file_exists(dirname(__FILE__).'/README.md')){
 		$tabs['theme_docs'] = array(
-						'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_071_book.png',
+						'icon' => SOF_URL.'img/glyphicons/glyphicons_071_book.png',
 						'title' => __('Documentation', 'simple-options'),
 						'content' => file_get_contents(dirname(__FILE__).'/README.md')
 						);
 	}//if
 
-	Simple_Options($sections, $args, $tabs);
+	
 
 
 	// You can append a new section at any time.
-	$section = array(
-				'icon' => SOF_OPTIONS_URL.'img/glyphicons/glyphicons_023_cogwheels.png',
+	$sections[] = array(
+				'icon' => SOF_URL.'img/glyphicons/glyphicons_023_cogwheels.png',
 				'title' => __('Additional Fields', 'simple-options'),
 				'description' => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'simple-options'),
 				'fields' => array(
@@ -823,13 +823,14 @@ $sections[] = array(
 						),
 					)
 				);
-	Simple_Options($section);
 	
+
+	Simple_Options($sections, $args, $tabs);
 
 
 
 }//function
-add_action('simple_options_register', 'setup_framework_options');
+add_action('init', 'setup_framework_options');
 
 /*
  * 

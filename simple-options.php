@@ -15,7 +15,7 @@
  * Plugin Name: Simple Options Framework
  * Plugin URI:  https://github.com/SimpleRain/SimpleOptions
  * Description: A simple wordpress options framework for developers.
- * Version:     0.5.0
+ * Version:     0.6.0
  * Author:      Dovy Paukstys
  * Author URI:  http://simplerain.com
  * Text Domain: simple-options
@@ -30,7 +30,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // TODO: replace `class-plugin-name.php` with the name of the actual plugin's class file
-require_once( plugin_dir_path( __FILE__ ) . 'class-simple-options.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'options/options.php' );
 
 // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
 register_activation_hook( __FILE__, array( 'Simple_Options', 'activate' ) );
