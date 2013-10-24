@@ -3,9 +3,9 @@ Simple Options Framework -> Redux Framework
 
 <meta http-equiv="refresh" content="0; url=https://github.com/ReduxFramework/ReduxFramework">
 
-Simple Options Framework has merged with Redux Framework to create the best option panel that exists.
+Simple Options Framework has merged with Redux Framework.
 
-[https://github.com/ReduxFramework/ReduxFramework](https://github.com/ReduxFramework/ReduxFramework)
+**Please visit: [https://github.com/ReduxFramework/ReduxFramework](https://github.com/ReduxFramework/ReduxFramework)**
 
 
 ### Contact the author
